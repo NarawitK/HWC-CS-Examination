@@ -1,0 +1,85 @@
+﻿@model IEnumerable<WebApplication1.Models.HR_Employee>
+@using System.Linq
+
+@{
+    ViewBag.Title = "ข้อมูลพนักงาน";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>ข้อมูลพนักงาน</h2>
+
+<table class="table table-bordered">
+    @if (!Model.Any())
+    {
+        <tr>
+            <th>
+                <p class="text-warning text-center"><span class="glyphicon glyphicon-info-sign"></span> ไม่มีข้อมูลพนักงาน</p>
+            </th>
+        </tr>
+    }
+    else
+    {
+        <tr>
+            <th></th>
+            <th>
+                รหัสพนักงาน
+            </th>
+            <th>
+                ชื่อ - นามสกุล พนักงาน
+            </th>
+            <th>
+                วันเดือนปีเกิด
+            </th>
+            <th>
+                หัวหน้างาน
+            </th>
+            <th>
+                วันที่แก้ไขข้อมูลล่าสุด
+            </th>
+            <th>
+                หน่วยงานที่สังกัด
+            </th>
+        </tr>
+        foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.ActionLink("แก้ไขข้อมูล", "Edit", new { id = item.EmployeeID }) |
+                    @Html.ActionLink("ดูรายละเอียด", "Details", new { id = item.EmployeeID }) |
+                    @Html.ActionLink("ลบ", "Delete", new { id = item.EmployeeID })
+
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EmployeeID)
+
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstName) @Html.DisplayFor(modelItem => item.LastName)
+
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Birthdate)
+
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BossID)
+
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ModifiedDate)
+
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HR_Department.Name)
+                </td>
+            </tr>
+        }
+    }
+
+
+
+</table>
+
+<div class="pull-right">
+@Html.ActionLink("Add New Employee", "Create",null, htmlAttributes: new { @class = "btn btn-default pull-right" })
+</div>

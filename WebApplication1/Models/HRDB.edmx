@@ -1,0 +1,148 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="HRModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="HR_Department">
+          <Key>
+            <PropertyRef Name="DepartmentID" />
+          </Key>
+          <Property Name="DepartmentID" Type="int" StoreGeneratedPattern="None" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="GroupName" Type="nvarchar" MaxLength="50" />
+          <Property Name="ModifiedDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="HR_Employee">
+          <Key>
+            <PropertyRef Name="EmployeeID" />
+          </Key>
+          <Property Name="EmployeeID" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Firstname" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Lastname" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Birthdate" Type="datetime" />
+          <Property Name="DepartmentID" Type="int" Nullable="false" />
+          <Property Name="BossID" Type="varchar" MaxLength="20" />
+          <Property Name="ModifiedDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_HR_Employee_HR_Department">
+          <End Role="HR_Department" Type="Self.HR_Department" Multiplicity="1" />
+          <End Role="HR_Employee" Type="Self.HR_Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HR_Department">
+              <PropertyRef Name="DepartmentID" />
+            </Principal>
+            <Dependent Role="HR_Employee">
+              <PropertyRef Name="DepartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="HRModelStoreContainer">
+          <EntitySet Name="HR_Department" EntityType="Self.HR_Department" Schema="dbo" Table="HR.Department" store:Type="Tables" />
+          <EntitySet Name="HR_Employee" EntityType="Self.HR_Employee" Schema="dbo" Table="HR.Employee" store:Type="Tables" />
+          <AssociationSet Name="FK_HR_Employee_HR_Department" Association="Self.FK_HR_Employee_HR_Department">
+            <End Role="HR_Department" EntitySet="HR_Department" />
+            <End Role="HR_Employee" EntitySet="HR_Employee" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="HRModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="HR_Department">
+          <Key>
+            <PropertyRef Name="DepartmentID" />
+          </Key>
+          <Property Name="DepartmentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="GroupName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="HR_Employee" Relationship="Self.FK_HR_Employee_HR_Department" FromRole="HR_Department" ToRole="HR_Employee" />
+        </EntityType>
+        <EntityType Name="HR_Employee">
+          <Key>
+            <PropertyRef Name="EmployeeID" />
+          </Key>
+          <Property Name="EmployeeID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Birthdate" Type="DateTime" Precision="3" />
+          <Property Name="DepartmentID" Type="Int32" Nullable="false" />
+          <Property Name="BossID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="HR_Department" Relationship="Self.FK_HR_Employee_HR_Department" FromRole="HR_Employee" ToRole="HR_Department" />
+        </EntityType>
+        <Association Name="FK_HR_Employee_HR_Department">
+          <End Role="HR_Department" Type="Self.HR_Department" Multiplicity="1" />
+          <End Role="HR_Employee" Type="Self.HR_Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HR_Department">
+              <PropertyRef Name="DepartmentID" />
+            </Principal>
+            <Dependent Role="HR_Employee">
+              <PropertyRef Name="DepartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="HREntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="HR_Department" EntityType="Self.HR_Department" />
+          <EntitySet Name="HR_Employee" EntityType="Self.HR_Employee" />
+          <AssociationSet Name="FK_HR_Employee_HR_Department" Association="Self.FK_HR_Employee_HR_Department">
+            <End Role="HR_Department" EntitySet="HR_Department" />
+            <End Role="HR_Employee" EntitySet="HR_Employee" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="HRModelStoreContainer" CdmEntityContainer="HREntities">
+          <EntitySetMapping Name="HR_Department">
+            <EntityTypeMapping TypeName="HRModel.HR_Department">
+              <MappingFragment StoreEntitySet="HR_Department">
+                <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="GroupName" ColumnName="GroupName" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HR_Employee">
+            <EntityTypeMapping TypeName="HRModel.HR_Employee">
+              <MappingFragment StoreEntitySet="HR_Employee">
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+                <ScalarProperty Name="FirstName" ColumnName="Firstname" />
+                <ScalarProperty Name="LastName" ColumnName="Lastname" />
+                <ScalarProperty Name="Birthdate" ColumnName="Birthdate" />
+                <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+                <ScalarProperty Name="BossID" ColumnName="BossID" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

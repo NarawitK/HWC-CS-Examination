@@ -1,0 +1,15 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Scripts{
+    <script src="~/Scripts/Autocomplete.js"></script>    
+}
+<br/>
+<div class="ui-widget">
+    @Html.Label("", htmlAttributes: new { @class = "control-label col-md-2" })
+    @Html.TextBox("BossID")
+</div>
+
+<button type="button" id="btn" class="btn btn-default">Ajax</button>

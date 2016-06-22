@@ -1,0 +1,67 @@
+﻿@model WebApplication1.Models.HR_Employee
+
+@{
+    ViewBag.Title = "รายละเอียด";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>รายละเอียด</h2>
+
+<div>
+    <h4>คุณ @Html.DisplayFor(model=>model.FirstName) @Html.DisplayFor(model => model.LastName)</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Birthdate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Birthdate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BossID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BossID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ModifiedDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ModifiedDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HR_Department.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HR_Department.Name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.EmployeeID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

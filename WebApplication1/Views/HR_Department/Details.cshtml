@@ -1,0 +1,42 @@
+﻿@model WebApplication1.Models.HR_Department
+
+@{
+    ViewBag.Title = "รายละเอียดพนักงาน";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>รายละเอียดพนักงาน</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GroupName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GroupName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ModifiedDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ModifiedDate)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("แก้ไขข้อมูล", "Edit", new { id = Model.DepartmentID }, new { @class = "btn btn-default" })
+    @Html.ActionLink("กลับสู่หน้าหลัก", "Index",null, new { @class = "btn btn-default" })
+</p>
