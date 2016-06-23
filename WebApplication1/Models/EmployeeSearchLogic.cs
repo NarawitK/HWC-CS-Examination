@@ -35,18 +35,18 @@ namespace WebApplication1.Models
                     {
                         string firstname = substr[0];
                         string lastname = substr[1];
-                        result = result.Where(x => x.FirstName.Contains(firstname) || x.LastName.Contains(lastname));
+                        result = result.Where(x => x.FirstName.Contains(firstname) && x.LastName.Contains(lastname));
                     }
                     else
                     {
                         result = null;
                     }
                 }
-                /*if (!string.IsNullOrEmpty(searchModel.FirstName))
+                /*if (!string.IsNullOrEmpty(searchModel.FirstName)) //Search FName Only
                 {
                     result = result.Where(x => x.FirstName.Contains(searchModel.FirstName));
                 }
-                if (!string.IsNullOrEmpty(searchModel.LastName))
+                if (!string.IsNullOrEmpty(searchModel.LastName)) //Search LName Only
                 {
                     result = result.Where(x => x.LastName.Contains(searchModel.LastName));
                 }*/
