@@ -15,7 +15,7 @@ namespace WebApplication1.Models
         public IQueryable<HR_Employee> GetSearchResult(EmployeeSearchModel searchModel)
         {
             var result = db.HR_Employee.AsQueryable();
-                if(searchModel != null)
+            if(searchModel != null)
             {
                 if (!string.IsNullOrEmpty(searchModel.EmployeeID))
                 {
@@ -42,14 +42,6 @@ namespace WebApplication1.Models
                         result = null;
                     }
                 }
-                /*if (!string.IsNullOrEmpty(searchModel.FirstName)) //Search FName Only
-                {
-                    result = result.Where(x => x.FirstName.Contains(searchModel.FirstName));
-                }
-                if (!string.IsNullOrEmpty(searchModel.LastName)) //Search LName Only
-                {
-                    result = result.Where(x => x.LastName.Contains(searchModel.LastName));
-                }*/
                 if (searchModel.DepartmentID.HasValue)
                 {
                     result = result.Where(x => x.DepartmentID == searchModel.DepartmentID);

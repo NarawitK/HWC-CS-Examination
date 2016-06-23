@@ -203,7 +203,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\AutoCompleteController.cs" />
     <Compile Include="Controllers\HR_DepartmentController.cs" />
     <Compile Include="Controllers\HR_EmployeeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -232,6 +231,8 @@
     <Compile Include="Models\HR_Employee.cs">
       <DependentUpon>HRDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\IDEmpLogic.cs" />
+    <Compile Include="Models\IDEmpModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -240,7 +241,7 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\HR_Employee\Search.cshtml" />
-    <Content Include="Views\AutoComplete\Index.cshtml" />
+    <Content Include="Views\HR_Employee\TestEmpID.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

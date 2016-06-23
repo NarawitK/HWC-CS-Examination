@@ -14,6 +14,7 @@ namespace WebApplication1.Models
     
     public partial class HR_Employee
     {
+        private HREntities db = new HREntities();
         public string EmployeeID { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -21,16 +22,14 @@ namespace WebApplication1.Models
         public int DepartmentID { get; set; }
         public string BossID { get; set; }
         public System.DateTime ModifiedDate { get; set; }
-
         public string FullName
         {
             get
             {
-                return (FirstName+" "+LastName);
+                return (FirstName + " " + LastName);
             }
         }
 
-    
         public virtual HR_Department HR_Department { get; set; }
     }
 }

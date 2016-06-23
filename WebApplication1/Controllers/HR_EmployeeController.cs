@@ -21,6 +21,14 @@ namespace WebApplication1.Controllers
             return View(hR_Employee.ToList());
         }
 
+        public ActionResult TestEmpID()
+        {
+            var b = from i in db.HR_Employee
+                    where i.BossID == i.EmployeeID
+                    select i.FirstName+" "+i.LastName;
+            return View(b.ToList());
+        }
+
         //GET: HR_Employee/Search
         public ActionResult Search()
          {
@@ -53,6 +61,7 @@ namespace WebApplication1.Controllers
         }
 
         // GET: HR_Employee/Create
+        [HandleError]
         public ActionResult Create()
         {
             IEnumerable<SelectListItem> DepartmentID = new SelectList(db.HR_Department, "DepartmentID", "Name");
@@ -64,7 +73,7 @@ namespace WebApplication1.Controllers
                 var query_int = ((int.Parse(query_substr[4])) + 1).ToString("D4");
                 ViewData["currentID"] = query_int;
             }
-            catch (Exception)
+            catch
             {
                 string D4 = "0000";
                 ViewData["currentID"] = D4;
@@ -76,6 +85,7 @@ namespace WebApplication1.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [HandleError]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "EmployeeID,FirstName,LastName,Birthdate,DepartmentID,BossID,ModifiedDate")] HR_Employee hR_Employee)
         {
