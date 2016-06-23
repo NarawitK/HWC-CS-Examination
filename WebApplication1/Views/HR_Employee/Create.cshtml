@@ -4,10 +4,6 @@
     ViewBag.Title = "เพิ่มพนักงาน";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@section Scripts{
-    <script src="~/Scripts/Autocomplete.js"><</script>
-}
-
 <h2>เพิ่มพนักงาน</h2>
 
 @using (Html.BeginForm())
@@ -20,7 +16,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.EmployeeID, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.EmployeeID, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @Value = "EMP-" + DateTime.Now.ToString("yyyy-MM-dd") + "-" + TempData["currentID"] } })
+                @Html.EditorFor(model => model.EmployeeID, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @Value = "EMP-" + DateTime.Now.ToString("yyyy-MM-dd") + "-" + ViewData["currentID"] } })
                 @Html.ValidationMessageFor(model => model.EmployeeID, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -52,8 +48,9 @@
         <div class="form-group">
             @Html.LabelFor(model => model.BossID, "หัวหน้างาน", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @*Html.TextBoxFor(model => model.BossID, htmlAttributes: new { @class="form-control"})*@
-                @Html.DropDownListFor(model => model.BossID, TempData["BossList_create"] as IEnumerable<SelectListItem>, "---",htmlAttributes: new { @class="form-control"})
+                @Html.TextBox("InputBossID", null, htmlAttributes: new { @class="form-control"})
+                <button type="button" class="btn btn-info" id="SearchBtn">ค้นหา</button>
+                @Html.HiddenFor(model => model.BossID)
                 @Html.ValidationMessageFor(model => model.BossID, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -61,7 +58,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.DepartmentID, "DepartmentID", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.DepartmentID,TempData["DepartmentID"] as IEnumerable<SelectListItem>,"---", htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownList("DepartmentID",null,htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.DepartmentID, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -84,3 +81,8 @@
         <div>
             @Html.ActionLink("Back to List", "Index")
         </div>
+@section Scripts{
+    <script src="~/Scripts/SearchBossBtn.js"></script>
+    <!--<script src="~/Scripts/Autocomplete.js"></script>-->
+    <script src=@Url.Content("~/Scripts/dateInput.js")></script>
+}

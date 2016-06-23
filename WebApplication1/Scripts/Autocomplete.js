@@ -1,31 +1,42 @@
 ﻿$(document).ready(function () {
-    $("#BossID").autocomplete({
+    $("#InputBossID").autocomplete({
         source: function (request, response) {
-           $.ajax({
-                url: '/AutoComplete/GetBossName',
-                type: 'POST',
-                dataType: "json",
-                data: { keyword: $("#BossID").val() },
-                success: function (result) {
-                    response(result.d);
-                    console.log(result);
-                    return result; 
+            $.ajax({
+                url: "/HR_Employee/GetBossName",
+                type: "GET",
+                datatype: "json",
+                data: { term: request.term },
+                success: function (data) {
+                    var res = data;
+                    var delay = 2750;
+                    console.log("Success Function: " + res);
+                    $("#InputBossID").prop("placeholder", "");
+                    if (res.length <= 0) {
+                        setTimeout(function () {
+                            $("#InputBossID").val("");
+                            $("#InputBossID").prop("placeholder", "ไม่พบข้อมูลหัวหน้างาน")
+                            $("#BossID").val(null);
+                        }, delay)
+                        
+                    }
+                    else {
+                        response(res);
+                    }
                 },
                 error: function (result) {
-                    return ("ไม่พบข้อมูล");
-                }
+                    $("#InputBossID").val("");
+                    $("#InputBossID").prop("placeholder", "ไม่พบข้อมูลหัวหน้างาน");
+                    $("#BossID").val(null);
+                },
             });
-        }
-    });
-    $("#BossID").change(function () {
-        $.ajax({
-            url: '/AutoComplete/GetBossName',
-            type: 'POST',
-            dataType: "json",
-            data: { keyword: $("#BossID").val() },
-            success: function (result) {
-                console.log(result);
-            }
-        });
+        },
+        select(event, ui) {
+            $("#InputBossID").val(ui.item.label);
+            $("#BossID").val(ui.item.value);
+            return false;
+        },
+        autoFocus:true,
+        minlength: 1,
+        delay:2.75
     });
 });

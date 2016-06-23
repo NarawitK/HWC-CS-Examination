@@ -13,7 +13,6 @@ namespace WebApplication1.Controllers
     public class HR_EmployeeController : Controller
     {
         private HREntities db = new HREntities();
-        //private BossNameModel BNM = new BossNameModel();
 
         // GET: HR_Employee
         public ActionResult Index()
@@ -57,21 +56,19 @@ namespace WebApplication1.Controllers
         public ActionResult Create()
         {
             IEnumerable<SelectListItem> DepartmentID = new SelectList(db.HR_Department, "DepartmentID", "Name");
-            TempData["DepartmentID"] = DepartmentID;
-           try
+            ViewBag.DepartmentID = DepartmentID;
+            try
             {
                 var query = (db.HR_Employee.Select(e => e.EmployeeID)).DefaultIfEmpty().Max();
                 var query_substr = query.Split('-');
                 var query_int = ((int.Parse(query_substr[4])) + 1).ToString("D4");
-                TempData["currentID"] = query_int;
+                ViewData["currentID"] = query_int;
             }
             catch (Exception)
             {
                 string D4 = "0000";
-                TempData["currentID"] = D4;
+                ViewData["currentID"] = D4;
             }
-            IEnumerable < SelectListItem > BossList_create = new SelectList(db.HR_Employee, "EmployeeID","FullName");
-            TempData["BossList_create"] = BossList_create;
             return View();
         }
 
@@ -82,48 +79,50 @@ namespace WebApplication1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "EmployeeID,FirstName,LastName,Birthdate,DepartmentID,BossID,ModifiedDate")] HR_Employee hR_Employee)
         {
-            IEnumerable<SelectListItem> BossList_create = new SelectList(db.HR_Employee, "EmployeeID", "FullName");
-            TempData["BossList_create"] = BossList_create;
-            IEnumerable<SelectListItem> DepartmentID = new SelectList(db.HR_Department, "DepartmentID", "Name");
-            TempData["DepartmentID"] = DepartmentID;
-            try
-            {
-                var query = (db.HR_Employee.Select(e => e.EmployeeID)).DefaultIfEmpty().Max();
-                var query_substr = query.Split('-');
-                var query_int = ((int.Parse(query_substr[4])) + 1).ToString("D4");
-                TempData["currentID"] = query_int;
-            }
-            catch (Exception)
-            {
-                string D4 = "0000";
-                TempData["currentID"] = D4;
-            }
             if (ModelState.IsValid)
             {
-                    db.HR_Employee.Add(hR_Employee);
-                    db.SaveChanges();
-                    return RedirectToAction("Index");        
+                db.HR_Employee.Add(hR_Employee);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+
             }
             return View(hR_Employee);
+        }
+
+        //For BossName Search
+        [HttpGet]
+        public ActionResult GetBossName(string term)
+        {
+            var name = (from c in db.HR_Employee
+                        where c.EmployeeID == term
+                       // where c.EmployeeID.Contains(term)
+                        //where c.FirstName.Contains(term) || c.LastName.Contains(term)
+                        select new { label = c.FirstName + " " + c.LastName, value = c.EmployeeID, }).Distinct();
+            if (!name.Any())
+            {
+                return null;
+            }
+            else
+            {
+                return Json(name.ToList(), JsonRequestBehavior.AllowGet);
+            }
         }
 
         // GET: HR_Employee/Edit/5
         public ActionResult Edit(string id)
         {
-            
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             HR_Employee hR_Employee = db.HR_Employee.Find(id);
+            IEnumerable<SelectListItem> DepartmentID = new SelectList(db.HR_Department, "DepartmentID", "Name", hR_Employee.DepartmentID);
+            ViewBag.DepartmentID = DepartmentID;
             if (hR_Employee == null)
             {
                 return HttpNotFound();
             }
-            IEnumerable<SelectListItem> BossList  = new SelectList(db.HR_Employee, "EmployeeID", "Firstname", hR_Employee.EmployeeID);
-            TempData["BossList"] = BossList;
-            IEnumerable<SelectListItem> deptID = new SelectList(db.HR_Department, "DepartmentID", "Name",hR_Employee.DepartmentID);
-            ViewData["deptID"] = deptID;
+
             return View(hR_Employee);
         }
 
@@ -139,11 +138,8 @@ namespace WebApplication1.Controllers
                 db.Entry(hR_Employee).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
+
             }
-            IEnumerable<SelectListItem> BossList = new SelectList(db.HR_Employee, "EmployeeID", "Firstname", hR_Employee.EmployeeID);
-            ViewData["BossList"] = BossList;
-            IEnumerable<SelectListItem> deptID = new SelectList(db.HR_Department, "DepartmentID", "Name", hR_Employee.DepartmentID);
-            ViewData["deptID"] = deptID;
             return View(hR_Employee);
         }
 

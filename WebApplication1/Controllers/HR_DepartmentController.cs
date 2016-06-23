@@ -40,7 +40,7 @@ namespace WebApplication1.Controllers
         {
             try
             {
-                TempData["NewDeptID"] = db.HR_Department.Select(e => e.DepartmentID).DefaultIfEmpty().Max();
+                TempData["NewDeptID"] = db.HR_Department.Select(e => e.DepartmentID).DefaultIfEmpty().Max()+1;
             }
             catch(Exception)
             {

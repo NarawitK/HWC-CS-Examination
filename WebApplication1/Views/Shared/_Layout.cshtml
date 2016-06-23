@@ -8,8 +8,8 @@
     <link rel="stylesheet" href="@Url.Content("~/Content/bootstrap.min.css")" type="text/css" />
     <link rel="stylesheet" href="@Url.Content("~/Content/jquery-ui.min.css")" type="text/css" />
     <link rel="stylesheet" href="@Url.Content("~/Content/jquery-ui.theme.min.css")" type="text/css" />
+    @RenderSection("StyleSheet", required: false)
     <script src="~/Scripts/modernizr-2.8.3.js"></script>
-    @RenderSection("StyleSheet",required:false)
     <script src=@Url.Content("~/Scripts/jquery-2.2.4.min.js")></script>
     <script src=@Url.Content("~/Scripts/jquery-ui.min.js")></script>
 </head>
@@ -34,6 +34,8 @@
                             <li>@Html.ActionLink("เพิ่มพนักงาน", "Create", "HR_Employee")</li>
                             <li role="separator" class="divider"></li>
                             <li>@Html.ActionLink("ค้นหาพนักงาน", "Search", "HR_Employee")</li>
+                            <li role="separator" class="divider"></li>
+                            <li>@Html.ActionLink("ทดสอบ AutoComplete","Index","AutoComplete")</li>
                         </ul>
                     </li>
                     <li class="dropdown">
@@ -58,7 +60,6 @@
             <p>&copy; @DateTime.Now.Year - C# Examination</p>
         </footer>
     </div>
-    <script src=@Url.Content("~/Scripts/dateInput.js")></script>
     <script src=@Url.Content("~/Scripts/bootstrap.min.js")></script>
 </body>
 </html>

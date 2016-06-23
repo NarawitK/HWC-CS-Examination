@@ -1,15 +1,14 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @section Scripts{
-    <script src="~/Scripts/Autocomplete.js"></script>    
+    <script src="~/Scripts/SearchBossBtn.js"></script>
 }
-<br/>
+<br />
 <div class="ui-widget">
-    @Html.Label("", htmlAttributes: new { @class = "control-label col-md-2" })
-    @Html.TextBox("BossID")
+    @Html.Label("Test AutocompleteBox", htmlAttributes: new { @class = "control-label col-md-2" })
+    @Html.TextBox("InputBossID")
+    @Html.TextBox("HiddenBossID")
+    <button type="button" id="SearchBtn" class="btn btn-primary">Search</button>
 </div>
-
-<button type="button" id="btn" class="btn btn-default">Ajax</button>

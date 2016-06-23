@@ -10,16 +10,16 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.EmployeeID,new {@maxlength="20",@readonly="readonly"})
+        @Html.HiddenFor(model => model.EmployeeID, new { @maxlength = "20", @readonly = "readonly" })
 
         <div class="form-group">
             @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" ,@required = true, @maxlength=50 } })
+                @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control", @required = true, @maxlength = 50 } })
                 @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -27,7 +27,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", @required=true ,@maxlength=50 } })
+                @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", @required = true, @maxlength = 50 } })
                 @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -35,7 +35,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Birthdate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Birthdate, new { htmlAttributes = new { @class = "form-control dateInput", @required = true} })
+                @Html.EditorFor(model => model.Birthdate, new { htmlAttributes = new { @class = "form-control dateInput", @required = true } })
                 @Html.ValidationMessageFor(model => model.Birthdate, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -43,7 +43,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.DepartmentID, "DepartmentID", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.DepartmentID, ViewData["deptID"] as IEnumerable<SelectListItem>, htmlAttributes: new { @class = "form-control",@required=true })
+               @Html.DropDownList("DepartmentID", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.DepartmentID, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -51,17 +51,19 @@
         <div class="form-group">
             @Html.LabelFor(model => model.BossID, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.BossID,ViewData["BossList"] as IEnumerable<SelectListItem>,"---",htmlAttributes: new { @class = "form-control" })
-                @*Html.EditorFor(model => model.BossID, new { htmlAttributes = new { @class = "form-control BossInput"} })*@
-                @Html.ValidationMessageFor(model => model.BossID, "", new { @class = "text-danger" })
+             
+                @Html.TextBox("InputBossID",null,htmlAttributes: new { @class="form-control"})
+                <button type="button" class="btn btn-info" id="SearchBtn">ค้นหา</button>
+                @Html.TextBoxFor(model => model.BossID,htmlAttributes: new { @class="form-control"})
+                @Html.HiddenFor(model => model.BossID)
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-md-10">
                 @Html.EditorFor(model => model.ModifiedDate, new { htmlAttributes = new { @class = "form-control", @type = "hidden", @readonly = "readonly", @Value = DateTime.Now } })
-                @Html.ValidationMessageFor(model => model.ModifiedDate, "", new { @class = "text-danger" ,@readonly="readonly" })
-                
+                @Html.ValidationMessageFor(model => model.ModifiedDate, "", new { @class = "text-danger", @readonly = "readonly" })
+
             </div>
         </div>
 
@@ -76,3 +78,8 @@
 <div>
     @Html.ActionLink("กลับสู่หน้าหลัก", "Index")
 </div>
+@section Scripts{
+    <script src=@Url.Content("~/Scripts/dateInput.js")></script>
+    <script src="~/Scripts/SearchBossBtn.js"></script>
+    <!--<script src=@Url.Content("~/Scripts/AutoComplete.js")></script>-->
+}

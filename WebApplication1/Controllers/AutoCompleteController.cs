@@ -15,17 +15,14 @@ namespace WebApplication1.Controllers
         {
             return View();
         }
-        [HttpPost]
-        public ActionResult GetBossName(string term)
+        [HttpGet]
+        public ActionResult GetBossName(string key)
         {
             var name = (from c in db.HR_Employee
-                        where c.FirstName.Contains(term) || c.LastName.Contains(term)
-                        select new { value = c.EmployeeID, label = c.FirstName + " " + c.LastName }).Distinct();
-            return this.Json(name, JsonRequestBehavior.AllowGet);
+                        where c.EmployeeID == key
+                        select new { name = c.FirstName + " " + c.LastName, id = c.EmployeeID, }).Distinct();
+            return Json(name.ToList(), JsonRequestBehavior.AllowGet);
         }
-        public ActionResult TestAtr()
-        {
-            return View();
-        }
+            
     }
 }
