@@ -70,7 +70,7 @@ namespace WebApplication1.Controllers
             {
                 var query = (db.HR_Employee.Select(e => e.EmployeeID)).DefaultIfEmpty().Max();
                 var query_substr = query.Split('-');
-                var query_int = ((int.Parse(query_substr[4])) + 1).ToString("D4");
+                var query_int = ((int.Parse(query_substr[3])) + 1).ToString("D4");
                 ViewData["currentID"] = query_int;
             }
             catch
@@ -85,16 +85,28 @@ namespace WebApplication1.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [HandleError]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "EmployeeID,FirstName,LastName,Birthdate,DepartmentID,BossID,ModifiedDate")] HR_Employee hR_Employee)
         {
+            IEnumerable<SelectListItem> DepartmentID = new SelectList(db.HR_Department, "DepartmentID", "Name");
+            ViewBag.DepartmentID = DepartmentID;
+            try
+            {
+                var query = (db.HR_Employee.Select(e => e.EmployeeID)).Max();
+                var query_substr = query.Split('-');
+                var query_int = ((int.Parse(query_substr[3])) + 1).ToString("D4");
+                ViewData["currentID"] = query_int;
+            }
+            catch
+            {
+                string D4 = "0000";
+                ViewData["currentID"] = D4;
+            }
             if (ModelState.IsValid)
             {
-                db.HR_Employee.Add(hR_Employee);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-
+                    db.HR_Employee.Add(hR_Employee);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
             }
             return View(hR_Employee);
         }
@@ -105,8 +117,6 @@ namespace WebApplication1.Controllers
         {
             var name = (from c in db.HR_Employee
                         where c.EmployeeID == term
-                       // where c.EmployeeID.Contains(term)
-                        //where c.FirstName.Contains(term) || c.LastName.Contains(term)
                         select new { label = c.FirstName + " " + c.LastName, value = c.EmployeeID, }).Distinct();
             if (!name.Any())
             {
@@ -143,6 +153,8 @@ namespace WebApplication1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "EmployeeID,FirstName,LastName,Birthdate,DepartmentID,BossID,ModifiedDate")] HR_Employee hR_Employee)
         {
+            IEnumerable<SelectListItem> DepartmentID = new SelectList(db.HR_Department, "DepartmentID", "Name", hR_Employee.DepartmentID);
+            ViewBag.DepartmentID = DepartmentID;
             if (ModelState.IsValid)
             {
                 db.Entry(hR_Employee).State = EntityState.Modified;

@@ -11,25 +11,27 @@ namespace WebApplication1.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     
     public partial class HR_Employee
     {
-        private HREntities db = new HREntities();
         public string EmployeeID { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public Nullable<System.DateTime> Birthdate { get; set; }
+
+        [Required(ErrorMessage = "Please Select your Birthdate")]
+        public DateTime? Birthdate { get; set; }
         public int DepartmentID { get; set; }
         public string BossID { get; set; }
-        public System.DateTime ModifiedDate { get; set; }
+        public DateTime ModifiedDate { get; set; }
         public string FullName
         {
             get
             {
-                return (FirstName + " " + LastName);
+                return FirstName + " " + LastName;
             }
         }
-
+    
         public virtual HR_Department HR_Department { get; set; }
     }
 }

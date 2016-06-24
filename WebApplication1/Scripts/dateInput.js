@@ -1,9 +1,11 @@
 ﻿$(document).ready(function () {
     $(".dateInput").datepicker({
-        dateFormat: 'dd/mm/yy',
+        isBE:true,
+        autoConversionField:false,
+        formatDate: 'dd/mm/yy',
         changeMonth: true,
         changeYear: true,
-        maxDate: 'd',
+        maxDate: '-3',
         yearRange:'-100:+0'
     });
 });

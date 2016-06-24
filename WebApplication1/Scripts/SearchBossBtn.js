@@ -6,15 +6,19 @@
             data:{term:$("#InputBossID").val()},
             type:"GET",
             success: function (result) {
-                console.log("Success Function: " + result);
                 if (result.length > 0) {
                     var fullName = result[0].label;
                     var bID = result[0].value;
-                    $("#InputBossID").val(fullName);
-                    $("#BossID").val(bID);
+                    if (bID !== $("#EmployeeID").val()) {
+                        $("#InputBossID").val(fullName);
+                        $("#BossID").val(bID);
+                    }
+                    else {
+                        $("#InputBossID").val("");
+                        $("#InputBossID").prop("placeholder","ไม่สามารถเลือกหัวหน้างานเป็นตัวเองได้")
+                    }
                 }
                 else {
-                    Console.log("Success Else");
                     $("#InputBossID").val("");
                     $("#InputBossID").prop("placeholder", "ไม่พบข้อมูลหัวหน้างาน")
                     $("#BossID").val(null);
@@ -23,8 +27,9 @@
             error: function () {
                 console.log("Error Function: " + result);
                 $("#InputBossID").val("");
-                $("#InputBossID").prop("placeholder","ไม่พบข้อมูลหัวหน้างาน")
+                $("#InputBossID").prop("placeholder","มีข้อผิดพลาดเกิดขึ้นในระบบ")
                 $("#BossID").val(null);
+                return false;
             }//err fn
         });
     });
