@@ -6,7 +6,8 @@
             data:{term:$("#InputBossID").val()},
             type:"GET",
             success: function (result) {
-                if (result.length > 0) {
+                if (result.length > 0)
+                {
                     var fullName = result[0].label;
                     var bID = result[0].value;
                     if (bID !== $("#EmployeeID").val()) {

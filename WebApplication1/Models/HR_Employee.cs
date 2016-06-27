@@ -12,7 +12,7 @@ namespace WebApplication1.Models
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    
+
     public partial class HR_Employee
     {
         public string EmployeeID { get; set; }
@@ -21,9 +21,11 @@ namespace WebApplication1.Models
 
         [Required(ErrorMessage = "Please Select your Birthdate")]
         public DateTime? Birthdate { get; set; }
+
         public int DepartmentID { get; set; }
         public string BossID { get; set; }
         public DateTime ModifiedDate { get; set; }
+
         public string FullName
         {
             get
@@ -31,7 +33,6 @@ namespace WebApplication1.Models
                 return FirstName + " " + LastName;
             }
         }
-    
         public virtual HR_Department HR_Department { get; set; }
     }
 }

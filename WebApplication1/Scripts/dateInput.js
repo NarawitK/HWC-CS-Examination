@@ -5,7 +5,7 @@
         formatDate: 'dd/mm/yy',
         changeMonth: true,
         changeYear: true,
-        maxDate: '-3',
+        maxDate: '0',
         yearRange:'-100:+0'
     });
 });

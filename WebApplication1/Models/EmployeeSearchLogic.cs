@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 
 namespace WebApplication1.Models
@@ -19,28 +20,37 @@ namespace WebApplication1.Models
             {
                 if (!string.IsNullOrEmpty(searchModel.EmployeeID))
                 {
-                    result = result.Where(x => x.EmployeeID.Contains(searchModel.EmployeeID));
+                    var res = searchModel.EmployeeID.Trim();
+                    result = result.Where(x => x.EmployeeID.Contains(res));
                 }
                 if (!string.IsNullOrEmpty(searchModel.FullName))
                 {
-                    string FN = searchModel.FullName;
-                    var substr = FN.Split(' ');
-                    int length = substr.Length;
-                    if (length == 1)
+                    try
                     {
-                        string firstname = substr[0];
-                        result = result.Where(x => x.FirstName.Contains(firstname) || x.LastName.Contains(firstname));
+                        string FN = searchModel.FullName.Trim();
+                        var split = FN.Split(' ');
+                        int length = FN.Length;
+                        if (length === 1)
+                        {
+                            string firstname = split[0];
+                            result = result.Where(x => x.FirstName.Contains(firstname) || x.LastName.Contains(firstname));
+                        }
+                        else if (length === 2)
+                        {
+                            string firstname = split[0];
+                            string lastname = split[1];
+                            result = result.Where(x => x.FirstName.Contains(firstname) && x.LastName.Contains(lastname));
+                        }
+                        else
+                        {
+                            result = null;
+                        }
                     }
-                    else if (length == 2)
+                    catch
                     {
-                        string firstname = substr[0];
-                        string lastname = substr[1];
-                        result = result.Where(x => x.FirstName.Contains(firstname) && x.LastName.Contains(lastname));
+
                     }
-                    else
-                    {
-                        result = null;
-                    }
+
                 }
                 if (searchModel.DepartmentID.HasValue)
                 {
