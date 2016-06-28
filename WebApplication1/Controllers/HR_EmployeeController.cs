@@ -21,23 +21,15 @@ namespace WebApplication1.Controllers
             return View(hR_Employee.ToList());
         }
 
-        public ActionResult TestEmpID()
-        {
-            var b = from i in db.HR_Employee
-                    where i.BossID == i.EmployeeID
-                    select i.FirstName+" "+i.LastName;
-            return View(b.ToList());
-        }
-
-        //GET: HR_Employee/Search
-        public ActionResult Search()
+        //GET: HR_Employee/ListEmployee <Search Employee>
+        public ActionResult ListEmployee()
          {
             ViewBag.DepartmentID = new SelectList(db.HR_Department, "DepartmentID", "Name");
             return View();
          }
 
         [HttpGet]
-        public ActionResult Search(EmployeeSearchModel searchModel) // Multiple Search Ctrl
+        public ActionResult ListEmployee(EmployeeSearchModel searchModel) // Multiple Search
         {
             ViewBag.DepartmentID = new SelectList(db.HR_Department, "DepartmentID", "Name");
             var search = new EmployeeSearchLogic();
@@ -61,7 +53,6 @@ namespace WebApplication1.Controllers
         }
 
         // GET: HR_Employee/Create
-        [HandleError]
         public ActionResult Create()
         {
             IEnumerable<SelectListItem> DepartmentID = new SelectList(db.HR_Department, "DepartmentID", "Name");
@@ -75,7 +66,7 @@ namespace WebApplication1.Controllers
             }
             catch
             {
-                string D4 = "0000";
+                string D4 = "0001";
                 ViewData["currentID"] = D4;
             }
             return View();
@@ -94,12 +85,20 @@ namespace WebApplication1.Controllers
             {
                 var query = (db.HR_Employee.Select(e => e.EmployeeID)).Max();
                 var query_substr = query.Split('-');
-                var query_int = ((int.Parse(query_substr[3])) + 1).ToString("D4");
-                ViewData["currentID"] = query_int;
+                if(int.Parse(query_substr[3]) == 9999)
+                {
+                    return View();
+                }
+                else
+                {
+                    var query_int = ((int.Parse(query_substr[3])) + 1).ToString("D4");
+                    ViewData["currentID"] = query_int;
+                }
+
             }
             catch
             {
-                string D4 = "0000";
+                string D4 = "0001";
                 ViewData["currentID"] = D4;
             }
             if (ModelState.IsValid)

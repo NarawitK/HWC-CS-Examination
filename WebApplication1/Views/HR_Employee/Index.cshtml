@@ -25,19 +25,16 @@
                 รหัสพนักงาน
             </th>
             <th>
-                ชื่อ - นามสกุล พนักงาน
+                ชื่อ-นามสกุล พนักงาน
             </th>
             <th>
-                วันเดือนปีเกิด
-            </th>
-            <th>
-                หัวหน้างาน
-            </th>
-            <th>
-                วันที่แก้ไขข้อมูลล่าสุด
+                วัน/เดือน/ปีเกิด
             </th>
             <th>
                 หน่วยงานที่สังกัด
+            </th>
+            <th>
+                หัวหน้างาน
             </th>
         </tr>
         foreach (var item in Model)
@@ -51,11 +48,9 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.EmployeeID)
-
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.FirstName) @Html.DisplayFor(modelItem => item.LastName)
-
+                    @Html.DisplayFor(modelItem => item.FullName)
                 </td>
                 <td>
                     @{
@@ -68,26 +63,18 @@
                         }
                     }
                 </td>
-
-                <td>
-                    @Html.DisplayFor(modelItem => item.BossID)
-
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ModifiedDate)
-
-                </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.HR_Department.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BossID)
                 </td>
             </tr>
         }
     }
-
-
-
 </table>
 
-<div class="pull-right">
+<div>
 @Html.ActionLink("Add New Employee", "Create",null, htmlAttributes: new { @class = "btn btn-default pull-right" })
+@Html.ActionLink("ค้นหารายชื่อพนักงาน", "ListEmployee", null, htmlAttributes: new { @class = "btn btn-default pull-right" })
 </div>

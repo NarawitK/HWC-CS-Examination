@@ -8,7 +8,7 @@
 
 <h2>ข้อมูลหน่วยงาน</h2>
 
-<table class="table">
+<table class="table table-bordered">
     @if (!Model.Any())
     {
         <tr>
@@ -22,13 +22,13 @@
         <tr>
             <th></th>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                รหัสหน่วยงาน
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.GroupName)
+                ชื่อหน่วยงาน
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ModifiedDate)
+                กลุ่มงาน
             </th>
         </tr>
         foreach (var item in Model)
@@ -40,16 +40,18 @@
                     @Html.ActionLink("ลบ", "Delete", new { id = item.DepartmentID })
                 </td>
                 <td>
+                    @Html.DisplayFor(modelItem => item.DepartmentID)
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.GroupName)
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ModifiedDate)
-                </td>
             </tr>
         }
     }
 </table>
+<div>
 @Html.ActionLink("เพิ่มหน่วยงานใหม่", "Create",null,htmlAttributes: new {@class = "btn btn-default pull-right" })
+</div>

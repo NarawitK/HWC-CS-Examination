@@ -17,7 +17,7 @@
         @Html.HiddenFor(model => model.EmployeeID, new { @maxlength = "20", @readonly = "readonly" })
 
         <div class="form-group">
-            @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.FirstName,"ชื่อ", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control", @required = true, @maxlength = 50 } })
                 @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
@@ -25,7 +25,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.LastName,"นามสกุล", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", @required = true, @maxlength = 50 } })
                 @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
@@ -33,7 +33,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Birthdate, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Birthdate,"วัน/เดือน/ปีเกิด", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Birthdate, new { htmlAttributes = new { @class = "form-control dateInput", @readonly = "true", @required = "tue"} })
                 @Html.ValidationMessageFor(model => model.Birthdate, "", new { @class = "text-danger" })
@@ -41,7 +41,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.DepartmentID, "DepartmentID", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.DepartmentID, "หน่วยงานที่สังกัด", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                @Html.DropDownList("DepartmentID", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.DepartmentID, "", new { @class = "text-danger" })
@@ -49,10 +49,10 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.BossID, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.BossID,"หัวหน้างาน", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10 form-inline">         
                 @Html.TextBox("InputBossID",null,htmlAttributes: new { @class="form-control", @autocomplete = "off",@Value=Model.BossID})
-                <button type="button" class="btn btn-info" id="SearchBtn">ค้นหา</button>
+                <button type="submit" class="btn btn-info" id="SearchBtn">ค้นหา</button>
                 @Html.HiddenFor(model => model.BossID)
             </div>
         </div>
@@ -61,7 +61,6 @@
             <div class="col-md-10">
                 @Html.EditorFor(model => model.ModifiedDate, new { htmlAttributes = new { @class = "form-control", @type = "hidden", @readonly = "readonly", @Value = DateTime.Now.ToString(@"dd/MM/yyy HH:mm:ss") } })
                 @Html.ValidationMessageFor(model => model.ModifiedDate, "", new { @class = "text-danger"})
-
             </div>
         </div>
 

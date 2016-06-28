@@ -222,14 +222,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>HRDB.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\HREntitiesIndexerData.cs" />
     <Compile Include="Models\HR_Department.cs">
       <DependentUpon>HRDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\HR_Employee.cs">
       <DependentUpon>HRDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\IDEmpLogic.cs" />
-    <Compile Include="Models\IDEmpModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -237,8 +236,7 @@
     <Content Include="packages.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\HR_Employee\Search.cshtml" />
-    <Content Include="Views\HR_Employee\TestEmpID.cshtml" />
+    <Content Include="Views\HR_Employee\ListEmployee.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

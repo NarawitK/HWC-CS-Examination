@@ -2,10 +2,11 @@
     $(".dateInput").datepicker({
         isBE:true,
         autoConversionField:false,
-        formatDate: 'dd/mm/yy',
+        dateFormat: "dd/mm/yy",
         changeMonth: true,
         changeYear: true,
-        maxDate: '0',
-        yearRange:'-100:+0'
+        maxDate: '+0d',
+        yearRange: '-100:+0',
+        hideIfNoPrevNext:true
     });
 });

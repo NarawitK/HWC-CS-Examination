@@ -12,23 +12,15 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.FirstName)
+            @Html.DisplayName("ชื่อ-นามสกุล พนักงาน")
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.FirstName)
+            @Html.DisplayFor(model => model.FullName)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.LastName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LastName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Birthdate)
+            @Html.DisplayName("วัน/เดือน/ปีเกิด")
         </dt>
 
         <dd>
@@ -36,7 +28,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.BossID)
+            @Html.DisplayName("หัวหน้างาน")
         </dt>
 
         <dd>
@@ -44,15 +36,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.ModifiedDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ModifiedDate)
-        </dd>
-
-        <dt>
-            Department Name
+            @Html.DisplayName("หน่วยงานที่สังกัด")
         </dt>
 
         <dd>
