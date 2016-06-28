@@ -36,7 +36,6 @@
             return false;
         },
         autoFocus:true,
-        minlength: 1,
         delay:2.75
     });
 });

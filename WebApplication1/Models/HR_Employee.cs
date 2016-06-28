@@ -12,7 +12,6 @@ namespace WebApplication1.Models
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
 
     public partial class HR_Employee
     {
@@ -20,7 +19,7 @@ namespace WebApplication1.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         [DataType(DataType.DateTime)]
-        [Required(ErrorMessage = "Please Select your Birthdate")]
+        [Required(ErrorMessage = "Please Select your BirthDate")]
         public DateTime? Birthdate { get; set; }
 
         public int DepartmentID { get; set; }

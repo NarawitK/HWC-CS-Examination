@@ -4,7 +4,7 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
+using System.Globalization;
 using System.Web.Mvc;
 using WebApplication1.Models;
 
@@ -82,7 +82,7 @@ namespace WebApplication1.Controllers
             IEnumerable<SelectListItem> DepartmentID = new SelectList(db.HR_Department, "DepartmentID", "Name");
             ViewBag.DepartmentID = DepartmentID;
             try
-            {
+            { 
                 var query = (db.HR_Employee.Select(e => e.EmployeeID)).Max();
                 var query_substr = query.Split('-');
                 if(int.Parse(query_substr[3]) == 9999)
@@ -94,7 +94,6 @@ namespace WebApplication1.Controllers
                     var query_int = ((int.Parse(query_substr[3])) + 1).ToString("D4");
                     ViewData["currentID"] = query_int;
                 }
-
             }
             catch
             {
@@ -102,10 +101,23 @@ namespace WebApplication1.Controllers
                 ViewData["currentID"] = D4;
             }
             if (ModelState.IsValid)
-            {
+            { //Handling Duplicate ID Insertion
+                try
+                {
                     db.HR_Employee.Add(hR_Employee);
                     db.SaveChanges();
                     return RedirectToAction("Index");
+                }
+                catch
+                {
+                    var query = (db.HR_Employee.Select(e => e.EmployeeID)).DefaultIfEmpty().Max();
+                    var query_substr = query.Split('-');
+                    var query_int = ((int.Parse(query_substr[3])) + 1).ToString("D4");
+                    hR_Employee.EmployeeID = "EMP-" + DateTime.Today.ToString("yyyy-MM", CultureInfo.InvariantCulture) + "-" + query_int;
+                    db.HR_Employee.Add(hR_Employee);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }  
             }
             return View(hR_Employee);
         }
