@@ -231,7 +231,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>HRDB.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\HREntitiesIndexerData.cs" />
     <Compile Include="Models\HR_Department.cs">
       <DependentUpon>HRDB.tt</DependentUpon>
     </Compile>
