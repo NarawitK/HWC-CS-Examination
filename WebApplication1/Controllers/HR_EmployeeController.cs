@@ -16,8 +16,8 @@ namespace WebApplication1.Controllers
         private HREntities db = new HREntities();
 
 
-        // GET: HR_Employee with Pagination, Sort and SearchBox
-        public ActionResult Index(string sortOrder,string searchString,string currentFilter,int? page)
+        // GET: HR_Employee with Pagination, Sort and SearchBox //Pagination Customizable 
+        public ActionResult Index(string sortOrder,string searchString,string currentFilter,int? page,int pagesize = 15)
         {
             var hR_Employee = db.HR_Employee.Include(h => h.HR_Department);
             ViewBag.CurrentSort = sortOrder;
@@ -46,7 +46,7 @@ namespace WebApplication1.Controllers
                     hR_Employee = hR_Employee.OrderByDescending(s => s.EmployeeID);
                     break;
             }
-            int pageSize = 10;
+            int pageSize = pagesize;
             int pageNum = page ?? 1;
 
             return View(hR_Employee.ToPagedList(pageNum,pageSize));

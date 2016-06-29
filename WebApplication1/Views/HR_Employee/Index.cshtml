@@ -12,15 +12,20 @@
 }
 
 <h2>ข้อมูลพนักงาน</h2>
-@using (Html.BeginForm("Index","HR_Employee",FormMethod.Get))
-{
-    <div class="form-inline pull-right">
-        @Html.Label("ค้นหาโดยใช้ชื่อ", ViewBag.currentFilter as string, htmlAttributes: new { @class = "control-label"})
-        @Html.TextBox("searchString",null, htmlAttributes: new { @class = "form-control" })
-        <button type="submit" value="Search"><span class="glyphicon glyphicon-search"></span></button>
-    </div>
-}
-<br/>
+    @using (Html.BeginForm("Index", "HR_Employee", FormMethod.Get))
+    {
+        <div class="row">
+            <div class="form-inline col-md-10 pull-right">
+                <div class="form-group">
+                    @Html.Label("ค้นหาโดยใช้ชื่อ", ViewBag.currentFilter as string, htmlAttributes: new { @class = "control-label" })
+                    @Html.TextBox("searchString", null, htmlAttributes: new { @class = "form-control" })
+                    <button type="submit" value="Search"><span class="glyphicon glyphicon-search"></span></button>
+                </div>
+            </div>
+        </div>   
+    }
+    <br />
+
 <table class="table table-bordered">
     @if (!Model.Any())
     {
@@ -86,15 +91,9 @@
         }
     }
 </table>
-<div class="row">
-    <div class="col-md-4 pull-right">
-        @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.currentFilter }),PagedListRenderOptions.ClassicPlusFirstAndLast)
-        Now Showing: @Model.PageSize item(s)
-    </div>
-    
+<div class="pull-right">
+    @Html.ActionLink("Add New Employee", "Create", null, htmlAttributes: new { @class = "btn btn-default" })
+    @Html.ActionLink("ค้นหารายชื่อพนักงาน", "ListEmployee", null, htmlAttributes: new { @class = "btn btn-default" })
 </div>
-<br/>
-<div class="row pull-right">
-        @Html.ActionLink("Add New Employee", "Create", null, htmlAttributes: new { @class = "btn btn-default" })
-        @Html.ActionLink("ค้นหารายชื่อพนักงาน", "ListEmployee", null, htmlAttributes: new { @class = "btn btn-default" })
-</div>
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.currentFilter }),PagedListRenderOptions.ClassicPlusFirstAndLast)
+    Now Showing: @Model.PageSize item(s)
