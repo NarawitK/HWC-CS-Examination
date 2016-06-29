@@ -1,5 +1,7 @@
-﻿@model IEnumerable<WebApplication1.Models.HR_Employee>
+﻿@*model IEnumerable<WebApplication1.Models.HR_Employee> *@
 @using System.Linq
+@using PagedList.Mvc
+@model PagedList.IPagedList<WebApplication1.Models.HR_Employee>
 
 @{
     ViewBag.Title = "ข้อมูลพนักงาน";
@@ -10,7 +12,15 @@
 }
 
 <h2>ข้อมูลพนักงาน</h2>
-
+@using (Html.BeginForm("Index","HR_Employee",FormMethod.Get))
+{
+    <div class="form-inline pull-right">
+        @Html.Label("ค้นหาโดยใช้ชื่อ", ViewBag.currentFilter as string, htmlAttributes: new { @class = "control-label"})
+        @Html.TextBox("searchString",null, htmlAttributes: new { @class = "form-control" })
+        <button type="submit" value="Search"><span class="glyphicon glyphicon-search"></span></button>
+    </div>
+}
+<br/>
 <table class="table table-bordered">
     @if (!Model.Any())
     {
@@ -28,7 +38,7 @@
                 รหัสพนักงาน
             </th>
             <th>
-                ชื่อ-นามสกุล พนักงาน
+                @Html.ActionLink("ชื่อ-นามสกุลพนักงาน", "Index", new { sortOrder = ViewBag.NameSort, currentFilter = ViewBag.CurrentFilter })
             </th>
             <th>
                 วัน/เดือน/ปีเกิด
@@ -76,8 +86,15 @@
         }
     }
 </table>
-
-<div>
-@Html.ActionLink("Add New Employee", "Create",null, htmlAttributes: new { @class = "btn btn-default pull-right" })
-@Html.ActionLink("ค้นหารายชื่อพนักงาน", "ListEmployee", null, htmlAttributes: new { @class = "btn btn-default pull-right" })
+<div class="row">
+    <div class="col-md-4 pull-right">
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.currentFilter }),PagedListRenderOptions.ClassicPlusFirstAndLast)
+        Now Showing: @Model.PageSize item(s)
+    </div>
+    
+</div>
+<br/>
+<div class="row pull-right">
+        @Html.ActionLink("Add New Employee", "Create", null, htmlAttributes: new { @class = "btn btn-default" })
+        @Html.ActionLink("ค้นหารายชื่อพนักงาน", "ListEmployee", null, htmlAttributes: new { @class = "btn btn-default" })
 </div>

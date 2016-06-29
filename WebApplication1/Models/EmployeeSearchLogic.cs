@@ -25,16 +25,16 @@ namespace WebApplication1.Models
                 if (!string.IsNullOrEmpty(searchModel.FullName))
                 {
                        string FN = searchModel.FullName.Trim();
-                       string[] Delimiter = { " " };
-                       var split = FN.Split(Delimiter,StringSplitOptions.RemoveEmptyEntries);
+                       string[] delimiter = { " " };
+                       var split = FN.Split(delimiter, StringSplitOptions.RemoveEmptyEntries);
                        int length = split.Length;
-                       if (length == 1)
+                       if (length == 1) //For Name or Surname only
                        {
                            string firstname = split[0];
                            result = result.Where(x => x.FirstName.Contains(firstname) || x.LastName.Contains(firstname));
                        }
-                       else if (length >= 2)
-                       {
+                       else if (length >= 2) //Both Name and Surname
+                    {
                            string firstname = split[0];
                            string lastname = split[1];
                            result = result.Where(x => x.FirstName.Contains(firstname) && x.LastName.Contains(lastname));

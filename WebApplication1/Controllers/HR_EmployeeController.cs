@@ -7,6 +7,7 @@ using System.Net;
 using System.Globalization;
 using System.Web.Mvc;
 using WebApplication1.Models;
+using PagedList;
 
 namespace WebApplication1.Controllers
 {
@@ -14,11 +15,41 @@ namespace WebApplication1.Controllers
     {
         private HREntities db = new HREntities();
 
-        // GET: HR_Employee
-        public ActionResult Index()
+
+        // GET: HR_Employee with Pagination, Sort and SearchBox
+        public ActionResult Index(string sortOrder,string searchString,string currentFilter,int? page)
         {
             var hR_Employee = db.HR_Employee.Include(h => h.HR_Department);
-            return View(hR_Employee.ToList());
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.NameSort = string.IsNullOrEmpty(sortOrder) ? "name_desc" : ""; //Sort by FirstName
+
+            if (searchString != null) //Check if srch then page = 1 
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            if (!String.IsNullOrEmpty(searchString))//Search by FirstName or LastName
+            {
+                hR_Employee = hR_Employee.Where(s => s.FirstName.Contains(searchString) || s.LastName.Contains(searchString));
+            }
+
+            switch (sortOrder) //If sort link is clicked, check sort options
+            {
+                case "name_desc":
+                    hR_Employee = hR_Employee.OrderByDescending(s=>s.FirstName);
+                    break;
+                default:
+                    hR_Employee = hR_Employee.OrderByDescending(s => s.EmployeeID);
+                    break;
+            }
+            int pageSize = 10;
+            int pageNum = page ?? 1;
+
+            return View(hR_Employee.ToPagedList(pageNum,pageSize));
         }
 
         //GET: HR_Employee/ListEmployee <Search Employee>
