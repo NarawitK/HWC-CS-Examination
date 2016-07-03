@@ -12,6 +12,10 @@
 }
 
 <h2>ข้อมูลพนักงาน</h2>
+@if (ViewBag.EmpDelException != null)
+{
+    <p class="bg-danger"><span class="glyphicon glyphicon-alert"></span> @ViewBag.EmpDelException</p>
+}
 @using (Html.BeginForm("Index", "HR_Employee", FormMethod.Get))
 {
     <div class="row">
@@ -61,7 +65,7 @@
                 <td>
                     @Html.ActionLink("Edit", "Edit", new { id = item.EmployeeID }) |
                     @*Html.ActionLink("ดูรายละเอียด", "Details", new { id = item.EmployeeID }) |*@
-                    @Html.ActionLink("Delete", "Delete", new { id = item.EmployeeID })
+                    @Html.ActionLink("Delete", "Delete", new { id = item.EmployeeID }, new { onclick = "return confirm('Are you sure you wish to delete this department info?');" })
 
                 </td>
                 <td>

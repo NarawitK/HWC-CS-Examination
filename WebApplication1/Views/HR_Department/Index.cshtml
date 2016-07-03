@@ -8,50 +8,55 @@
 
 <h2>ข้อมูลหน่วยงาน</h2>
 
-<table class="table table-bordered">
-    @if (!Model.Any())
-    {
-        <tr>
-            <th>
-                <p class="text-warning text-center"><span class="glyphicon glyphicon-info-sign"></span> ไม่มีข้อมูลหน่วยงาน</p>
-            </th>
-        </tr>
-    }
-    else
-    {
-        <tr>
-            <th></th>
-            <th>
-                รหัสหน่วยงาน
-            </th>
-            <th>
-                ชื่อหน่วยงาน
-            </th>
-            <th>
-                กลุ่มงาน
-            </th>
-        </tr>
-        foreach (var item in Model)
-        {
-            <tr>
-                <td class="col-md-3">
-                    @Html.ActionLink("Edit", "Edit", new { id = item.DepartmentID }) |
-                    @*Html.ActionLink("ดูรายละเอียด", "Details", new { id = item.DepartmentID }) |*@
-                    @Html.ActionLink("Delete", "Delete", new { id = item.DepartmentID })
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DepartmentID)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.GroupName)
-                </td>
-            </tr>
-        }
-    }
-</table>
-<div>
-@Html.ActionLink("เพิ่มหน่วยงานใหม่", "Create",null,htmlAttributes: new {@class = "btn btn-default pull-right" })
-</div>
+@if (ViewBag.DeptDelException != null)
+{
+    <p class="bg-danger"><span class="glyphicon glyphicon-alert"></span> @ViewBag.DeptDelException</p>
+}
+
+        <table class="table table-bordered">
+            @if (!Model.Any())
+            {
+                <tr>
+                    <th>
+                        <p class="text-warning text-center"><span class="glyphicon glyphicon-info-sign"></span> ไม่มีข้อมูลหน่วยงาน</p>
+                    </th>
+                </tr>
+            }
+            else
+            {
+                <tr>
+                    <th></th>
+                    <th>
+                        รหัสหน่วยงาน
+                    </th>
+                    <th>
+                        ชื่อหน่วยงาน
+                    </th>
+                    <th>
+                        กลุ่มงาน
+                    </th>
+                </tr>
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="col-md-3">
+                            @Html.ActionLink("Edit", "Edit", new { id = item.DepartmentID }) |
+                            @*Html.ActionLink("ดูรายละเอียด", "Details", new { id = item.DepartmentID }) |*@
+                            @Html.ActionLink("Delete", "Delete", new { id = item.DepartmentID }, new { onclick = "return confirm('Are you sure you wish to delete this department info?');" })
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DepartmentID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.GroupName)
+                        </td>
+                    </tr>
+                }
+            }
+        </table>
+        <div>
+            @Html.ActionLink("เพิ่มหน่วยงานใหม่", "Create", null, htmlAttributes: new { @class = "btn btn-default pull-right" })
+        </div>

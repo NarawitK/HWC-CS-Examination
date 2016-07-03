@@ -21,6 +21,7 @@ namespace WebApplication1.Controllers
         {
             var hR_Employee = db.HR_Employee.Include(h => h.HR_Department);
             ViewBag.CurrentSort = sortOrder;
+            ViewBag.EmpDelException = TempData["EmpDelException"];
             ViewBag.NameSort = string.IsNullOrEmpty(sortOrder) ? "name_desc" : ""; //Sort by FirstName
 
             if (Search != null) //Check if srch then page = 1 
@@ -222,7 +223,7 @@ namespace WebApplication1.Controllers
             return View(hR_Employee);
         }
 
-        // GET: HR_Employee/Delete/5
+        // POST: HR_Employee/Delete/5
         public ActionResult Delete(string id)
         {
             if (id == null)
@@ -234,11 +235,21 @@ namespace WebApplication1.Controllers
             {
                 return HttpNotFound();
             }
-            return View(hR_Employee);
+            try
+            {
+                db.HR_Employee.Remove(hR_Employee);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                TempData["EmpDelException"] = "Error Occured";
+                return RedirectToAction("Index");
+            }
         }
 
         // POST: HR_Employee/Delete/5
-        [HttpPost, ActionName("Delete")]
+        /*[ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
@@ -246,7 +257,7 @@ namespace WebApplication1.Controllers
             db.HR_Employee.Remove(hR_Employee);
             db.SaveChanges();
             return RedirectToAction("Index");
-        }
+        }*/
 
         protected override void Dispose(bool disposing)
         {

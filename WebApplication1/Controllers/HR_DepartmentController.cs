@@ -17,6 +17,7 @@ namespace WebApplication1.Controllers
         // GET: HR_Department
         public ActionResult Index()
         {
+            ViewBag.DeptDelException = TempData["DeptDelException"];
             return View(db.HR_Department.ToList());
         }
 
@@ -97,7 +98,7 @@ namespace WebApplication1.Controllers
             return View(hR_Department);
         }
 
-        // GET: HR_Department/Delete/5
+        // POST: HR_Employee/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -109,19 +110,45 @@ namespace WebApplication1.Controllers
             {
                 return HttpNotFound();
             }
-            return View(hR_Department);
+            try
+            {
+                db.HR_Department.Remove(hR_Department);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            catch(Exception e)
+            {
+                TempData["DeptDelException"] = "Some Employee(s) still referenced to this Department. Please Edit their dept first before delete.";
+                return RedirectToAction("Index");
+            }
+            
         }
 
-        // POST: HR_Department/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            HR_Department hR_Department = db.HR_Department.Find(id);
-            db.HR_Department.Remove(hR_Department);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
+        /* // GET: HR_Department/Delete/5
+         public ActionResult Delete(int? id)
+         {
+             if (id == null)
+             {
+                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+             }
+             HR_Department hR_Department = db.HR_Department.Find(id);
+             if (hR_Department == null)
+             {
+                 return HttpNotFound();
+             }
+             return View(hR_Department);
+         }
+
+         // POST: HR_Department/Delete/5
+         [HttpPost, ActionName("Delete")]
+         [ValidateAntiForgeryToken]
+         public ActionResult DeleteConfirmed(int id)
+         {
+             HR_Department hR_Department = db.HR_Department.Find(id);
+             db.HR_Department.Remove(hR_Department);
+             db.SaveChanges();
+             return RedirectToAction("Index");
+         }*/
 
         protected override void Dispose(bool disposing)
         {
