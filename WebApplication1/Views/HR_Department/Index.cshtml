@@ -34,10 +34,10 @@
         foreach (var item in Model)
         {
             <tr>
-                <td>
-                    @Html.ActionLink("แก้ไขข้อมูล", "Edit", new { id = item.DepartmentID }) |
-                    @Html.ActionLink("ดูรายละเอียด", "Details", new { id = item.DepartmentID }) |
-                    @Html.ActionLink("ลบ", "Delete", new { id = item.DepartmentID })
+                <td class="col-md-3">
+                    @Html.ActionLink("Edit", "Edit", new { id = item.DepartmentID }) |
+                    @*Html.ActionLink("ดูรายละเอียด", "Details", new { id = item.DepartmentID }) |*@
+                    @Html.ActionLink("Delete", "Delete", new { id = item.DepartmentID })
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.DepartmentID)

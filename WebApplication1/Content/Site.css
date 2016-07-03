@@ -22,3 +22,14 @@ select,
 textarea {
     max-width: 280px;
 }
+
+table{
+    margin-bottom:0.77em;
+}
+table th,td{
+    text-align:center;
+}
+.form-group.required .control-label:after {
+  content:"*";
+  color:red;
+}

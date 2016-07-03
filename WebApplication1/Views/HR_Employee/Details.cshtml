@@ -29,7 +29,7 @@
                 string FormatDate;
                 if (Bdate.HasValue)
                 {
-                    FormatDate = Bdate.Value.ToString("dd-MM-yyyy");
+                    FormatDate = Bdate.Value.ToString("dd/MM/yyyy");
                     @Html.DisplayFor(model => FormatDate);
                 }
             }
@@ -42,14 +42,6 @@
         <dd>
             @Html.DisplayFor(model => model.BossID)
         </dd>
-
-        <!--<dt>
-            @Html.DisplayNameFor(model => model.ModifiedDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ModifiedDate)
-        </dd>-->
 
         <dt>
             @Html.DisplayName("หน่วยงานที่สังกัด")

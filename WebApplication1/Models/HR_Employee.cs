@@ -12,9 +12,12 @@ namespace WebApplication1.Models
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.Linq;
+    using WebApplication1.Models;
 
     public partial class HR_Employee
     {
+        private HREntities db = new HREntities();
         public string EmployeeID { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -24,6 +27,16 @@ namespace WebApplication1.Models
 
         public int DepartmentID { get; set; }
         public string BossID { get; set; }
+        public string BossName
+        {
+            get
+            {
+                var BName = (from q in db.HR_Employee
+                        where BossID == q.EmployeeID
+                        select q.FirstName+" "+ q.LastName).FirstOrDefault();
+                return BName;
+            }
+        }
 
         [DataType(DataType.DateTime)]
         public DateTime ModifiedDate { get; set; }
@@ -35,6 +48,7 @@ namespace WebApplication1.Models
                 return FirstName + " " + LastName;
             }
         }
+       
         public virtual HR_Department HR_Department { get; set; }
     }
 }

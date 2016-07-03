@@ -24,7 +24,15 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Birthdate)
+            @{
+                DateTime? Bdate = Model.Birthdate;
+                string FormatDate;
+                if (Bdate.HasValue)
+                {
+                    FormatDate = Bdate.Value.ToString("dd/MM/yyyy");
+                    @Html.DisplayFor(model => FormatDate);
+                }
+            }
         </dd>
 
         <dt>

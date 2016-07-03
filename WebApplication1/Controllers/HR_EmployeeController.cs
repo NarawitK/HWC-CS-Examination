@@ -17,24 +17,24 @@ namespace WebApplication1.Controllers
 
 
         // GET: HR_Employee with Pagination, Sort and SearchBox //Pagination Customizable 
-        public ActionResult Index(string sortOrder,string searchString,string currentFilter,int? page,int pagesize = 15)
+        public ActionResult Index(string sortOrder,string Search,string currentFilter,int? page,int pagesize = 15)
         {
             var hR_Employee = db.HR_Employee.Include(h => h.HR_Department);
             ViewBag.CurrentSort = sortOrder;
             ViewBag.NameSort = string.IsNullOrEmpty(sortOrder) ? "name_desc" : ""; //Sort by FirstName
 
-            if (searchString != null) //Check if srch then page = 1 
+            if (Search != null) //Check if srch then page = 1 
             {
                 page = 1;
             }
             else
             {
-                searchString = currentFilter;
+                Search = currentFilter;
             }
 
-            if (!String.IsNullOrEmpty(searchString))//Search by FirstName or LastName
+            if (!String.IsNullOrEmpty(Search))//Search by FirstName or LastName
             {
-                hR_Employee = hR_Employee.Where(s => s.FirstName.Contains(searchString) || s.LastName.Contains(searchString));
+                hR_Employee = hR_Employee.Where(s => s.FirstName.Contains(Search) || s.LastName.Contains(Search));
             }
 
             switch (sortOrder) //If sort link is clicked, check sort options
@@ -56,17 +56,32 @@ namespace WebApplication1.Controllers
         public ActionResult ListEmployee()
          {
             ViewBag.DepartmentID = new SelectList(db.HR_Department, "DepartmentID", "Name");
-            return View();
+            using (Exam.Webservice.EmployeeService proxy = new Exam.Webservice.EmployeeService())
+            {
+                var model = proxy.ListEmployee();
+                return View(model.ToList());
+            };
          }
 
-        [HttpGet]
-        public ActionResult ListEmployee(EmployeeSearchModel searchModel) // Multiple Search
+        [HttpPost] //Call Webservice
+        public ActionResult ListEmployee(string EmployeeID, string FullName, int? DepartmentID)
+        {
+            ViewBag.DepartmentID = new SelectList(db.HR_Department, "DepartmentID", "Name");
+            using (Exam.Webservice.EmployeeService proxy = new Exam.Webservice.EmployeeService())
+            {
+                var model = proxy.ListEmployee(EmployeeID, FullName, DepartmentID);
+                return View(model.ToList());
+            };
+        }
+        /*[HttpGet]
+        public ActionResult ListEmployee(EmployeeSearchModel searchModel) // Multiple Search Not using Webservice
         {
             ViewBag.DepartmentID = new SelectList(db.HR_Department, "DepartmentID", "Name");
             var search = new EmployeeSearchLogic();
             var model = search.GetSearchResult(searchModel);
+            
             return View(model);
-        }
+        }*/
 
         // GET: HR_Employee/Details/5
         public ActionResult Details(string id)

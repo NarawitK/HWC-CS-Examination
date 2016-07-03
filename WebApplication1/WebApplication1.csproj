@@ -66,6 +66,7 @@
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -147,6 +148,7 @@
     <Content Include="Content\jquery-ui.theme.min.css" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="Exam.Webservice\EmployeeService.asmx" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Models\HRDB.Context.tt">
@@ -195,6 +197,13 @@
     <Content Include="Scripts\Ajax.js" />
     <Content Include="Scripts\Autocomplete.js" />
     <Content Include="Scripts\SearchBossBtn.js" />
+    <None Include="Service References\EmployeeServiceReference\EmployeeService.disco" />
+    <None Include="Service References\EmployeeServiceReference\configuration91.svcinfo" />
+    <None Include="Service References\EmployeeServiceReference\configuration.svcinfo" />
+    <None Include="Service References\EmployeeServiceReference\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <Content Include="Web.config" />
     <Content Include="Views\HR_Department\Create.cshtml" />
     <Content Include="Views\HR_Department\Delete.cshtml" />
@@ -211,6 +220,10 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HR_DepartmentController.cs" />
     <Compile Include="Controllers\HR_EmployeeController.cs" />
+    <Compile Include="Exam.Webservice\EmployeeService.asmx.cs">
+      <DependentUpon>EmployeeService.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -238,6 +251,11 @@
       <DependentUpon>HRDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service References\EmployeeServiceReference\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -245,6 +263,16 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\HR_Employee\ListEmployee.cshtml" />
+    <None Include="Service References\EmployeeServiceReference\EmployeeService.wsdl" />
+    <Content Include="Service References\EmployeeServiceReference\WebApplication1.EmployeeServiceReference.EmployeeInfo.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EmployeeServiceReference\WebApplication1.EmployeeServiceReference.HelloWorldResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EmployeeServiceReference\WebApplication1.EmployeeServiceReference.ListEmployeeResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -252,9 +280,14 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\EmployeeServiceReference\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

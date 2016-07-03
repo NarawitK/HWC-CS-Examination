@@ -1,37 +1,37 @@
-﻿@*model IEnumerable<WebApplication1.Models.HR_Employee> *@
+﻿@model PagedList.IPagedList<WebApplication1.Models.HR_Employee>
 @using System.Linq
 @using PagedList.Mvc
-@model PagedList.IPagedList<WebApplication1.Models.HR_Employee>
+
 
 @{
     ViewBag.Title = "ข้อมูลพนักงาน";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @section StyleSheet{
-<link rel="stylesheet" type="text/css" href="~/Content/PagedList.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/PagedList.css" />
 }
 
 <h2>ข้อมูลพนักงาน</h2>
-    @using (Html.BeginForm("Index", "HR_Employee", FormMethod.Get))
-    {
-        <div class="row">
-            <div class="form-inline col-md-10 pull-right">
-                <div class="form-group">
-                    @Html.Label("ค้นหาโดยใช้ชื่อ", ViewBag.currentFilter as string, htmlAttributes: new { @class = "control-label" })
-                    @Html.TextBox("searchString", null, htmlAttributes: new { @class = "form-control" })
-                    <button type="submit" value="Search"><span class="glyphicon glyphicon-search"></span></button>
-                </div>
+@using (Html.BeginForm("Index", "HR_Employee", FormMethod.Get))
+{
+    <div class="row">
+        <div class="form-inline pull-right">
+            <div class="form-group">
+                @Html.Label("Search by Name", ViewBag.currentFilter as string, htmlAttributes: new { @class = "control-label" })
+                @Html.TextBox("Search", null, htmlAttributes: new { @class = "form-control" })
+                <button type="submit" value="Search"><span class="glyphicon glyphicon-search"></span></button>
             </div>
-        </div>   
-    }
-    <br />
+        </div>
+    </div>
+}
+<br />
 
 <table class="table table-bordered">
     @if (!Model.Any())
     {
         <tr>
             <th>
-                <p class="text-warning text-center"><span class="glyphicon glyphicon-info-sign"></span> ไม่มีข้อมูลพนักงาน</p>
+                <p class="text-warning text-center"><span class="glyphicon glyphicon-info-sign"></span> ไม่พบข้อมูลพนักงาน</p>
             </th>
         </tr>
     }
@@ -59,9 +59,9 @@
         {
             <tr>
                 <td>
-                    @Html.ActionLink("แก้ไขข้อมูล", "Edit", new { id = item.EmployeeID }) |
-                    @Html.ActionLink("ดูรายละเอียด", "Details", new { id = item.EmployeeID }) |
-                    @Html.ActionLink("ลบ", "Delete", new { id = item.EmployeeID })
+                    @Html.ActionLink("Edit", "Edit", new { id = item.EmployeeID }) |
+                    @*Html.ActionLink("ดูรายละเอียด", "Details", new { id = item.EmployeeID }) |*@
+                    @Html.ActionLink("Delete", "Delete", new { id = item.EmployeeID })
 
                 </td>
                 <td>
@@ -76,7 +76,7 @@
                         string FormatDate;
                         if (Bdate.HasValue)
                         {
-                            FormatDate = Bdate.Value.ToString("dd-MM-yyyy");
+                            FormatDate = Bdate.Value.ToString("dd/MM/yyyy");
                             @Html.DisplayFor(model => FormatDate);
                         }
                     }
@@ -85,15 +85,17 @@
                     @Html.DisplayFor(modelItem => item.HR_Department.Name)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.BossID)
+                    @Html.DisplayFor(modelItem => (item.BossName))
                 </td>
             </tr>
-        }
-    }
+                            }
+                        }
 </table>
 <div class="pull-right">
     @Html.ActionLink("Add New Employee", "Create", null, htmlAttributes: new { @class = "btn btn-default" })
-    @Html.ActionLink("ค้นหารายชื่อพนักงาน", "ListEmployee", null, htmlAttributes: new { @class = "btn btn-default" })
+    @Html.ActionLink("Search Employee", "ListEmployee", null, htmlAttributes: new { @class = "btn btn-default" })
 </div>
-    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.currentFilter }),PagedListRenderOptions.ClassicPlusFirstAndLast)
-    Now Showing: @Model.PageSize item(s)
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.currentFilter }), PagedListRenderOptions.ClassicPlusFirstAndLast)
+    <p>Now Showing: @Model.PageSize item(s)</p>
+
+

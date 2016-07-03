@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Web;
 
 namespace WebApplication1.Models
-{
+{ //Inactive by now
     public class EmployeeSearchLogic
     {
         private HREntities db;
@@ -20,7 +21,7 @@ namespace WebApplication1.Models
                 if (!string.IsNullOrEmpty(searchModel.EmployeeID))
                 {
                     var res = searchModel.EmployeeID.Trim();
-                    result = result.Where(x => x.EmployeeID.Contains(res));
+                    result = result.Where(x => x.EmployeeID == res);
                 }
                 if (!string.IsNullOrEmpty(searchModel.FullName))
                 {
