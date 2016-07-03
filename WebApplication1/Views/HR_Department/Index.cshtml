@@ -10,6 +10,9 @@
 
 @if (ViewBag.DeptDelException != null)
 {
+    <script type="text/javascript">
+        alert('@ViewBag.DeptDelException');
+    </script>
     <p class="bg-danger"><span class="glyphicon glyphicon-alert"></span> @ViewBag.DeptDelException</p>
 }
 

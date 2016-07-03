@@ -14,6 +14,9 @@
 <h2>ข้อมูลพนักงาน</h2>
 @if (ViewBag.EmpDelException != null)
 {
+    <script type="text/javascript">
+        alert('@ViewBag.EmpDelException');
+    </script>
     <p class="bg-danger"><span class="glyphicon glyphicon-alert"></span> @ViewBag.EmpDelException</p>
 }
 @using (Html.BeginForm("Index", "HR_Employee", FormMethod.Get))
