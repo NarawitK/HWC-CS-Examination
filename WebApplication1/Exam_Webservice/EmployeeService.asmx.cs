@@ -12,7 +12,7 @@ namespace WebApplication1.Exam_Webservice
     /// Search Employee (ListEmployee) Web Service
     /// </summary>
     [WebService(Namespace = "http://tempuri.org/")]
-    //[WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
+    [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
     [System.ComponentModel.ToolboxItem(false)]
     // To allow this Web Service to be called from script, using ASP.NET AJAX, uncomment the following line. 
     //[System.Web.Script.Services.ScriptService]
@@ -72,7 +72,7 @@ namespace WebApplication1.Exam_Webservice
                         string firstname = split[0];
                         query = query.Where(x => x.FirstName.Contains(firstname) || x.LastName.Contains(firstname));
                     }
-                    else if (length >= 2) //Search Both Name and Surname
+                    else if (length >= 2) //Search Both Name and Surname & Ignore Middle Name
                     {
                         string firstname = split[0];
                         string lastname = split[1];

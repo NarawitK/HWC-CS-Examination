@@ -15,9 +15,9 @@ namespace WebApplication1.EmployeeServiceReference {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="SearchModel", Namespace="http://tempuri.org/")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ListEmployeeModel", Namespace="http://tempuri.org/")]
     [System.SerializableAttribute()]
-    public partial class SearchModel : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    public partial class ListEmployeeModel : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -26,15 +26,15 @@ namespace WebApplication1.EmployeeServiceReference {
         private string EmployeeIDField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string FullNameField;
+        private string FirstNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string LastNameField;
         
         private System.Nullable<System.DateTime> BirthdateField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string DepartmentNameField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string BossIDField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -60,19 +60,32 @@ namespace WebApplication1.EmployeeServiceReference {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
-        public string FullName {
+        public string FirstName {
             get {
-                return this.FullNameField;
+                return this.FirstNameField;
             }
             set {
-                if ((object.ReferenceEquals(this.FullNameField, value) != true)) {
-                    this.FullNameField = value;
-                    this.RaisePropertyChanged("FullName");
+                if ((object.ReferenceEquals(this.FirstNameField, value) != true)) {
+                    this.FirstNameField = value;
+                    this.RaisePropertyChanged("FirstName");
                 }
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=2)]
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
+        public string LastName {
+            get {
+                return this.LastNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.LastNameField, value) != true)) {
+                    this.LastNameField = value;
+                    this.RaisePropertyChanged("LastName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=3)]
         public System.Nullable<System.DateTime> Birthdate {
             get {
                 return this.BirthdateField;
@@ -85,7 +98,7 @@ namespace WebApplication1.EmployeeServiceReference {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=3)]
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=4)]
         public string DepartmentName {
             get {
                 return this.DepartmentNameField;
@@ -94,19 +107,6 @@ namespace WebApplication1.EmployeeServiceReference {
                 if ((object.ReferenceEquals(this.DepartmentNameField, value) != true)) {
                     this.DepartmentNameField = value;
                     this.RaisePropertyChanged("DepartmentName");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=4)]
-        public string BossID {
-            get {
-                return this.BossIDField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.BossIDField, value) != true)) {
-                    this.BossIDField = value;
-                    this.RaisePropertyChanged("BossID");
                 }
             }
         }
@@ -132,12 +132,12 @@ namespace WebApplication1.EmployeeServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ShowEmployeeList", ReplyAction="*")]
         System.Threading.Tasks.Task<WebApplication1.EmployeeServiceReference.ShowEmployeeList1> ListEmployeeAsync(WebApplication1.EmployeeServiceReference.ShowEmployeeList request);
         
-        // CODEGEN: Generating message contract since the wrapper name (SearchEmployee) of message SearchEmployee does not match the default value (ListEmployee1)
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/SearchEmployee", ReplyAction="*")]
-        WebApplication1.EmployeeServiceReference.SearchEmployee1 ListEmployee1(WebApplication1.EmployeeServiceReference.SearchEmployee request);
+        // CODEGEN: Generating message contract since the wrapper name (FilterEmployeeList) of message FilterEmployeeList does not match the default value (ListEmployee1)
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/FilterEmployeeList", ReplyAction="*")]
+        WebApplication1.EmployeeServiceReference.FilterEmployeeList1 ListEmployee1(WebApplication1.EmployeeServiceReference.FilterEmployeeList request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/SearchEmployee", ReplyAction="*")]
-        System.Threading.Tasks.Task<WebApplication1.EmployeeServiceReference.SearchEmployee1> ListEmployee1Async(WebApplication1.EmployeeServiceReference.SearchEmployee request);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/FilterEmployeeList", ReplyAction="*")]
+        System.Threading.Tasks.Task<WebApplication1.EmployeeServiceReference.FilterEmployeeList1> ListEmployee1Async(WebApplication1.EmployeeServiceReference.FilterEmployeeList request);
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -157,12 +157,12 @@ namespace WebApplication1.EmployeeServiceReference {
     public partial class ShowEmployeeList1 {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
-        public WebApplication1.EmployeeServiceReference.SearchModel[] ShowEmployeeListResult;
+        public WebApplication1.EmployeeServiceReference.ListEmployeeModel[] ShowEmployeeListResult;
         
         public ShowEmployeeList1() {
         }
         
-        public ShowEmployeeList1(WebApplication1.EmployeeServiceReference.SearchModel[] ShowEmployeeListResult) {
+        public ShowEmployeeList1(WebApplication1.EmployeeServiceReference.ListEmployeeModel[] ShowEmployeeListResult) {
             this.ShowEmployeeListResult = ShowEmployeeListResult;
         }
     }
@@ -170,8 +170,8 @@ namespace WebApplication1.EmployeeServiceReference {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="SearchEmployee", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
-    public partial class SearchEmployee {
+    [System.ServiceModel.MessageContractAttribute(WrapperName="FilterEmployeeList", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
+    public partial class FilterEmployeeList {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
         public string EmployeeID;
@@ -182,10 +182,10 @@ namespace WebApplication1.EmployeeServiceReference {
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=2)]
         public System.Nullable<int> DepartmentID;
         
-        public SearchEmployee() {
+        public FilterEmployeeList() {
         }
         
-        public SearchEmployee(string EmployeeID, string FullName, System.Nullable<int> DepartmentID) {
+        public FilterEmployeeList(string EmployeeID, string FullName, System.Nullable<int> DepartmentID) {
             this.EmployeeID = EmployeeID;
             this.FullName = FullName;
             this.DepartmentID = DepartmentID;
@@ -195,17 +195,17 @@ namespace WebApplication1.EmployeeServiceReference {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="SearchEmployeeResponse", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
-    public partial class SearchEmployee1 {
+    [System.ServiceModel.MessageContractAttribute(WrapperName="FilterEmployeeListResponse", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
+    public partial class FilterEmployeeList1 {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
-        public WebApplication1.EmployeeServiceReference.SearchModel[] SearchEmployeeResult;
+        public WebApplication1.EmployeeServiceReference.ListEmployeeModel[] FilterEmployeeListResult;
         
-        public SearchEmployee1() {
+        public FilterEmployeeList1() {
         }
         
-        public SearchEmployee1(WebApplication1.EmployeeServiceReference.SearchModel[] SearchEmployeeResult) {
-            this.SearchEmployeeResult = SearchEmployeeResult;
+        public FilterEmployeeList1(WebApplication1.EmployeeServiceReference.ListEmployeeModel[] FilterEmployeeListResult) {
+            this.FilterEmployeeListResult = FilterEmployeeListResult;
         }
     }
     
@@ -241,7 +241,7 @@ namespace WebApplication1.EmployeeServiceReference {
             return base.Channel.ListEmployee(request);
         }
         
-        public WebApplication1.EmployeeServiceReference.SearchModel[] ListEmployee() {
+        public WebApplication1.EmployeeServiceReference.ListEmployeeModel[] ListEmployee() {
             WebApplication1.EmployeeServiceReference.ShowEmployeeList inValue = new WebApplication1.EmployeeServiceReference.ShowEmployeeList();
             WebApplication1.EmployeeServiceReference.ShowEmployeeList1 retVal = ((WebApplication1.EmployeeServiceReference.EmployeeServiceSoap)(this)).ListEmployee(inValue);
             return retVal.ShowEmployeeListResult;
@@ -258,26 +258,26 @@ namespace WebApplication1.EmployeeServiceReference {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        WebApplication1.EmployeeServiceReference.SearchEmployee1 WebApplication1.EmployeeServiceReference.EmployeeServiceSoap.ListEmployee1(WebApplication1.EmployeeServiceReference.SearchEmployee request) {
+        WebApplication1.EmployeeServiceReference.FilterEmployeeList1 WebApplication1.EmployeeServiceReference.EmployeeServiceSoap.ListEmployee1(WebApplication1.EmployeeServiceReference.FilterEmployeeList request) {
             return base.Channel.ListEmployee1(request);
         }
         
-        public WebApplication1.EmployeeServiceReference.SearchModel[] ListEmployee1(string EmployeeID, string FullName, System.Nullable<int> DepartmentID) {
-            WebApplication1.EmployeeServiceReference.SearchEmployee inValue = new WebApplication1.EmployeeServiceReference.SearchEmployee();
+        public WebApplication1.EmployeeServiceReference.ListEmployeeModel[] ListEmployee1(string EmployeeID, string FullName, System.Nullable<int> DepartmentID) {
+            WebApplication1.EmployeeServiceReference.FilterEmployeeList inValue = new WebApplication1.EmployeeServiceReference.FilterEmployeeList();
             inValue.EmployeeID = EmployeeID;
             inValue.FullName = FullName;
             inValue.DepartmentID = DepartmentID;
-            WebApplication1.EmployeeServiceReference.SearchEmployee1 retVal = ((WebApplication1.EmployeeServiceReference.EmployeeServiceSoap)(this)).ListEmployee1(inValue);
-            return retVal.SearchEmployeeResult;
+            WebApplication1.EmployeeServiceReference.FilterEmployeeList1 retVal = ((WebApplication1.EmployeeServiceReference.EmployeeServiceSoap)(this)).ListEmployee1(inValue);
+            return retVal.FilterEmployeeListResult;
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<WebApplication1.EmployeeServiceReference.SearchEmployee1> WebApplication1.EmployeeServiceReference.EmployeeServiceSoap.ListEmployee1Async(WebApplication1.EmployeeServiceReference.SearchEmployee request) {
+        System.Threading.Tasks.Task<WebApplication1.EmployeeServiceReference.FilterEmployeeList1> WebApplication1.EmployeeServiceReference.EmployeeServiceSoap.ListEmployee1Async(WebApplication1.EmployeeServiceReference.FilterEmployeeList request) {
             return base.Channel.ListEmployee1Async(request);
         }
         
-        public System.Threading.Tasks.Task<WebApplication1.EmployeeServiceReference.SearchEmployee1> ListEmployee1Async(string EmployeeID, string FullName, System.Nullable<int> DepartmentID) {
-            WebApplication1.EmployeeServiceReference.SearchEmployee inValue = new WebApplication1.EmployeeServiceReference.SearchEmployee();
+        public System.Threading.Tasks.Task<WebApplication1.EmployeeServiceReference.FilterEmployeeList1> ListEmployee1Async(string EmployeeID, string FullName, System.Nullable<int> DepartmentID) {
+            WebApplication1.EmployeeServiceReference.FilterEmployeeList inValue = new WebApplication1.EmployeeServiceReference.FilterEmployeeList();
             inValue.EmployeeID = EmployeeID;
             inValue.FullName = FullName;
             inValue.DepartmentID = DepartmentID;

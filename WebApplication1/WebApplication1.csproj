@@ -263,13 +263,13 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\HR_Employee\ListEmployee.cshtml" />
     <None Include="Service References\EmployeeServiceReference\EmployeeService.wsdl" />
-    <Content Include="Service References\EmployeeServiceReference\WebApplication1.EmployeeServiceReference.SearchEmployee1.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\EmployeeServiceReference\WebApplication1.EmployeeServiceReference.SearchModel.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
     <Content Include="Service References\EmployeeServiceReference\WebApplication1.EmployeeServiceReference.ShowEmployeeList1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EmployeeServiceReference\WebApplication1.EmployeeServiceReference.FilterEmployeeList1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\EmployeeServiceReference\WebApplication1.EmployeeServiceReference.ListEmployeeModel.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
     <None Include="Web.Debug.config">

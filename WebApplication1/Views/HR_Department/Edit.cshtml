@@ -7,6 +7,14 @@
 
 <h2>@ViewBag.Title</h2>
 
+@if (ViewBag.EditDeptException != null)
+{
+    <script type="text/javascript">
+        alert('@ViewBag.EditDeptException');
+    </script>
+    <p class="bg-danger"><span class="glyphicon glyphicon-alert"></span> @ViewBag.EditDeptException</p>
+}
+
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()

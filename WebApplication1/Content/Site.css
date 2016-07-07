@@ -26,9 +26,9 @@ textarea {
 table{
     margin-bottom:0.77em;
 }
-table th,td{
+/*table th{
     text-align:center;
-}
+}*/
 .form-group.required .control-label:after {
   content:"*";
   color:red;

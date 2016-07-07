@@ -7,6 +7,14 @@
 
 <h2>แก้ไขข้อมูลพนักงาน</h2>
 
+@if (ViewBag.EmpEditException != null)
+{
+    <script type="text/javascript">
+        alert('@ViewBag.EmpEditException');
+    </script>
+    <p class="bg-danger"><span class="glyphicon glyphicon-alert"></span>@ViewBag.EmpEditException</p>
+}
+
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()

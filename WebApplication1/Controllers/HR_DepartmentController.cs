@@ -39,15 +39,6 @@ namespace WebApplication1.Controllers
         // GET: HR_Department/Create
         public ActionResult Create()
         {
-            try
-            {
-                TempData["NewDeptID"] = db.HR_Department.Select(e => e.DepartmentID).DefaultIfEmpty().Max()+1;
-            }
-            catch(Exception)
-            {
-                TempData["NewDeptID"] = 0;
-            }
-                                    
             return View();
         }
 
@@ -58,13 +49,22 @@ namespace WebApplication1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include="DepartmentID,Name,GroupName,ModifiedDate")] HR_Department hR_Department)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.HR_Department.Add(hR_Department);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    db.HR_Department.Add(hR_Department);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                return View(hR_Department);
             }
-            return View(hR_Department);
+            catch
+            {
+               ViewBag.CreateDeptException = "มีข้อผิดพลาดเกิดขึ้น ลองเช็คค่าที่ใส่ดูอีกครั้ง";
+                return View(hR_Department);
+            }
+            
         }
 
         // GET: HR_Department/Edit/5
@@ -89,13 +89,22 @@ namespace WebApplication1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "DepartmentID,Name,GroupName,ModifiedDate")] HR_Department hR_Department)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Entry(hR_Department).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    db.Entry(hR_Department).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                return View(hR_Department);
             }
-            return View(hR_Department);
+            catch
+            {
+                ViewBag.EditDeptException = "เกิดข้อผิดพลาดในการแก้ไข ลองเช็คค่าที่ใส่ดูอีกครั้ง";
+                return View(hR_Department);
+            }
+            
         }
 
         // POST: HR_Employee/Delete/5
@@ -118,37 +127,11 @@ namespace WebApplication1.Controllers
             }
             catch
             {
-                TempData["DeptDelException"] = "Some Employee(s) still referenced to this Department. Please Edit their dept first before delete.";
+                TempData["DeptDelException"] = "ไม่สามารถลบหน่วยงานได้ เนื่องจากยังมีพนักงานสังกัดอยู่ โปรดย้ายพนักงานออกก่อนทำการลบหน่วยงาน.";
                 return RedirectToAction("Index");
             }
             
         }
-
-        /* // GET: HR_Department/Delete/5
-         public ActionResult Delete(int? id)
-         {
-             if (id == null)
-             {
-                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-             }
-             HR_Department hR_Department = db.HR_Department.Find(id);
-             if (hR_Department == null)
-             {
-                 return HttpNotFound();
-             }
-             return View(hR_Department);
-         }
-
-         // POST: HR_Department/Delete/5
-         [HttpPost, ActionName("Delete")]
-         [ValidateAntiForgeryToken]
-         public ActionResult DeleteConfirmed(int id)
-         {
-             HR_Department hR_Department = db.HR_Department.Find(id);
-             db.HR_Department.Remove(hR_Department);
-             db.SaveChanges();
-             return RedirectToAction("Index");
-         }*/
 
         protected override void Dispose(bool disposing)
         {

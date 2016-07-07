@@ -139,7 +139,7 @@ namespace WebApplication1.Controllers
             { 
                 var query = (db.HR_Employee.Select(e => e.EmployeeID)).Max();
                 var query_substr = query.Split('-');
-                if(int.Parse(query_substr[3]) == 9999)
+                if (int.Parse(query_substr[3]) == 9999)
                 {
                     return View();
                 }
@@ -218,16 +218,24 @@ namespace WebApplication1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "EmployeeID,FirstName,LastName,Birthdate,DepartmentID,BossID,ModifiedDate")] HR_Employee hR_Employee)
         {
-            IEnumerable<SelectListItem> DepartmentID = new SelectList(db.HR_Department, "DepartmentID", "Name", hR_Employee.DepartmentID);
-            ViewBag.DepartmentID = DepartmentID;
-            if (ModelState.IsValid)
+            try
             {
-                db.Entry(hR_Employee).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                IEnumerable<SelectListItem> DepartmentID = new SelectList(db.HR_Department, "DepartmentID", "Name", hR_Employee.DepartmentID);
+                ViewBag.DepartmentID = DepartmentID;
+                if (ModelState.IsValid)
+                {
+                    db.Entry(hR_Employee).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
 
+                }
+                return View(hR_Employee);
             }
-            return View(hR_Employee);
+            catch(Exception e)
+            {
+                ViewBag.EmpEditException = e.GetType();
+                return View(hR_Employee);
+            }
         }
 
         // POST: HR_Employee/Delete/5
@@ -248,23 +256,12 @@ namespace WebApplication1.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            catch
+            catch(Exception e)
             {
-                TempData["EmpDelException"] = "Error Occured";
+                TempData["EmpDelException"] = e.GetType();
                 return RedirectToAction("Index");
             }
         }
-
-        // POST: HR_Employee/Delete/5
-        /*[ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string id)
-        {
-            HR_Employee hR_Employee = db.HR_Employee.Find(id);
-            db.HR_Employee.Remove(hR_Employee);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }*/
 
         protected override void Dispose(bool disposing)
         {

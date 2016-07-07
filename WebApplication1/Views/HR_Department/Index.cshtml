@@ -44,7 +44,6 @@
                     <tr>
                         <td class="col-md-3">
                             @Html.ActionLink("Edit", "Edit", new { id = item.DepartmentID }) |
-                            @*Html.ActionLink("ดูรายละเอียด", "Details", new { id = item.DepartmentID }) |*@
                             @Html.ActionLink("Delete", "Delete", new { id = item.DepartmentID }, new { onclick = "return confirm('Are you sure you wish to delete this department info?');" })
                         </td>
                         <td>

@@ -7,6 +7,14 @@
 
 <h2>@ViewBag.Title</h2>
 
+@if (ViewBag.CreateDeptException != null)
+{
+    <script type="text/javascript">
+        alert('@ViewBag.CreateDeptException');
+    </script>
+    <p class="bg-danger"><span class="glyphicon glyphicon-alert"></span> @ViewBag.CreateDeptException</p>
+}
+
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
@@ -17,7 +25,7 @@
         <div class="form-group required">
             @Html.LabelFor(model => model.DepartmentID, "รหัสหน่วยงาน",htmlAttributes: new { @class = "control-label col-md-2"})
             <div class="col-md-10">
-                @Html.EditorFor(model => model.DepartmentID, new { htmlAttributes = new { @class = "form-control",@Value = TempData["NewDeptID"], @required = true} })
+                @Html.EditorFor(model => model.DepartmentID, new { htmlAttributes = new { @class = "form-control", @required = true, @placeholder = "ใส่ค่าเป็นจำนวนเต็มบวก เช่น 1"} })
                 @Html.ValidationMessageFor(model => model.DepartmentID, "", new { @class = "text-danger" })
             </div>
         </div>
