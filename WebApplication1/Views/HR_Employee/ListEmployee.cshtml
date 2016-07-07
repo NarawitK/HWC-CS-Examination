@@ -1,4 +1,4 @@
-﻿@model IEnumerable<WebApplication1.Models.HR_Employee>
+﻿@model List<WebApplication1.Exam_Webservice.ListEmployeeModel>
     @using System.Linq
 
     @{
@@ -67,7 +67,6 @@
                 <tr>
                     <td>
                         @Html.ActionLink("Edit", "Edit", new { id = item.EmployeeID }) |
-                        @*Html.ActionLink("Details", "Details", new { id = item.EmployeeID }) |*@
                         @Html.ActionLink("Delete", "Delete", new { id = item.EmployeeID })
                     </td>
                     <td>
@@ -88,7 +87,7 @@
                         }
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.HR_Department.Name)
+                        @Html.DisplayFor(modelItem => item.DepartmentName)
                     </td>
 
                 </tr>

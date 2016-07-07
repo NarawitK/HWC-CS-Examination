@@ -5,7 +5,7 @@ using System.Linq;
 using System.Web;
 
 namespace WebApplication1.Models
-{ //Inactive by now
+{
     public class EmployeeSearchLogic
     {
         private HREntities db;

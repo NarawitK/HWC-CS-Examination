@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="wnc66IjdCug4fdsSySlFBv/mZc4=">
+<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="znnjFgIWSwSbzwzGBip9s/MlS7Y=">
   <bindingConfigurations>
     <bindingConfiguration bindingType="basicHttpBinding" name="EmployeeServiceSoap">
       <properties>
@@ -112,10 +112,10 @@
     </bindingConfiguration>
   </bindingConfigurations>
   <endpoints>
-    <endpoint name="EmployeeServiceSoap" contract="EmployeeServiceReference.EmployeeServiceSoap" bindingType="basicHttpBinding" address="http://localhost:10784/Exam.Webservice/EmployeeService.asmx" bindingConfiguration="EmployeeServiceSoap">
+    <endpoint name="EmployeeServiceSoap" contract="EmployeeServiceReference.EmployeeServiceSoap" bindingType="basicHttpBinding" address="http://localhost:10784/Exam_Webservice/EmployeeService.asmx" bindingConfiguration="EmployeeServiceSoap">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>http://localhost:10784/Exam.Webservice/EmployeeService.asmx</serializedValue>
+          <serializedValue>http://localhost:10784/Exam_Webservice/EmployeeService.asmx</serializedValue>
         </property>
         <property path="/behaviorConfiguration" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />

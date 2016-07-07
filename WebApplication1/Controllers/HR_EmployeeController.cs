@@ -57,10 +57,18 @@ namespace WebApplication1.Controllers
         public ActionResult ListEmployee()
          {
             ViewBag.DepartmentID = new SelectList(db.HR_Department, "DepartmentID", "Name");
-            using (Exam.Webservice.EmployeeService proxy = new Exam.Webservice.EmployeeService())
+            using (Exam_Webservice.EmployeeService proxy = new Exam_Webservice.EmployeeService())
             {
-                var model = proxy.ListEmployee();
-                return View(model.ToList());
+                try
+                {
+                    var model = proxy.ListEmployee();
+                    return View(model.ToList());
+                }
+                catch
+                {
+                    return View();
+                }
+                
             };
          }
 
@@ -68,21 +76,20 @@ namespace WebApplication1.Controllers
         public ActionResult ListEmployee(string EmployeeID, string FullName, int? DepartmentID)
         {
             ViewBag.DepartmentID = new SelectList(db.HR_Department, "DepartmentID", "Name");
-            using (Exam.Webservice.EmployeeService proxy = new Exam.Webservice.EmployeeService())
+            using (Exam_Webservice.EmployeeService proxy = new Exam_Webservice.EmployeeService())
             {
-                var model = proxy.ListEmployee(EmployeeID, FullName, DepartmentID);
-                return View(model.ToList());
+                try
+                {
+                    var model = proxy.ListEmployee(EmployeeID, FullName, DepartmentID);
+                    return View(model.ToList());
+                }
+                catch
+                {
+                    return View();
+                }
+                
             };
         }
-        /*[HttpGet]
-        public ActionResult ListEmployee(EmployeeSearchModel searchModel) // Multiple Search Not using Webservice
-        {
-            ViewBag.DepartmentID = new SelectList(db.HR_Department, "DepartmentID", "Name");
-            var search = new EmployeeSearchLogic();
-            var model = search.GetSearchResult(searchModel);
-            
-            return View(model);
-        }*/
 
         // GET: HR_Employee/Details/5
         public ActionResult Details(string id)

@@ -15,9 +15,9 @@ namespace WebApplication1.EmployeeServiceReference {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="EmployeeInfo", Namespace="http://tempuri.org/")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="SearchModel", Namespace="http://tempuri.org/")]
     [System.SerializableAttribute()]
-    public partial class EmployeeInfo : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    public partial class SearchModel : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
@@ -28,10 +28,13 @@ namespace WebApplication1.EmployeeServiceReference {
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string FullNameField;
         
-        private System.Nullable<System.DateTime> BirthDateField;
+        private System.Nullable<System.DateTime> BirthdateField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string DepartmentNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string BossIDField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -70,14 +73,14 @@ namespace WebApplication1.EmployeeServiceReference {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=2)]
-        public System.Nullable<System.DateTime> BirthDate {
+        public System.Nullable<System.DateTime> Birthdate {
             get {
-                return this.BirthDateField;
+                return this.BirthdateField;
             }
             set {
-                if ((this.BirthDateField.Equals(value) != true)) {
-                    this.BirthDateField = value;
-                    this.RaisePropertyChanged("BirthDate");
+                if ((this.BirthdateField.Equals(value) != true)) {
+                    this.BirthdateField = value;
+                    this.RaisePropertyChanged("Birthdate");
                 }
             }
         }
@@ -91,6 +94,19 @@ namespace WebApplication1.EmployeeServiceReference {
                 if ((object.ReferenceEquals(this.DepartmentNameField, value) != true)) {
                     this.DepartmentNameField = value;
                     this.RaisePropertyChanged("DepartmentName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=4)]
+        public string BossID {
+            get {
+                return this.BossIDField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BossIDField, value) != true)) {
+                    this.BossIDField = value;
+                    this.RaisePropertyChanged("BossID");
                 }
             }
         }
@@ -109,155 +125,87 @@ namespace WebApplication1.EmployeeServiceReference {
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="EmployeeServiceReference.EmployeeServiceSoap")]
     public interface EmployeeServiceSoap {
         
-        // CODEGEN: Generating message contract since element name HelloWorldResult from namespace http://tempuri.org/ is not marked nillable
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/HelloWorld", ReplyAction="*")]
-        WebApplication1.EmployeeServiceReference.HelloWorldResponse HelloWorld(WebApplication1.EmployeeServiceReference.HelloWorldRequest request);
+        // CODEGEN: Generating message contract since the wrapper name (ShowEmployeeList) of message ShowEmployeeList does not match the default value (ListEmployee)
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ShowEmployeeList", ReplyAction="*")]
+        WebApplication1.EmployeeServiceReference.ShowEmployeeList1 ListEmployee(WebApplication1.EmployeeServiceReference.ShowEmployeeList request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/HelloWorld", ReplyAction="*")]
-        System.Threading.Tasks.Task<WebApplication1.EmployeeServiceReference.HelloWorldResponse> HelloWorldAsync(WebApplication1.EmployeeServiceReference.HelloWorldRequest request);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ShowEmployeeList", ReplyAction="*")]
+        System.Threading.Tasks.Task<WebApplication1.EmployeeServiceReference.ShowEmployeeList1> ListEmployeeAsync(WebApplication1.EmployeeServiceReference.ShowEmployeeList request);
         
-        // CODEGEN: Generating message contract since element name empID from namespace http://tempuri.org/ is not marked nillable
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ListEmployee", ReplyAction="*")]
-        WebApplication1.EmployeeServiceReference.ListEmployeeResponse ListEmployee(WebApplication1.EmployeeServiceReference.ListEmployeeRequest request);
+        // CODEGEN: Generating message contract since the wrapper name (SearchEmployee) of message SearchEmployee does not match the default value (ListEmployee1)
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/SearchEmployee", ReplyAction="*")]
+        WebApplication1.EmployeeServiceReference.SearchEmployee1 ListEmployee1(WebApplication1.EmployeeServiceReference.SearchEmployee request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ListEmployee", ReplyAction="*")]
-        System.Threading.Tasks.Task<WebApplication1.EmployeeServiceReference.ListEmployeeResponse> ListEmployeeAsync(WebApplication1.EmployeeServiceReference.ListEmployeeRequest request);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/SearchEmployee", ReplyAction="*")]
+        System.Threading.Tasks.Task<WebApplication1.EmployeeServiceReference.SearchEmployee1> ListEmployee1Async(WebApplication1.EmployeeServiceReference.SearchEmployee request);
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
-    public partial class HelloWorldRequest {
+    [System.ServiceModel.MessageContractAttribute(WrapperName="ShowEmployeeList", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
+    public partial class ShowEmployeeList {
         
-        [System.ServiceModel.MessageBodyMemberAttribute(Name="HelloWorld", Namespace="http://tempuri.org/", Order=0)]
-        public WebApplication1.EmployeeServiceReference.HelloWorldRequestBody Body;
-        
-        public HelloWorldRequest() {
-        }
-        
-        public HelloWorldRequest(WebApplication1.EmployeeServiceReference.HelloWorldRequestBody Body) {
-            this.Body = Body;
+        public ShowEmployeeList() {
         }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.Runtime.Serialization.DataContractAttribute()]
-    public partial class HelloWorldRequestBody {
+    [System.ServiceModel.MessageContractAttribute(WrapperName="ShowEmployeeListResponse", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
+    public partial class ShowEmployeeList1 {
         
-        public HelloWorldRequestBody() {
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
+        public WebApplication1.EmployeeServiceReference.SearchModel[] ShowEmployeeListResult;
+        
+        public ShowEmployeeList1() {
+        }
+        
+        public ShowEmployeeList1(WebApplication1.EmployeeServiceReference.SearchModel[] ShowEmployeeListResult) {
+            this.ShowEmployeeListResult = ShowEmployeeListResult;
         }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
-    public partial class HelloWorldResponse {
+    [System.ServiceModel.MessageContractAttribute(WrapperName="SearchEmployee", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
+    public partial class SearchEmployee {
         
-        [System.ServiceModel.MessageBodyMemberAttribute(Name="HelloWorldResponse", Namespace="http://tempuri.org/", Order=0)]
-        public WebApplication1.EmployeeServiceReference.HelloWorldResponseBody Body;
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
+        public string EmployeeID;
         
-        public HelloWorldResponse() {
-        }
-        
-        public HelloWorldResponse(WebApplication1.EmployeeServiceReference.HelloWorldResponseBody Body) {
-            this.Body = Body;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
-    public partial class HelloWorldResponseBody {
-        
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
-        public string HelloWorldResult;
-        
-        public HelloWorldResponseBody() {
-        }
-        
-        public HelloWorldResponseBody(string HelloWorldResult) {
-            this.HelloWorldResult = HelloWorldResult;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
-    public partial class ListEmployeeRequest {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Name="ListEmployee", Namespace="http://tempuri.org/", Order=0)]
-        public WebApplication1.EmployeeServiceReference.ListEmployeeRequestBody Body;
-        
-        public ListEmployeeRequest() {
-        }
-        
-        public ListEmployeeRequest(WebApplication1.EmployeeServiceReference.ListEmployeeRequestBody Body) {
-            this.Body = Body;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
-    public partial class ListEmployeeRequestBody {
-        
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
-        public string empID;
-        
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=1)]
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=1)]
         public string FullName;
         
-        [System.Runtime.Serialization.DataMemberAttribute(Order=2)]
-        public System.Nullable<int> deptID;
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=2)]
+        public System.Nullable<int> DepartmentID;
         
-        public ListEmployeeRequestBody() {
+        public SearchEmployee() {
         }
         
-        public ListEmployeeRequestBody(string empID, string FullName, System.Nullable<int> deptID) {
-            this.empID = empID;
+        public SearchEmployee(string EmployeeID, string FullName, System.Nullable<int> DepartmentID) {
+            this.EmployeeID = EmployeeID;
             this.FullName = FullName;
-            this.deptID = deptID;
+            this.DepartmentID = DepartmentID;
         }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
-    public partial class ListEmployeeResponse {
+    [System.ServiceModel.MessageContractAttribute(WrapperName="SearchEmployeeResponse", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
+    public partial class SearchEmployee1 {
         
-        [System.ServiceModel.MessageBodyMemberAttribute(Name="ListEmployeeResponse", Namespace="http://tempuri.org/", Order=0)]
-        public WebApplication1.EmployeeServiceReference.ListEmployeeResponseBody Body;
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
+        public WebApplication1.EmployeeServiceReference.SearchModel[] SearchEmployeeResult;
         
-        public ListEmployeeResponse() {
+        public SearchEmployee1() {
         }
         
-        public ListEmployeeResponse(WebApplication1.EmployeeServiceReference.ListEmployeeResponseBody Body) {
-            this.Body = Body;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
-    public partial class ListEmployeeResponseBody {
-        
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
-        public WebApplication1.EmployeeServiceReference.EmployeeInfo[] ListEmployeeResult;
-        
-        public ListEmployeeResponseBody() {
-        }
-        
-        public ListEmployeeResponseBody(WebApplication1.EmployeeServiceReference.EmployeeInfo[] ListEmployeeResult) {
-            this.ListEmployeeResult = ListEmployeeResult;
+        public SearchEmployee1(WebApplication1.EmployeeServiceReference.SearchModel[] SearchEmployeeResult) {
+            this.SearchEmployeeResult = SearchEmployeeResult;
         }
     }
     
@@ -289,55 +237,51 @@ namespace WebApplication1.EmployeeServiceReference {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        WebApplication1.EmployeeServiceReference.HelloWorldResponse WebApplication1.EmployeeServiceReference.EmployeeServiceSoap.HelloWorld(WebApplication1.EmployeeServiceReference.HelloWorldRequest request) {
-            return base.Channel.HelloWorld(request);
-        }
-        
-        public string HelloWorld() {
-            WebApplication1.EmployeeServiceReference.HelloWorldRequest inValue = new WebApplication1.EmployeeServiceReference.HelloWorldRequest();
-            inValue.Body = new WebApplication1.EmployeeServiceReference.HelloWorldRequestBody();
-            WebApplication1.EmployeeServiceReference.HelloWorldResponse retVal = ((WebApplication1.EmployeeServiceReference.EmployeeServiceSoap)(this)).HelloWorld(inValue);
-            return retVal.Body.HelloWorldResult;
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<WebApplication1.EmployeeServiceReference.HelloWorldResponse> WebApplication1.EmployeeServiceReference.EmployeeServiceSoap.HelloWorldAsync(WebApplication1.EmployeeServiceReference.HelloWorldRequest request) {
-            return base.Channel.HelloWorldAsync(request);
-        }
-        
-        public System.Threading.Tasks.Task<WebApplication1.EmployeeServiceReference.HelloWorldResponse> HelloWorldAsync() {
-            WebApplication1.EmployeeServiceReference.HelloWorldRequest inValue = new WebApplication1.EmployeeServiceReference.HelloWorldRequest();
-            inValue.Body = new WebApplication1.EmployeeServiceReference.HelloWorldRequestBody();
-            return ((WebApplication1.EmployeeServiceReference.EmployeeServiceSoap)(this)).HelloWorldAsync(inValue);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        WebApplication1.EmployeeServiceReference.ListEmployeeResponse WebApplication1.EmployeeServiceReference.EmployeeServiceSoap.ListEmployee(WebApplication1.EmployeeServiceReference.ListEmployeeRequest request) {
+        WebApplication1.EmployeeServiceReference.ShowEmployeeList1 WebApplication1.EmployeeServiceReference.EmployeeServiceSoap.ListEmployee(WebApplication1.EmployeeServiceReference.ShowEmployeeList request) {
             return base.Channel.ListEmployee(request);
         }
         
-        public WebApplication1.EmployeeServiceReference.EmployeeInfo[] ListEmployee(string empID, string FullName, System.Nullable<int> deptID) {
-            WebApplication1.EmployeeServiceReference.ListEmployeeRequest inValue = new WebApplication1.EmployeeServiceReference.ListEmployeeRequest();
-            inValue.Body = new WebApplication1.EmployeeServiceReference.ListEmployeeRequestBody();
-            inValue.Body.empID = empID;
-            inValue.Body.FullName = FullName;
-            inValue.Body.deptID = deptID;
-            WebApplication1.EmployeeServiceReference.ListEmployeeResponse retVal = ((WebApplication1.EmployeeServiceReference.EmployeeServiceSoap)(this)).ListEmployee(inValue);
-            return retVal.Body.ListEmployeeResult;
+        public WebApplication1.EmployeeServiceReference.SearchModel[] ListEmployee() {
+            WebApplication1.EmployeeServiceReference.ShowEmployeeList inValue = new WebApplication1.EmployeeServiceReference.ShowEmployeeList();
+            WebApplication1.EmployeeServiceReference.ShowEmployeeList1 retVal = ((WebApplication1.EmployeeServiceReference.EmployeeServiceSoap)(this)).ListEmployee(inValue);
+            return retVal.ShowEmployeeListResult;
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<WebApplication1.EmployeeServiceReference.ListEmployeeResponse> WebApplication1.EmployeeServiceReference.EmployeeServiceSoap.ListEmployeeAsync(WebApplication1.EmployeeServiceReference.ListEmployeeRequest request) {
+        System.Threading.Tasks.Task<WebApplication1.EmployeeServiceReference.ShowEmployeeList1> WebApplication1.EmployeeServiceReference.EmployeeServiceSoap.ListEmployeeAsync(WebApplication1.EmployeeServiceReference.ShowEmployeeList request) {
             return base.Channel.ListEmployeeAsync(request);
         }
         
-        public System.Threading.Tasks.Task<WebApplication1.EmployeeServiceReference.ListEmployeeResponse> ListEmployeeAsync(string empID, string FullName, System.Nullable<int> deptID) {
-            WebApplication1.EmployeeServiceReference.ListEmployeeRequest inValue = new WebApplication1.EmployeeServiceReference.ListEmployeeRequest();
-            inValue.Body = new WebApplication1.EmployeeServiceReference.ListEmployeeRequestBody();
-            inValue.Body.empID = empID;
-            inValue.Body.FullName = FullName;
-            inValue.Body.deptID = deptID;
+        public System.Threading.Tasks.Task<WebApplication1.EmployeeServiceReference.ShowEmployeeList1> ListEmployeeAsync() {
+            WebApplication1.EmployeeServiceReference.ShowEmployeeList inValue = new WebApplication1.EmployeeServiceReference.ShowEmployeeList();
             return ((WebApplication1.EmployeeServiceReference.EmployeeServiceSoap)(this)).ListEmployeeAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        WebApplication1.EmployeeServiceReference.SearchEmployee1 WebApplication1.EmployeeServiceReference.EmployeeServiceSoap.ListEmployee1(WebApplication1.EmployeeServiceReference.SearchEmployee request) {
+            return base.Channel.ListEmployee1(request);
+        }
+        
+        public WebApplication1.EmployeeServiceReference.SearchModel[] ListEmployee1(string EmployeeID, string FullName, System.Nullable<int> DepartmentID) {
+            WebApplication1.EmployeeServiceReference.SearchEmployee inValue = new WebApplication1.EmployeeServiceReference.SearchEmployee();
+            inValue.EmployeeID = EmployeeID;
+            inValue.FullName = FullName;
+            inValue.DepartmentID = DepartmentID;
+            WebApplication1.EmployeeServiceReference.SearchEmployee1 retVal = ((WebApplication1.EmployeeServiceReference.EmployeeServiceSoap)(this)).ListEmployee1(inValue);
+            return retVal.SearchEmployeeResult;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<WebApplication1.EmployeeServiceReference.SearchEmployee1> WebApplication1.EmployeeServiceReference.EmployeeServiceSoap.ListEmployee1Async(WebApplication1.EmployeeServiceReference.SearchEmployee request) {
+            return base.Channel.ListEmployee1Async(request);
+        }
+        
+        public System.Threading.Tasks.Task<WebApplication1.EmployeeServiceReference.SearchEmployee1> ListEmployee1Async(string EmployeeID, string FullName, System.Nullable<int> DepartmentID) {
+            WebApplication1.EmployeeServiceReference.SearchEmployee inValue = new WebApplication1.EmployeeServiceReference.SearchEmployee();
+            inValue.EmployeeID = EmployeeID;
+            inValue.FullName = FullName;
+            inValue.DepartmentID = DepartmentID;
+            return ((WebApplication1.EmployeeServiceReference.EmployeeServiceSoap)(this)).ListEmployee1Async(inValue);
         }
     }
 }

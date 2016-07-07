@@ -116,7 +116,7 @@ namespace WebApplication1.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            catch(Exception e)
+            catch
             {
                 TempData["DeptDelException"] = "Some Employee(s) still referenced to this Department. Please Edit their dept first before delete.";
                 return RedirectToAction("Index");
