@@ -27,8 +27,8 @@ namespace WebApplication1.Exam_Webservice
         public string DepartmentName { get; set; }
         public string FullName {
             get {
-                return FirstName+" "+ LastName;
-            }
+                    return FirstName+" "+ LastName;
+                }
         }
     }
     public class EmployeeService : System.Web.Services.WebService

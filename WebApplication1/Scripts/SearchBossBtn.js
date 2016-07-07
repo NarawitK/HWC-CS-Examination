@@ -1,13 +1,13 @@
 ﻿$(document).ready(function () {
-    $("#SearchBtn").click(function () {
+
+    function callAJAX() {
         $.ajax({
-            url:"/HR_Employee/GetBossName",
+            url: "/HR_Employee/GetBossName",
             datatype: "JSON",
-            data:{term:$("#InputBossID").val()},
-            type:"GET",
+            data: { term: $("#InputBossID").val() },
+            type: "GET",
             success: function (result) {
-                if (result.length > 0)
-                {
+                if (result.length > 0) {
                     var fullName = result[0].label;
                     var bID = result[0].value;
                     if (bID !== $("#EmployeeID").val()) {
@@ -16,7 +16,7 @@
                     }
                     else {
                         $("#InputBossID").val("");
-                        $("#InputBossID").prop("placeholder","ไม่สามารถเลือกหัวหน้างานเป็นตัวเองได้")
+                        $("#InputBossID").prop("placeholder", "เลือกตัวเองไม่ได้")
                     }
                 }
                 else {
@@ -28,10 +28,23 @@
             error: function () {
                 console.log("Error Function: " + result);
                 $("#InputBossID").val("");
-                $("#InputBossID").prop("placeholder","มีข้อผิดพลาดเกิดขึ้นในระบบ")
+                $("#InputBossID").prop("placeholder", "มีข้อผิดพลาดเกิดขึ้นในระบบ")
                 $("#BossID").val(null);
                 return false;
             }//err fn
         });
+    }
+
+    $("#InputBossID").focus(function () {
+        $(this).keypress(function (e) {
+            if (e.keyCode == 13) {
+                e.preventDefault();
+                callAJAX();
+            }
+        });
     });
+    $("#SearchBtn").click(function () {
+        callAJAX();
+    });
+
 });

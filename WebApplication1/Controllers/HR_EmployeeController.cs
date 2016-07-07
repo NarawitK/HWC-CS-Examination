@@ -62,7 +62,7 @@ namespace WebApplication1.Controllers
                 try
                 {
                     var model = proxy.ListEmployee();
-                    return View(model.ToList());
+                    return View(model);
                 }
                 catch
                 {
@@ -81,7 +81,7 @@ namespace WebApplication1.Controllers
                 try
                 {
                     var model = proxy.ListEmployee(EmployeeID, FullName, DepartmentID);
-                    return View(model.ToList());
+                    return View(model);
                 }
                 catch
                 {
