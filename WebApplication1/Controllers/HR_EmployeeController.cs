@@ -57,11 +57,11 @@ namespace WebApplication1.Controllers
         public ActionResult ListEmployee()
          {
             ViewBag.DepartmentID = new SelectList(db.HR_Department, "DepartmentID", "Name");
-            using (Exam_Webservice.EmployeeService proxy = new Exam_Webservice.EmployeeService())
+            using (Exam_Webservice.EmployeeService emp_service = new Exam_Webservice.EmployeeService())
             {
                 try
                 {
-                    var model = proxy.ListEmployee();
+                    var model = emp_service.ListEmployee();
                     return View(model);
                 }
                 catch
@@ -76,11 +76,11 @@ namespace WebApplication1.Controllers
         public ActionResult ListEmployee(string EmployeeID, string FullName, int? DepartmentID)
         {
             ViewBag.DepartmentID = new SelectList(db.HR_Department, "DepartmentID", "Name");
-            using (Exam_Webservice.EmployeeService proxy = new Exam_Webservice.EmployeeService())
+            using (Exam_Webservice.EmployeeService emp_service = new Exam_Webservice.EmployeeService())
             {
                 try
                 {
-                    var model = proxy.ListEmployee(EmployeeID, FullName, DepartmentID);
+                    var model = emp_service.ListEmployee(EmployeeID, FullName, DepartmentID);
                     return View(model);
                 }
                 catch
