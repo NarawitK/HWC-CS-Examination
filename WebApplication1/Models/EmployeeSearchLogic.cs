@@ -13,7 +13,7 @@ namespace WebApplication1.Models
         {
             db = new HREntities();
         }
-        public IQueryable<HR_Employee> GetSearchResult(EmployeeSearchModel searchModel)
+        public List<HR_Employee> GetSearchResult(EmployeeSearchModel searchModel)
         {
             var result = db.HR_Employee.AsQueryable();
             if(searchModel != null)
@@ -46,7 +46,7 @@ namespace WebApplication1.Models
                     result = result.Where(x => x.DepartmentID == searchModel.DepartmentID);
                 }
             }
-            return result;
+            return result.ToList();
         }
     }
 }

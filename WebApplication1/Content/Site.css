@@ -1,8 +1,8 @@
 ﻿@font-face {
-	font-family: ThaiSansNeue-Regular;
-	src: url('../fonts/ThaiSansNeue-Regular.ttf') format('truetype');
     font-family: ThaiSansNeue-Bold;
     src: url('../fonts/ThaiSansNeue-Bold.ttf') format('truetype');
+    /*font-family: ThaiSansNeue-Regular;
+	src: url('../fonts/ThaiSansNeue-Regular.ttf') format('truetype');*/
 }
 
 body {

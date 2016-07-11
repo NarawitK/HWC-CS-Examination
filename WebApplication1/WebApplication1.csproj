@@ -274,6 +274,7 @@
     <Content Include="Service References\EmployeeServiceReference\WebApplication1.EmployeeServiceReference.ListEmployeeModel.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
+    <Content Include="Views\HR_Employee\SearchEmployee.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

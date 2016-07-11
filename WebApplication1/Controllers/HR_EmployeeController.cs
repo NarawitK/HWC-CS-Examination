@@ -53,6 +53,22 @@ namespace WebApplication1.Controllers
             return View(hR_Employee.ToPagedList(pageNum,pageSize));
         }
 
+        //GET: /SearchEmployee
+        public ActionResult SearchEmployee()
+        {
+            ViewBag.DepartmentID = new SelectList(db.HR_Department, "DepartmentID", "Name");
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult SearchEmployee(EmployeeSearchModel searchModel)
+        {
+            ViewBag.DepartmentID = new SelectList(db.HR_Department, "DepartmentID", "Name");
+            var searchLogic = new EmployeeSearchLogic();
+            var model = searchLogic.GetSearchResult(searchModel);
+            return View(model);
+        }
+
         //GET: HR_Employee/ListEmployee <Search Employee>
         public ActionResult ListEmployee()
          {
