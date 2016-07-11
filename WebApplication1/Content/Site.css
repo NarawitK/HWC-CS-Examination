@@ -1,12 +1,23 @@
-﻿body {
+﻿@font-face {
+	font-family: ThaiSansNeue-Regular;
+	src: url('../fonts/ThaiSansNeue-Regular.ttf') format('truetype');
+    font-family: ThaiSansNeue-Bold;
+    src: url('../fonts/ThaiSansNeue-Bold.ttf') format('truetype');
+}
+
+body {
     padding-top: 50px;
     padding-bottom: 20px;
 }
 
+body h2{
+    font-family: ThaiSansNeue-Bold, Arial, sans-serif;
+}
 /* Set padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
+    
 }
 
 /* Override the default bootstrap behavior where horizontal description lists 

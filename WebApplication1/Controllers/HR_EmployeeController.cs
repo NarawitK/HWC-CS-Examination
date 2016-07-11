@@ -66,7 +66,7 @@ namespace WebApplication1.Controllers
                 }
                 catch
                 {
-                    return View();
+                    return RedirectToAction("Index");
                 }
                 
             };
