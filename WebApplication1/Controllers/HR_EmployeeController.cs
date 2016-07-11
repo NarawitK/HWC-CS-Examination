@@ -21,8 +21,10 @@ namespace WebApplication1.Controllers
         {
             var hR_Employee = db.HR_Employee.Include(h => h.HR_Department);
             ViewBag.CurrentSort = sortOrder;
+            ViewBag.AddEmpException = TempData["AddEmpException"];
             ViewBag.EmpDelException = TempData["EmpDelException"];
-            ViewBag.NameSort = string.IsNullOrEmpty(sortOrder) ? "name_desc" : ""; //Sort by FirstName
+            ViewBag.NameSort = string.IsNullOrEmpty(sortOrder) ? "name_desc" : null; //Sort by FirstName
+            ViewBag.IDSort = string.IsNullOrEmpty(sortOrder) ? "id_desc" : null;
 
             if (Search != null) //Check if srch then page = 1 
             {
@@ -43,6 +45,9 @@ namespace WebApplication1.Controllers
                 case "name_desc":
                     hR_Employee = hR_Employee.OrderByDescending(s=>s.FirstName);
                     break;
+                case "id_desc":
+                    hR_Employee = hR_Employee.OrderBy(id => id.EmployeeID);
+                    break;
                 default:
                     hR_Employee = hR_Employee.OrderByDescending(s => s.EmployeeID);
                     break;
@@ -53,23 +58,24 @@ namespace WebApplication1.Controllers
             return View(hR_Employee.ToPagedList(pageNum,pageSize));
         }
 
-        //GET: /SearchEmployee
+        //GET: /SearchEmployee (Non-Webservice)
         public ActionResult SearchEmployee()
         {
             ViewBag.DepartmentID = new SelectList(db.HR_Department, "DepartmentID", "Name");
             return View();
         }
 
+        //GET: /SearchEmpFromDB (Non-Webservice)
         [HttpGet]
         public ActionResult SearchEmployee(EmployeeSearchModel searchModel)
         {
             ViewBag.DepartmentID = new SelectList(db.HR_Department, "DepartmentID", "Name");
-            var searchLogic = new EmployeeSearchLogic();
-            var model = searchLogic.GetSearchResult(searchModel);
+            var SearchMethod = new EmployeeSearchLogic();
+            var model = SearchMethod.GetSearchResult(searchModel);
             return View(model);
         }
 
-        //GET: HR_Employee/ListEmployee <Search Employee>
+        //GET: HR_Employee/ListEmployee <Search Employee> (Webservice)
         public ActionResult ListEmployee()
          {
             ViewBag.DepartmentID = new SelectList(db.HR_Department, "DepartmentID", "Name");
@@ -129,15 +135,25 @@ namespace WebApplication1.Controllers
             ViewBag.DepartmentID = DepartmentID;
             try
             {
-                var query = (db.HR_Employee.Select(e => e.EmployeeID)).DefaultIfEmpty().Max();
+                System.Threading.Thread.Sleep(2000);
+                var query = (db.HR_Employee.Select(e => e.EmployeeID)).DefaultIfEmpty("0000").Max();
+                var counter = (db.HR_Employee.Select(e => e.EmployeeID)).Count();
                 var query_substr = query.Split('-');
                 var query_int = ((int.Parse(query_substr[3])) + 1).ToString("D4");
                 ViewData["currentID"] = query_int;
+                if(counter == 10000) //If count to 1K Employees -> Send Alert 
+                {
+                    TempData["AddEmpException"] = "Employee At Maximum Capacity";
+                    return RedirectToAction("Index");
+                }
             }
-            catch
+            catch(Exception ex)
             {
-                string D4 = "0001";
-                ViewData["currentID"] = D4;
+                if(ex is IndexOutOfRangeException)
+                {
+                    ViewData["currentID"] = "0001";
+                }
+                
             }
             return View();
         }
@@ -152,12 +168,15 @@ namespace WebApplication1.Controllers
             IEnumerable<SelectListItem> DepartmentID = new SelectList(db.HR_Department, "DepartmentID", "Name");
             ViewBag.DepartmentID = DepartmentID;
             try
-            { 
-                var query = (db.HR_Employee.Select(e => e.EmployeeID)).Max();
+            {
+                System.Threading.Thread.Sleep(1500);
+                var query = (db.HR_Employee.Select(e => e.EmployeeID)).DefaultIfEmpty("0000").Max();
+                var counter = (db.HR_Employee.Select(e => e.EmployeeID)).Count();
                 var query_substr = query.Split('-');
-                if (int.Parse(query_substr[3]) == 9999)
+                if (counter == 10000) //When 1K Emp fire alert
                 {
-                    return View();
+                    TempData["AddEmpException"] = "Employee At Maximum Capacity";
+                    return RedirectToAction("Index");
                 }
                 else
                 {
@@ -165,10 +184,12 @@ namespace WebApplication1.Controllers
                     ViewData["currentID"] = query_int;
                 }
             }
-            catch
+            catch(Exception ex)
             {
-                string D4 = "0001";
-                ViewData["currentID"] = D4;
+                if (ex is IndexOutOfRangeException)
+                {
+                    ViewData["currentID"] = "0001";
+                }
             }
             if (ModelState.IsValid)
             { //Handling Duplicate ID Insertion
@@ -178,15 +199,20 @@ namespace WebApplication1.Controllers
                     db.SaveChanges();
                     return RedirectToAction("Index");
                 }
-                catch
+                catch(Exception ex)
                 {
-                    var query = (db.HR_Employee.Select(e => e.EmployeeID)).DefaultIfEmpty().Max();
-                    var query_substr = query.Split('-');
-                    var query_int = ((int.Parse(query_substr[3])) + 1).ToString("D4");
-                    hR_Employee.EmployeeID = "EMP-" + DateTime.Today.ToString("yyyy-MM", CultureInfo.InvariantCulture) + "-" + query_int;
-                    db.HR_Employee.Add(hR_Employee);
-                    db.SaveChanges();
-                    return RedirectToAction("Index");
+                    if(ex is System.Data.Entity.Infrastructure.DbUpdateException)
+                    {
+                        System.Threading.Thread.Sleep(1300);
+                        var query = (db.HR_Employee.Select(e => e.EmployeeID)).DefaultIfEmpty().Max();
+                        var query_substr = query.Split('-');
+                        var query_int = ((int.Parse(query_substr[3])) + 1).ToString("D4");
+                        hR_Employee.EmployeeID = "EMP-" + DateTime.Today.ToString("yyyy-MM", CultureInfo.InvariantCulture) + "-" + query_int;
+                        db.HR_Employee.Add(hR_Employee);
+                        db.SaveChanges();
+                        return RedirectToAction("Index");
+                    }
+
                 }  
             }
             return View(hR_Employee);

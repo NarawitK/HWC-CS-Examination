@@ -8,31 +8,31 @@
             if (result.length > 0) {
                 var fullName = result[0].label;
                 var bID = result[0].value;
-                //Case Boss is not self
+                //Case Boss is not themself
                 if (bID !== $("#EmployeeID").val()) {
                     $("#InputBossID").val(fullName);
                     $("#BossID").val(bID);
                 }
-                    //Case Boss is self
+                    //Case Boss is themself
                 else {
-                    $("#InputBossID").val("");
+                    $("#InputBossID").val(null);
                     $("#InputBossID").prop("placeholder", "เลือกตัวเองไม่ได้")
                 }
             }
                 //Case Not Found
             else {
-                $("#InputBossID").val("");
+                $("#InputBossID").val(null);
                 $("#InputBossID").prop("placeholder", "ไม่พบข้อมูลหัวหน้างาน")
                 $("#BossID").val(null);
             }
-        },//end Success Fn
+        },//End Case AJAX Success
         error: function () {
             console.log("Error Function: " + result);
-            $("#InputBossID").val("");
+            $("#InputBossID").val(null);
             $("#InputBossID").prop("placeholder", "มีข้อผิดพลาดเกิดขึ้นในระบบ")
             $("#BossID").val(null);
             return false;
-        }//end Err Fn
+        }//End Case AJAX Error
     });
 }
 $(document).ready(function () {

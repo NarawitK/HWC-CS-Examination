@@ -7,7 +7,13 @@
 }
 
 <h2>ข้อมูลหน่วยงาน</h2>
-
+@if (ViewBag.AddEmpException != null)
+{
+    <script type="text/javascript">
+        alert('@ViewBag.AddEmpException');
+    </script>
+    <p class="bg-danger"><span class="glyphicon glyphicon-alert"></span> @ViewBag.AddEmpException</p>
+}
 @if (ViewBag.DeptDelException != null)
 {
     <script type="text/javascript">
