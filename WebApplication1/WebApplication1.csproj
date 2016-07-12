@@ -181,7 +181,6 @@
     <Content Include="Scripts\dateInput.js" />
     <Content Include="fonts\ThaiSansNeue-Regular.ttf" />
     <Content Include="fonts\ThaiSansNeue-Bold.ttf" />
-    <None Include="bundleconfig.json" />
     <None Include="Scripts\jquery-2.2.4.intellisense.js" />
     <Content Include="Scripts\jquery-2.2.4.js" />
     <Content Include="Scripts\jquery-2.2.4.min.js" />

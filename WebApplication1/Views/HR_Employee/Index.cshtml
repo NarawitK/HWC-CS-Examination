@@ -15,14 +15,14 @@
 @if (ViewBag.AddEmpException != null)
 {
     <script type="text/javascript">
-        alert('@ViewBag.AddEmpException');
+        alert('@ViewBag.AddEmpException'); //Alert if Caught Add Employee Exception
     </script>
     <p class="bg-danger"><span class="glyphicon glyphicon-alert"></span> @ViewBag.AddEmpException</p>
 }
 @if (ViewBag.EmpDelException != null)
 {
     <script type="text/javascript">
-        alert('@ViewBag.EmpDelException');
+        alert('@ViewBag.EmpDelException'); //Alert if Caught Delete Employee Exception
     </script>
     <p class="bg-danger"><span class="glyphicon glyphicon-alert"></span> @ViewBag.EmpDelException</p>
 }

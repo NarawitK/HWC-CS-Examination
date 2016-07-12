@@ -31,6 +31,7 @@ namespace WebApplication1.Exam_Webservice
                 }
         }
     }
+
     public class EmployeeService : System.Web.Services.WebService
     {
         [WebMethod(MessageName = "ShowEmployeeList")]
@@ -50,6 +51,7 @@ namespace WebApplication1.Exam_Webservice
                 return Emplist.ToList();
             }
         }
+
             [WebMethod(MessageName = "FilterEmployeeList")]
             public List<ListEmployeeModel> ListEmployee(string EmployeeID, string FullName, int? DepartmentID)
             {
