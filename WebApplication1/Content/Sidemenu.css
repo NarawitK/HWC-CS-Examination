@@ -1,0 +1,47 @@
+﻿#navigator{
+    display:block;
+    margin-top:3.5em;
+    height: 100%;
+    width: 0px;
+    position: fixed;
+    z-index: 4;
+    top: 0;
+    left: 0;
+    background-color: #000;
+    color:#fff;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+}
+
+#navigator a {
+    margin-top:0.4em;
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    color: #818181;
+    display: block;
+    transition: .2s
+}
+
+#navigator a:hover, .offcanvas a:focus{
+    color: #fff;
+}
+.sidemenu-toggle{
+    border-radius:4px;
+    margin-right: 6px;
+    cursor:pointer;
+}
+#navigator ul li{
+    list-style:none;
+}
+.closebtn {
+    position: absolute;
+    top: 0em;
+    right: 7%;
+    font-size: 20px !important;
+    margin-left: 50px;
+}
+@media screen and (max-height:450px){
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 18px;}
+}

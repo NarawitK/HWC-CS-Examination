@@ -12,7 +12,7 @@ namespace WebApplication1.Models
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
-
+    
     public partial class HREntities : DbContext
     {
         public HREntities()

@@ -37,13 +37,13 @@ namespace WebApplication1.Controllers
 
             if (!String.IsNullOrEmpty(Search))//Search by FirstName or LastName
             {
-                hR_Employee = hR_Employee.Where(s => s.FirstName.Contains(Search) || s.LastName.Contains(Search));
+                hR_Employee = hR_Employee.Where(s => s.Firstname.Contains(Search) || s.Lastname.Contains(Search));
             }
 
             switch (sortOrder) //If sort link is clicked, check sort options
             {
                 case "name_desc":
-                    hR_Employee = hR_Employee.OrderByDescending(s=>s.FirstName);
+                    hR_Employee = hR_Employee.OrderByDescending(s=>s.Firstname);
                     break;
                 case "id_desc":
                     hR_Employee = hR_Employee.OrderBy(id => id.EmployeeID);
@@ -224,7 +224,7 @@ namespace WebApplication1.Controllers
         {
             var name = (from c in db.HR_Employee
                         where c.EmployeeID == term
-                        select new { label = c.FirstName + " " + c.LastName, value = c.EmployeeID, }).Distinct();
+                        select new { label = c.Firstname + " " + c.Lastname, value = c.EmployeeID, }).Distinct();
             if (!name.Any())
             {
                 return null;

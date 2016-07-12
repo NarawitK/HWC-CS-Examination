@@ -147,10 +147,19 @@
     <Content Include="Content\jquery-ui.theme.css" />
     <Content Include="Content\jquery-ui.theme.min.css" />
     <Content Include="Content\PagedList.css" />
+    <Content Include="Content\Sidemenu.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Exam_Webservice\EmployeeService.asmx" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-theme.min.css.map" />
+    <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Models\HRDB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>HRDB.edmx</DependentUpon>
@@ -161,6 +170,11 @@
       <DependentUpon>HRDB.edmx</DependentUpon>
       <LastGenOutput>HRDB.cs</LastGenOutput>
     </Content>
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\dateInput.js" />
+    <Content Include="fonts\ThaiSansNeue-Regular.ttf" />
+    <Content Include="fonts\ThaiSansNeue-Bold.ttf" />
     <EntityDeploy Include="Models\HRDB.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>HRDB.Designer.cs</LastGenOutput>
@@ -168,19 +182,6 @@
     <Content Include="Models\HRDB.edmx.diagram">
       <DependentUpon>HRDB.edmx</DependentUpon>
     </Content>
-    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Content\bootstrap.min.css.map" />
-    <Content Include="Content\bootstrap.css.map" />
-    <Content Include="Content\bootstrap-theme.min.css.map" />
-    <Content Include="Content\bootstrap-theme.css.map" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Scripts\dateInput.js" />
-    <Content Include="fonts\ThaiSansNeue-Regular.ttf" />
-    <Content Include="fonts\ThaiSansNeue-Bold.ttf" />
     <None Include="Scripts\jquery-2.2.4.intellisense.js" />
     <Content Include="Scripts\jquery-2.2.4.js" />
     <Content Include="Scripts\jquery-2.2.4.min.js" />
@@ -196,7 +197,6 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="Scripts\Ajax.js" />
     <Content Include="Scripts\Autocomplete.js" />
     <Content Include="Scripts\SearchBossBtn.js" />
     <None Include="Service References\EmployeeServiceReference\EmployeeService.disco" />

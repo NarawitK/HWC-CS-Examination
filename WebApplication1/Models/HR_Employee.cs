@@ -13,20 +13,23 @@ namespace WebApplication1.Models
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
-    using WebApplication1.Models;
+
 
     public partial class HR_Employee
     {
-        
         public string EmployeeID { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
+        public string Firstname { get; set; }
+        public string Lastname { get; set; }
+
         [DataType(DataType.DateTime)]
         [Required(ErrorMessage = "กรุณาเลือกวันเกิดด้วย")]
         public DateTime? Birthdate { get; set; }
-
         public int DepartmentID { get; set; }
         public string BossID { get; set; }
+
+        [DataType(DataType.DateTime)]
+        public DateTime? ModifiedDate { get; set; }
+
         public string BossName
         {
             get
@@ -35,24 +38,20 @@ namespace WebApplication1.Models
                 {
                     var BName = (from q in db.HR_Employee
                                  where BossID == q.EmployeeID
-                                 select q.FirstName + " " + q.LastName).FirstOrDefault();
+                                 select q.Firstname + " " + q.Lastname).FirstOrDefault();
                     return BName;
                 }
- 
+
             }
         }
-
-        [DataType(DataType.DateTime)]
-        public DateTime ModifiedDate { get; set; }
-
         public string FullName
         {
             get
             {
-                return FirstName + " " + LastName;
+                return Firstname + " " + Lastname;
             }
         }
-       
+
         public virtual HR_Department HR_Department { get; set; }
     }
 }

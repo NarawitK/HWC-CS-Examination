@@ -43,8 +43,8 @@ namespace WebApplication1.Exam_Webservice
                               select new ListEmployeeModel
                               {
                                   EmployeeID = query.EmployeeID,
-                                  FirstName = query.FirstName,
-                                  LastName = query.LastName,
+                                  FirstName = query.Firstname,
+                                  LastName = query.Lastname,
                                   Birthdate = query.Birthdate,
                                   DepartmentName = query.HR_Department.Name
                               };
@@ -61,7 +61,7 @@ namespace WebApplication1.Exam_Webservice
                 if (!string.IsNullOrEmpty(EmployeeID))
                 {
                     var TrimEmpID = EmployeeID.Trim();
-                    query = query.Where(x => x.EmployeeID == TrimEmpID);
+                    query = query.Where(x => x.EmployeeID.Contains(TrimEmpID));
                 }
                 if (!string.IsNullOrEmpty(FullName))
                 {
@@ -72,13 +72,13 @@ namespace WebApplication1.Exam_Webservice
                     if (length == 1) //Search Name or Surname only
                     {
                         string firstname = split[0];
-                        query = query.Where(x => x.FirstName.Contains(firstname) || x.LastName.Contains(firstname));
+                        query = query.Where(x => x.Firstname.Contains(firstname) || x.Lastname.Contains(firstname));
                     }
                     else if (length >= 2) //Search Both Name and Surname & Ignore Middle Name
                     {
                         string firstname = split[0];
                         string lastname = split[1];
-                        query = query.Where(x => x.FirstName.Contains(firstname) && x.LastName.Contains(lastname));
+                        query = query.Where(x => x.Firstname.Contains(firstname) && x.Lastname.Contains(lastname));
                     }
                 }
                 if (DepartmentID.HasValue)
@@ -89,8 +89,8 @@ namespace WebApplication1.Exam_Webservice
                           select new ListEmployeeModel
                           {
                               EmployeeID = item.EmployeeID,
-                              FirstName = item.FirstName,
-                              LastName = item.LastName,
+                              FirstName = item.Firstname,
+                              LastName = item.Lastname,
                               Birthdate = item.Birthdate,
                               DepartmentName = item.HR_Department.Name
                           };

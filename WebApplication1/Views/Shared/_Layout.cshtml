@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title</title>
     <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/Sidemenu.css")" />
     <link rel="stylesheet" href="@Url.Content("~/Content/bootstrap.min.css")" type="text/css" />
     <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/bootstrap-theme.min.css")"/>
     <link rel="stylesheet" href="@Url.Content("~/Content/jquery-ui.min.css")" type="text/css" />
@@ -24,6 +25,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
+                <p class="sidemenu-toggle navbar-brand" onclick="openMenu()">☰</p>
                 <a href="@Url.Action("Index","HR_Employee")" class="navbar-brand">C# Examination</a>
             </div>
             <div class="navbar-collapse collapse">
@@ -53,14 +55,45 @@
         </div>
     </div>
 
+    <div id="navigator">
+        <ul>
+            <li>
+                <a href="javascript:void(0)" class="closebtn" onclick="closeMenu()"><span class="glyphicon glyphicon-remove"></span></a>
+            </li>
+            <li>
+                พนักงาน
+            </li>
+                    <li>@Html.ActionLink("หน้าหลัก", "Index", "HR_Employee")</li>
+                    <li>@Html.ActionLink("เพิ่มพนักงาน", "Create", "HR_Employee")</li>
+                    <li>@Html.ActionLink("ค้นหาพนักงาน (Webservice)", "ListEmployee", "HR_Employee")</li>
+                    <li>@Html.ActionLink("ค้นหาพนักงาน (ไม่ใช้ Webservice)", "SearchEmployee", "HR_Employee")</li>
+            
+            <li>
+                หน่วยงาน
+            </li>
+                    <li>@Html.ActionLink("รายชื่อหน่วยงาน", "Index", "HR_Department")</li>
+                    <li>@Html.ActionLink("เพิ่มหน่วยงาน", "Create", "HR_Department")</li>
+        </ul>
+    </div>
+
     <div class="container body-content">
         @RenderBody()
         @RenderSection("Scripts", required: false)
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - C# Examination</p>
+            <p><span class="glyphicon glyphicon-copyright-mark"></span> @DateTime.Now.Year - C# Examination</p>
         </footer>
     </div>
+    <script type="text/javascript">
+        function openMenu() {
+            $("#navigator").width(250);
+            $("#navigator ul").fadeIn(400);
+        }
+        function closeMenu() {
+            $("#navigator").width(0);
+            $("#navigator ul").fadeOut(400);
+        }
+    </script>
     <script src=@Url.Content("~/Scripts/bootstrap.min.js")></script>
 </body>
 </html>

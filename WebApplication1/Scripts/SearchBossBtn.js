@@ -17,6 +17,7 @@
                 else {
                     $("#InputBossID").val(null);
                     $("#InputBossID").prop("placeholder", "เลือกตัวเองไม่ได้")
+                    setTimeout(function () { $("#InputBossID").prop("placeholder", "กรอกรหัสหัวหน้างาน") }, 3000);      
                 }
             }
                 //Case Not Found
@@ -24,6 +25,7 @@
                 $("#InputBossID").val(null);
                 $("#InputBossID").prop("placeholder", "ไม่พบข้อมูลหัวหน้างาน")
                 $("#BossID").val(null);
+                setTimeout(function () { $("#InputBossID").prop("placeholder", "กรอกรหัสหัวหน้างาน") }, 3000);
             }
         },//End Case AJAX Success
         error: function () {

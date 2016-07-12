@@ -21,7 +21,7 @@ namespace WebApplication1.Models
                 if (!string.IsNullOrEmpty(searchModel.EmployeeID))
                 {
                     var res = searchModel.EmployeeID.Trim();
-                    result = result.Where(x => x.EmployeeID == res);
+                    result = result.Where(x => x.EmployeeID.Contains(res));
                 }
                 if (!string.IsNullOrEmpty(searchModel.FullName))
                 {
@@ -32,13 +32,13 @@ namespace WebApplication1.Models
                        if (length == 1) //For Name or Surname only
                        {
                            string firstname = split[0];
-                           result = result.Where(x => x.FirstName.Contains(firstname) || x.LastName.Contains(firstname));
+                           result = result.Where(x => x.Firstname.Contains(firstname) || x.Lastname.Contains(firstname));
                        }
                        else if (length >= 2) //Both Name and Surname
                     {
                            string firstname = split[0];
                            string lastname = split[1];
-                           result = result.Where(x => x.FirstName.Contains(firstname) && x.LastName.Contains(lastname));
+                           result = result.Where(x => x.Firstname.Contains(firstname) && x.Lastname.Contains(lastname));
                        }
                 }
                 if (searchModel.DepartmentID.HasValue)

@@ -7,6 +7,6 @@
         changeYear: true,
         maxDate: '+0d',
         yearRange: '-100:+0',
-        hideIfNoPrevNext:true
+        hideIfNoPrevNext: true
     });
 });
