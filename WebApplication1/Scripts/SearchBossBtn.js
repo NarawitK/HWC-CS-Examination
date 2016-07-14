@@ -17,7 +17,8 @@
                 else {
                     $("#InputBossID").val(null);
                     $("#InputBossID").prop("placeholder", "เลือกตัวเองไม่ได้")
-                    setTimeout(function () { $("#InputBossID").prop("placeholder", "กรอกรหัสหัวหน้างาน") }, 3000);      
+                    alert("ไม่สามารถเลือกตัวเองเป็นหัวหน้างานของตัวเองได้ \nข้อมูลหัวหน้างานไม่เปลี่ยนแปลง");
+                    $("#InputBossID").prop("placeholder", "กรอกรหัสหัวหน้างาน");      
                 }
             }
                 //Case Not Found

@@ -59,8 +59,13 @@ namespace WebApplication1.Controllers
                 }
                 return View(hR_Department);
             }
-            catch
+            catch(Exception e)
             {
+                if(e is OverflowException)
+                {
+                    ViewBag.CreateDeptException = "มีการใส่ค่าที่เกินข้อจำกัด กรุณาเช็คค่าที่กรอกอีกครั้ง";
+                    return View(hR_Department);
+                }
                ViewBag.CreateDeptException = "มีข้อผิดพลาดเกิดขึ้น ลองเช็คค่าที่ใส่ดูอีกครั้ง";
                 return View(hR_Department);
             }
@@ -127,7 +132,7 @@ namespace WebApplication1.Controllers
             }
             catch(Exception e)
             {
-                TempData["DeptDelException"] = "ไม่สามารถลบหน่วยงานได้ เนื่องจากยังมีพนักงานสังกัดอยู่ โปรดย้ายพนักงานออกก่อนทำการลบหน่วยงาน.\n Error:  "+e.GetType();
+                TempData["DeptDelException"] = "ไม่สามารถลบหน่วยงานได้ เนื่องจากยังมีพนักงานสังกัดอยู่ โปรดย้ายพนักงานออกก่อนทำการลบหน่วยงาน. Error:  "+e.GetType();
                 return RedirectToAction("Index");
             }
             
