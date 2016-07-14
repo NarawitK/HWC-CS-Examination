@@ -125,9 +125,9 @@ namespace WebApplication1.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            catch
+            catch(Exception e)
             {
-                TempData["DeptDelException"] = "ไม่สามารถลบหน่วยงานได้ เนื่องจากยังมีพนักงานสังกัดอยู่ โปรดย้ายพนักงานออกก่อนทำการลบหน่วยงาน.";
+                TempData["DeptDelException"] = "ไม่สามารถลบหน่วยงานได้ เนื่องจากยังมีพนักงานสังกัดอยู่ โปรดย้ายพนักงานออกก่อนทำการลบหน่วยงาน.\n Error:  "+e.GetType();
                 return RedirectToAction("Index");
             }
             

@@ -43,12 +43,20 @@ namespace WebApplication1.Models
                 }
 
             }
+            set
+            {
+                throw new InvalidOperationException("This property is read-only.");
+            }
         }
         public string FullName
         {
             get
             {
                 return Firstname + " " + Lastname;
+            }
+            set
+            {
+                throw new InvalidOperationException("This property is read-only.");
             }
         }
 

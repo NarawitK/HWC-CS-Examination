@@ -186,9 +186,22 @@ namespace WebApplication1.Controllers
             }
             catch(Exception ex)
             {
+                if(ex is ArgumentNullException)
+                {
+                    TempData["AddEmpException"] = "เกิดข้อผิดพลาด: มีค่าว่างเกิดขึ้นระหว่างการดำเนินการ";
+                }
                 if (ex is IndexOutOfRangeException)
                 {
                     ViewData["currentID"] = "0001";
+                }
+                if(ex is DataException)
+                {
+                    ModelState.AddModelError(string.Empty, "Exception");
+                    return View(hR_Employee);
+                }
+                if(ex is OverflowException || ex is FormatException)
+                {
+                    TempData["AddEmpException"] = "Problem Detected at Number Ordering";
                 }
             }
             if (ModelState.IsValid)
@@ -201,7 +214,8 @@ namespace WebApplication1.Controllers
                 }
                 catch(Exception ex)
                 {
-                    if(ex is System.Data.Entity.Infrastructure.DbUpdateException)
+
+                    if (ex is System.Data.Entity.Infrastructure.DbUpdateException)
                     {
                         System.Threading.Thread.Sleep(1300);
                         var query = (db.HR_Employee.Select(e => e.EmployeeID)).DefaultIfEmpty().Max();

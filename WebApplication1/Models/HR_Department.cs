@@ -21,7 +21,6 @@ namespace WebApplication1.Models
             this.HR_Employee = new HashSet<HR_Employee>();
         }
         [RegularExpression("([1-9][0-9]*)", ErrorMessage = "กรุณาใส่ค่าเป็นตัวเลขจำนวนเต็มบวก")]
-
         public int DepartmentID { get; set; }
         public string Name { get; set; }
         public string GroupName { get; set; }

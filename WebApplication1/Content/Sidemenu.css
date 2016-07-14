@@ -1,8 +1,9 @@
 ﻿#navigator{
     display:block;
     margin-top:3.5em;
+    margin-right:3.5em;
     height: 100%;
-    width: 0px;
+    width: 0em;
     position: fixed;
     z-index: 4;
     top: 0;
@@ -36,7 +37,7 @@
 }
 .closebtn {
     position: absolute;
-    top: 0em;
+    top: 0;
     right: 7%;
     font-size: 20px !important;
     margin-left: 50px;

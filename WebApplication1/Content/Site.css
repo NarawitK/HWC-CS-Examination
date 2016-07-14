@@ -1,8 +1,6 @@
 ﻿@font-face {
     font-family: ThaiSansNeue-Bold;
     src: url('../fonts/ThaiSansNeue-Bold.ttf') format('truetype');
-    /*font-family: ThaiSansNeue-Regular;
-	src: url('../fonts/ThaiSansNeue-Regular.ttf') format('truetype');*/
 }
 
 body {
@@ -15,13 +13,15 @@ body h2{
 }
 /* Set padding to keep content from hitting the edges */
 .body-content {
+    /*background-color:;*/
     padding-left: 15px;
     padding-right: 15px;
 }
 
-body .sortLink { 
+body .sortLink a { 
     color:#000000;
     text-decoration:none;
+
 }
 
 
@@ -42,9 +42,7 @@ textarea {
 table{
     margin-bottom:0.77em;
 }
-/*table th{
-    text-align:center;
-}*/
+/*Comma on label*/
 .form-group.required .control-label:after {
   content:"*";
   color:red;
