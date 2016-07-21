@@ -1,0 +1,124 @@
+﻿@model WebApplication1.Models.HR_Department
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+@if (ViewBag.Mode == 1) //Create Mode
+{
+    ViewBag.Title = " เพิ่มหน่วยงาน";
+    <h2>@ViewBag.Title</h2>
+    if (ViewBag.CreateDeptException != null)
+    {
+        <script type="text/javascript">
+        alert('@ViewBag.CreateDeptException');
+        </script>
+        <p class="bg-danger"><span class="glyphicon glyphicon-alert"></span> @ViewBag.CreateDeptException</p>
+    }
+
+    using (Html.BeginForm("Create", "HR_Department"))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group required">
+                @Html.LabelFor(model => model.DepartmentID, "รหัสหน่วยงาน", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.DepartmentID, new { htmlAttributes = new { @class = "form-control", @placeholder = "ใส่ค่าเป็นจำนวนเต็มบวก เช่น 1" } })
+                    @Html.ValidationMessageFor(model => model.DepartmentID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group required">
+                @Html.LabelFor(model => model.Name, "ชื่อหน่วยงาน", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", @maxlength = 50 } })
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.GroupName, "ชื่อกลุ่มงาน", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.GroupName, new { htmlAttributes = new { @class = "form-control", @maxlength = 50 } })
+                    @Html.ValidationMessageFor(model => model.GroupName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.ModifiedDate, new { htmlAttributes = new { @class = "form-control", @type = "hidden", @Value = DateTime.Now.ToString(@"dd/MM/yyy hh:mm:ss") } })
+                    @Html.ValidationMessageFor(model => model.ModifiedDate, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                    @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-default" })
+                </div>
+            </div>
+        </div>
+    }
+}
+
+@if (ViewBag.Mode == 2) //Edit Mode
+{
+    ViewBag.Title = "แก้ไขข้อมูลหน่วยงาน";
+    <h2>@ViewBag.Title</h2>
+    if (ViewBag.EditDeptException != null)
+    {
+        <script type="text/javascript">
+        alert('@ViewBag.EditDeptException');
+        </script>
+        <p class="bg-danger"><span class="glyphicon glyphicon-alert"></span> @ViewBag.EditDeptException</p>
+    }
+
+    using (Html.BeginForm("Edit","HR_Department"))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.DepartmentID)
+
+            <div class="form-group required">
+                @Html.LabelFor(model => model.Name, "ชื่อหน่วยงาน", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", @required = true } })
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.GroupName, "ชื่อกลุ่มงาน", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.GroupName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.GroupName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.ModifiedDate, new { htmlAttributes = new { @class = "form-control", @type = "hidden" } })
+                    @Html.ValidationMessageFor(model => model.ModifiedDate, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                    @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-default" })
+                </div>
+            </div>
+        </div>
+    }
+}
+
+
+<div>
+    @Html.ActionLink("กลับสู่หน้าหลัก", "Index",null, new { @class = "btn btn-default" })
+</div>

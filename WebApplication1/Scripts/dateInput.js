@@ -5,8 +5,11 @@
         dateFormat: "dd/mm/yy",
         changeMonth: true,
         changeYear: true,
-        maxDate: '+0d',
-        yearRange: '-100:+0',
+        yearRange: '1753:+0',
+        maxDate: '+0',
+        monthNamesShort: ["ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.",
+                   "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.",
+                   "ต.ค.", "พ.ย.", "ธ.ค."],
         hideIfNoPrevNext: true
     });
 });

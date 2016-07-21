@@ -17,30 +17,15 @@ namespace WebApplication1.Exam_Webservice
     // To allow this Web Service to be called from script, using ASP.NET AJAX, uncomment the following line. 
     //[System.Web.Script.Services.ScriptService]
 
-    [Serializable()]
-    public class ListEmployeeModel
-    {
-        public string EmployeeID { get; set;}
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public DateTime? Birthdate { get; set; }
-        public string DepartmentName { get; set; }
-        public string FullName {
-            get {
-                    return FirstName+" "+ LastName;
-                }
-        }
-    }
-
     public class EmployeeService : System.Web.Services.WebService
     {
-        [WebMethod(MessageName = "ShowEmployeeList")]
-        public List<ListEmployeeModel> ListEmployee()
+        [WebMethod]
+        public List<WebServiceModel> ShowEmployeeList()
         {
             using (HREntities db = new HREntities())
             {
                 var Emplist = from query in db.HR_Employee
-                              select new ListEmployeeModel
+                              select new WebServiceModel
                               {
                                   EmployeeID = query.EmployeeID,
                                   FirstName = query.Firstname,
@@ -52,9 +37,9 @@ namespace WebApplication1.Exam_Webservice
             }
         }
 
-            [WebMethod(MessageName = "FilterEmployeeList")]
-            public List<ListEmployeeModel> ListEmployee(string EmployeeID, string FullName, int? DepartmentID)
-            {
+        [WebMethod]
+        public List<WebServiceModel> ListEmployee(string EmployeeID, string FullName, int? DepartmentID)
+        {
             using (HREntities db = new HREntities())
             {
                 var query = db.HR_Employee.AsQueryable();
@@ -78,7 +63,7 @@ namespace WebApplication1.Exam_Webservice
                     {
                         string firstname = split[0];
                         string lastname = split[1];
-                        query = query.Where(x => x.Firstname.Contains(firstname) && x.Lastname.Contains(lastname));
+                        query = query.Where(x => x.Firstname.Contains(firstname) && x.Lastname.Contains(lastname) || x.Firstname.Contains(lastname) && x.Lastname.Contains(firstname));
                     }
                 }
                 if (DepartmentID.HasValue)
@@ -86,16 +71,16 @@ namespace WebApplication1.Exam_Webservice
                     query = query.Where(x => x.DepartmentID == DepartmentID);
                 }
                 var ResultSet = from item in query
-                          select new ListEmployeeModel
-                          {
-                              EmployeeID = item.EmployeeID,
-                              FirstName = item.Firstname,
-                              LastName = item.Lastname,
-                              Birthdate = item.Birthdate,
-                              DepartmentName = item.HR_Department.Name
-                          };
+                                select new WebServiceModel
+                                {
+                                    EmployeeID = item.EmployeeID,
+                                    FirstName = item.Firstname,
+                                    LastName = item.Lastname,
+                                    Birthdate = item.Birthdate,
+                                    DepartmentName = item.HR_Department.Name
+                                };
                 return ResultSet.ToList();
             }
-        }   
+        }
     }
 }

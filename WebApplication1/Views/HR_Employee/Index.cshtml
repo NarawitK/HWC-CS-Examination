@@ -2,7 +2,6 @@
 @using System.Linq
 @using PagedList.Mvc
 
-
 @{
     ViewBag.Title = "ข้อมูลพนักงาน";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -41,73 +40,75 @@
     <br />
 
     <table class="table table-bordered table-hover table-responsive">
-        @if (!Model.Any())
+    @if (!Model.Any())
+    {
+        <tr>
+            <th>
+                <p class="text-warning text-center"><span class="glyphicon glyphicon-info-sign"></span> ไม่พบข้อมูลพนักงาน</p>
+            </th>
+        </tr>
+    }
+    else
+    {
+        <tr>
+            <th></th>
+            <th>
+                <a href="@Url.Action("Index", new { sortOrder = ViewBag.IDSort, currentFilter = ViewBag.CurrentFilter })" class="sortLink">รหัสพนักงาน <span class="glyphicon glyphicon-sort"></span></a>
+
+            </th>
+            <th>
+                <a href="@Url.Action("Index", new { sortOrder = ViewBag.NameSort, currentFilter = ViewBag.CurrentFilter })" class="sortLink">ชื่อ นามสกุลพนักงาน <span class="glyphicon glyphicon-sort"></span></a>
+            </th>
+            <th>
+                วัน/เดือน/ปีเกิด
+            </th>
+            <th>
+                หน่วยงานที่สังกัด
+            </th>
+            <th>
+                หัวหน้างาน
+            </th>
+        </tr>
+        foreach (var item in Model)
         {
             <tr>
-                <th>
-                    <p class="text-warning text-center"><span class="glyphicon glyphicon-info-sign"></span> ไม่พบข้อมูลพนักงาน</p>
-                </th>
-            </tr>
-        }
-        else
-        {
-            <tr>
-                <th></th>
-                <th>
-                    <a href="@Url.Action("Index", new { sortOrder = ViewBag.IDSort, currentFilter = ViewBag.CurrentFilter })" class="sortLink">รหัสพนักงาน <span class="glyphicon glyphicon-sort"></span></a>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.EmployeeID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.EmployeeID }, new { onclick = "return confirm('Are you sure you wish to delete this employee info?');" })
 
-                </th>
-                <th>
-                    <a href="@Url.Action("Index", new { sortOrder = ViewBag.NameSort, currentFilter = ViewBag.CurrentFilter })" class="sortLink">ชื่อ นามสกุลพนักงาน <span class="glyphicon glyphicon-sort"></span></a>
-                </th>
-                <th>
-                    วัน/เดือน/ปีเกิด
-                </th>
-                <th>
-                    หน่วยงานที่สังกัด
-                </th>
-                <th>
-                    หัวหน้างาน
-                </th>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EmployeeID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FullName)
+                </td>
+                <td>
+                    @{
+                        DateTime? Bdate = item.Birthdate;
+                        string FormatDate;
+                        if (Bdate.HasValue)
+                        {
+                            FormatDate = Bdate.Value.ToString("dd/MM/yyyy");
+                            @Html.DisplayFor(model => FormatDate);
+                        }
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HR_Department.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => (item.BossName))
+                </td>
             </tr>
-            foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.ActionLink("Edit", "Edit", new { id = item.EmployeeID }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.EmployeeID }, new { onclick = "return confirm('Are you sure you wish to delete this employee info?');" })
-
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.EmployeeID)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.FullName)
-                    </td>
-                    <td>
-                        @{
-                            DateTime? Bdate = item.Birthdate;
-                            string FormatDate;
-                            if (Bdate.HasValue)
-                            {
-                                FormatDate = Bdate.Value.ToString("dd/MM/yyyy");
-                                @Html.DisplayFor(model => FormatDate);
                             }
                         }
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.HR_Department.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => (item.BossName))
-                    </td>
-                </tr>
-                                }
-                            }
-    </table>
+</table>
+
     <div class="pull-right">
-        @Html.ActionLink("Add New Employee", "Create", null, htmlAttributes: new { @class = "btn btn-default" })
-        @Html.ActionLink("Search Employee", "ListEmployee", null, htmlAttributes: new { @class = "btn btn-default" })
+        @Html.ActionLink("Add New Employee", "Create",null, htmlAttributes: new { @class = "btn btn-default" })
+        @Html.ActionLink("List Employee", "ListEmployee", null, htmlAttributes: new { @class = "btn btn-default" })
+        @Html.ActionLink("Search Employee", "SearchEmployee", null, htmlAttributes: new { @class = "btn btn-default" })
     </div>
     @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.currentFilter }), PagedListRenderOptions.ClassicPlusFirstAndLast)
     <p>Showing: @Model.PageSize item(s)/Page</p>

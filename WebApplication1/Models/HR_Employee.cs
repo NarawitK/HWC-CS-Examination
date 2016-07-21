@@ -14,22 +14,22 @@ namespace WebApplication1.Models
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
 
-
+    [Serializable]
     public partial class HR_Employee
     {
         public string EmployeeID { get; set; }
+		[Required(ErrorMessage="กรุณากรอกชื่อด้วย")]
         public string Firstname { get; set; }
+		[Required(ErrorMessage="กรุณากรอกนามสกุลด้วย")]
         public string Lastname { get; set; }
-
         [DataType(DataType.DateTime)]
-        [Required(ErrorMessage = "กรุณาเลือกวันเกิดด้วย")]
+        [Required(ErrorMessage="กรุณาเลือกวันเกิดด้วย")]
         public DateTime? Birthdate { get; set; }
+		[Required(ErrorMessage = "เลือกหน่วยงานที่สังกัดด้วย")]
         public int DepartmentID { get; set; }
         public string BossID { get; set; }
-
         [DataType(DataType.DateTime)]
         public DateTime? ModifiedDate { get; set; }
-
         public string BossName
         {
             get
@@ -43,20 +43,12 @@ namespace WebApplication1.Models
                 }
 
             }
-            set
-            {
-                throw new InvalidOperationException("This property is read-only.");
-            }
         }
         public string FullName
         {
             get
             {
                 return Firstname + " " + Lastname;
-            }
-            set
-            {
-                throw new InvalidOperationException("This property is read-only.");
             }
         }
 

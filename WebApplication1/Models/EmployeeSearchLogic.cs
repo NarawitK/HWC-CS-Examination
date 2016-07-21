@@ -38,7 +38,8 @@ namespace WebApplication1.Models
                     {
                            string firstname = split[0];
                            string lastname = split[1];
-                           result = result.Where(x => x.Firstname.Contains(firstname) && x.Lastname.Contains(lastname));
+                           result = result.Where(x => x.Firstname.Contains(firstname) && x.Lastname.Contains(lastname)
+                           || x.Firstname.Contains(lastname) && x.Lastname.Contains(firstname));
                        }
                 }
                 if (searchModel.DepartmentID.HasValue)

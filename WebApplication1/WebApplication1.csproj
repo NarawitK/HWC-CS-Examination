@@ -207,15 +207,9 @@
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
     <Content Include="Web.config" />
-    <Content Include="Views\HR_Department\Create.cshtml" />
-    <Content Include="Views\HR_Department\Delete.cshtml" />
-    <Content Include="Views\HR_Department\Details.cshtml" />
-    <Content Include="Views\HR_Department\Edit.cshtml" />
+    <Content Include="Views\HR_Department\DeptEditor.cshtml" />
     <Content Include="Views\HR_Department\Index.cshtml" />
-    <Content Include="Views\HR_Employee\Create.cshtml" />
-    <Content Include="Views\HR_Employee\Delete.cshtml" />
-    <Content Include="Views\HR_Employee\Details.cshtml" />
-    <Content Include="Views\HR_Employee\Edit.cshtml" />
+    <Content Include="Views\HR_Employee\EmpEditor.cshtml" />
     <Content Include="Views\HR_Employee\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -224,6 +218,7 @@
     <Compile Include="Controllers\HR_EmployeeController.cs" />
     <Compile Include="Exam_Webservice\EmployeeService.asmx.cs">
       <DependentUpon>EmployeeService.asmx</DependentUpon>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -251,6 +246,7 @@
     <Compile Include="Models\HR_Employee.cs">
       <DependentUpon>HRDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\WebServiceModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\EmployeeServiceReference\Reference.cs">
       <AutoGen>True</AutoGen>

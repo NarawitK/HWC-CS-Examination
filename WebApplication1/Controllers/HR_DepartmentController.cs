@@ -39,7 +39,8 @@ namespace WebApplication1.Controllers
         // GET: HR_Department/Create
         public ActionResult Create()
         {
-            return View();
+            ViewBag.Mode = 1;
+            return View("DeptEditor");
         }
 
         // POST: HR_Department/Create
@@ -49,6 +50,7 @@ namespace WebApplication1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include="DepartmentID,Name,GroupName,ModifiedDate")] HR_Department hR_Department)
         {
+            ViewBag.Mode = 1;
             try
             {
                 if (ModelState.IsValid)
@@ -57,7 +59,7 @@ namespace WebApplication1.Controllers
                     db.SaveChanges();
                     return RedirectToAction("Index");
                 }
-                return View(hR_Department);
+                return View("DeptEditor", hR_Department);
             }
             catch(Exception e)
             {
@@ -75,6 +77,7 @@ namespace WebApplication1.Controllers
         // GET: HR_Department/Edit/5
         public ActionResult Edit(int? id)
         {
+            ViewBag.Mode = 2;
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -84,7 +87,7 @@ namespace WebApplication1.Controllers
             {
                 return HttpNotFound();
             }
-            return View(hR_Department);
+            return View("DeptEditor", hR_Department);
         }
 
         // POST: HR_Department/Edit/5
@@ -94,6 +97,7 @@ namespace WebApplication1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "DepartmentID,Name,GroupName,ModifiedDate")] HR_Department hR_Department)
         {
+            ViewBag.Mode = 2;
             try
             {
                 if (ModelState.IsValid)
@@ -102,12 +106,12 @@ namespace WebApplication1.Controllers
                     db.SaveChanges();
                     return RedirectToAction("Index");
                 }
-                return View(hR_Department);
+                return View("DeptEditor", hR_Department);
             }
             catch
             {
                 ViewBag.EditDeptException = "เกิดข้อผิดพลาดในการแก้ไข ลองเช็คค่าที่ใส่ดูอีกครั้ง";
-                return View(hR_Department);
+                return View("DeptEditor", hR_Department);
             }
             
         }

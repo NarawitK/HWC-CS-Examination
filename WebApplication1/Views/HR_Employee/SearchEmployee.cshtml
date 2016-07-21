@@ -1,4 +1,4 @@
-﻿@model List<WebApplication1.Models.HR_Employee>
+﻿@model List<WebApplication1.Models.WebServiceModel>
 @using System.Linq
 
 @{
@@ -7,6 +7,12 @@
 }
 
 <h2>ค้นหาข้อมูลพนักงาน <small>ไม่ใช้ Webservice</small></h2>
+
+@if (ViewBag.Exception != null)
+{
+    <p class="bg-danger"><span class="glyphicon glyphicon-alert"></span> Error: @ViewBag.Exception</p>
+}
+
 @using (Html.BeginForm("SearchEmployee", "HR_Employee", FormMethod.Get))
 {
     <div class="form-horizontal">
@@ -103,6 +109,9 @@
                             }
                         }
 </table>
+<div class="pull-right">
+    @Html.ActionLink("Add New Employee", "Create", null, htmlAttributes: new { @class = "btn btn-default" })
+</div>
 
 
 

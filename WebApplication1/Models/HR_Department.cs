@@ -12,7 +12,8 @@ namespace WebApplication1.Models
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    
+
+    [Serializable]
     public partial class HR_Department
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -21,12 +22,15 @@ namespace WebApplication1.Models
             this.HR_Employee = new HashSet<HR_Employee>();
         }
         [RegularExpression("([1-9][0-9]*)", ErrorMessage = "กรุณาใส่ค่าเป็นตัวเลขจำนวนเต็มบวก")]
+        [Required]
         public int DepartmentID { get; set; }
+        [Required]
         public string Name { get; set; }
         public string GroupName { get; set; }
         public System.DateTime ModifiedDate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<HR_Employee> HR_Employee { get; set; }
+        
     }
 }

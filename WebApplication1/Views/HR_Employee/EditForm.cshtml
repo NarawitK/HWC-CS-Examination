@@ -6,6 +6,10 @@
 }
 <h2>เพิ่มพนักงาน</h2>
 
+@if (ViewBag.AddEmpException != null)
+{
+        <p class="bg-danger"><span class="glyphicon glyphicon-alert"></span> @ViewBag.AddEmpException</p>
+}
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -72,6 +76,7 @@
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
                         <input type="submit" value="Create" class="btn btn-primary" />
+                        @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-default" })
                     </div>
                 </div>
             </div>

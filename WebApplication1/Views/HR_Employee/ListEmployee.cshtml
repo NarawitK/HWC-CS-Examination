@@ -1,13 +1,12 @@
-﻿@model List<WebApplication1.Exam_Webservice.ListEmployeeModel>
-    @using System.Linq
+﻿@{
+    ViewBag.Title = "ค้นหาข้อมูลพนักงาน";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using System.Linq
+@model List<WebApplication1.Models.WebServiceModel>
 
-    @{
-        ViewBag.Title = "ค้นหาข้อมูลพนักงาน";
-        Layout = "~/Views/Shared/_Layout.cshtml";
-    }
-
-    <h2>ค้นหาข้อมูลพนักงาน <small>ใช้ Webservice</small></h2>
-    @using (Html.BeginForm("ListEmployee", "HR_Employee", FormMethod.Post))
+    <h2>@ViewBag.Title <small>ใช้ Webservice</small></h2>
+    @using (Html.BeginForm("ListEmployee", "HR_Employee"))
     {
         <div class="form-horizontal">
             <hr />
@@ -69,8 +68,8 @@
             {
                 <tr>
                     <td>
-                        @Html.ActionLink("Edit", "Edit", new { id = item.EmployeeID }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.EmployeeID }, new { onclick = "return confirm('Are you sure you wish to delete this employee info?');" })
+                        @Html.ActionLink("Edit", "HR_Employee", "Edit", new { id = item.EmployeeID }) |
+                        @Html.ActionLink("Delete","HR_Employee", "Delete", new { id = item.EmployeeID }, new { onclick = "return confirm('Are you sure you wish to delete this employee info?');" })
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.EmployeeID)
@@ -97,6 +96,9 @@
             }
         }
     </table>
+<div class="pull-right">
+    @Html.ActionLink("Add New Employee", "Create", null, htmlAttributes: new { @class = "btn btn-default" })
+</div>
 
 
 

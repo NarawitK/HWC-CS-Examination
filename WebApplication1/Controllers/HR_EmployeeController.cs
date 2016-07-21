@@ -21,7 +21,6 @@ namespace WebApplication1.Controllers
         {
             var hR_Employee = db.HR_Employee.Include(h => h.HR_Department);
             ViewBag.CurrentSort = sortOrder;
-            ViewBag.AddEmpException = TempData["AddEmpException"];
             ViewBag.EmpDelException = TempData["EmpDelException"];
             ViewBag.NameSort = string.IsNullOrEmpty(sortOrder) ? "name_desc" : null; //Sort by FirstName
             ViewBag.IDSort = string.IsNullOrEmpty(sortOrder) ? "id_desc" : null;
@@ -58,22 +57,22 @@ namespace WebApplication1.Controllers
             return View(hR_Employee.ToPagedList(pageNum,pageSize));
         }
 
-        //GET: /SearchEmployee (Non-Webservice)
-        public ActionResult SearchEmployee()
+        //GET: /SearchEmployeeFromDB (Non-Webservice)
+        /*public ActionResult SearchEmployee()
         {
             ViewBag.DepartmentID = new SelectList(db.HR_Department, "DepartmentID", "Name");
-            return View();
+            return View("ListEmployee");
         }
 
-        //GET: /SearchEmpFromDB (Non-Webservice)
+        //GET: /SearchEmployeeFromDB (Non-Webservice)
         [HttpGet]
         public ActionResult SearchEmployee(EmployeeSearchModel searchModel)
         {
             ViewBag.DepartmentID = new SelectList(db.HR_Department, "DepartmentID", "Name");
             var SearchMethod = new EmployeeSearchLogic();
             var model = SearchMethod.GetSearchResult(searchModel);
-            return View(model);
-        }
+            return View("ListEmployee", model);
+        }*/
 
         //GET: HR_Employee/ListEmployee <Search Employee> (Webservice)
         public ActionResult ListEmployee()
@@ -83,12 +82,13 @@ namespace WebApplication1.Controllers
             {
                 try
                 {
-                    var model = emp_service.ListEmployee();
+                    var model = emp_service.ShowEmployeeList();
                     return View(model);
                 }
-                catch
+                catch(Exception e)
                 {
-                    return RedirectToAction("Index");
+                    ViewBag.Exception = e.GetType();
+                    return View("ListEmployee");
                 }
                 
             };
@@ -103,11 +103,11 @@ namespace WebApplication1.Controllers
                 try
                 {
                     var model = emp_service.ListEmployee(EmployeeID, FullName, DepartmentID);
-                    return View(model);
+                    return View("ListEmployee",model);
                 }
                 catch
                 {
-                    return View();
+                    return RedirectToAction("Index");
                 }
                 
             };
@@ -131,21 +131,17 @@ namespace WebApplication1.Controllers
         // GET: HR_Employee/Create
         public ActionResult Create()
         {
+            ViewBag.Mode = "Create";
             IEnumerable<SelectListItem> DepartmentID = new SelectList(db.HR_Department, "DepartmentID", "Name");
-            ViewBag.DepartmentID = DepartmentID;
+            IEnumerable<SelectListItem> BossID = new SelectList(db.HR_Employee, "EmployeeID", "FullName");
+            ViewBag.BossIDList = BossID;
+            ViewBag.DepartmentIDList = DepartmentID;
             try
             {
-                System.Threading.Thread.Sleep(2000);
-                var query = (db.HR_Employee.Select(e => e.EmployeeID)).DefaultIfEmpty("0000").Max();
-                var counter = (db.HR_Employee.Select(e => e.EmployeeID)).Count();
+                var query = (db.HR_Employee.Select(e => e.EmployeeID)).DefaultIfEmpty("0001").Max();
                 var query_substr = query.Split('-');
                 var query_int = ((int.Parse(query_substr[3])) + 1).ToString("D4");
                 ViewData["currentID"] = query_int;
-                if(counter == 10000) //If count to 1K Employees -> Send Alert 
-                {
-                    TempData["AddEmpException"] = "Employee At Maximum Capacity";
-                    return RedirectToAction("Index");
-                }
             }
             catch(Exception ex)
             {
@@ -155,7 +151,7 @@ namespace WebApplication1.Controllers
                 }
                 
             }
-            return View();
+            return View("EmpEditor");
         }
 
         // POST: HR_Employee/Create
@@ -165,30 +161,24 @@ namespace WebApplication1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "EmployeeID,FirstName,LastName,Birthdate,DepartmentID,BossID,ModifiedDate")] HR_Employee hR_Employee)
         {
-            IEnumerable<SelectListItem> DepartmentID = new SelectList(db.HR_Department, "DepartmentID", "Name");
-            ViewBag.DepartmentID = DepartmentID;
+            ViewBag.Mode = "Create";
+            IEnumerable<SelectListItem> DepartmentID = new SelectList(db.HR_Department, "DepartmentID", "Name",hR_Employee.DepartmentID);
+              IEnumerable <SelectListItem> BossID = new SelectList(db.HR_Employee, "EmployeeID", "FullName",hR_Employee.BossID);
+            ViewBag.BossIDList = BossID; 
+            ViewBag.DepartmentIDList = DepartmentID;
             try
             {
-                System.Threading.Thread.Sleep(1500);
-                var query = (db.HR_Employee.Select(e => e.EmployeeID)).DefaultIfEmpty("0000").Max();
-                var counter = (db.HR_Employee.Select(e => e.EmployeeID)).Count();
+                var query = (db.HR_Employee.Select(e => e.EmployeeID)).DefaultIfEmpty("0001").Max();
                 var query_substr = query.Split('-');
-                if (counter == 10000) //When 1K Emp fire alert
-                {
-                    TempData["AddEmpException"] = "Employee At Maximum Capacity";
-                    return RedirectToAction("Index");
-                }
-                else
-                {
-                    var query_int = ((int.Parse(query_substr[3])) + 1).ToString("D4");
-                    ViewData["currentID"] = query_int;
-                }
+                var query_int = ((int.Parse(query_substr[3])) + 1).ToString("D4");
+                ViewData["currentID"] = query_int;
             }
-            catch(Exception ex)
+            catch(Exception ex) //Error show at create view
             {
                 if(ex is ArgumentNullException)
                 {
-                    TempData["AddEmpException"] = "เกิดข้อผิดพลาด: มีค่าว่างเกิดขึ้นระหว่างการดำเนินการ";
+                    ViewBag.Exception = "เกิดข้อผิดพลาด: มีค่าว่างเกิดขึ้นระหว่างการดำเนินการ";
+                    return View(hR_Employee);
                 }
                 if (ex is IndexOutOfRangeException)
                 {
@@ -196,12 +186,13 @@ namespace WebApplication1.Controllers
                 }
                 if(ex is DataException)
                 {
-                    ModelState.AddModelError(string.Empty, "Exception");
+                    ViewBag.Exception = ex.GetType();
                     return View(hR_Employee);
                 }
                 if(ex is OverflowException || ex is FormatException)
                 {
-                    TempData["AddEmpException"] = "Problem Detected at Number Ordering";
+                    ViewBag.Exception = "Problem Detected at Number Ordering";
+                    return View(hR_Employee);
                 }
             }
             if (ModelState.IsValid)
@@ -217,7 +208,6 @@ namespace WebApplication1.Controllers
 
                     if (ex is System.Data.Entity.Infrastructure.DbUpdateException)
                     {
-                        System.Threading.Thread.Sleep(1300);
                         var query = (db.HR_Employee.Select(e => e.EmployeeID)).DefaultIfEmpty().Max();
                         var query_substr = query.Split('-');
                         var query_int = ((int.Parse(query_substr[3])) + 1).ToString("D4");
@@ -226,10 +216,15 @@ namespace WebApplication1.Controllers
                         db.SaveChanges();
                         return RedirectToAction("Index");
                     }
+                    /*if(ex is System.Data.Entity.Validation.DbEntityValidationException)
+                    {
+                        ViewBag.Exception = ex.GetType();
+                        return View(hR_Employee);
+                    }*/
 
                 }  
             }
-            return View(hR_Employee);
+            return View("EmpEditor", hR_Employee);
         }
 
         //For BossName Search
@@ -256,15 +251,18 @@ namespace WebApplication1.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            ViewBag.Mode = "Edit";
             HR_Employee hR_Employee = db.HR_Employee.Find(id);
             IEnumerable<SelectListItem> DepartmentID = new SelectList(db.HR_Department, "DepartmentID", "Name", hR_Employee.DepartmentID);
+            IEnumerable<SelectListItem> BossID = new SelectList(db.HR_Employee.Where(m => m.EmployeeID != hR_Employee.EmployeeID), "EmployeeID", "FullName", hR_Employee.BossID);
             ViewBag.DepartmentID = DepartmentID;
+            ViewBag.BossIDList = BossID;
             if (hR_Employee == null)
             {
                 return HttpNotFound();
             }
 
-            return View(hR_Employee);
+            return View("EmpEditor", hR_Employee);
         }
 
         // POST: HR_Employee/Edit/5
@@ -276,7 +274,10 @@ namespace WebApplication1.Controllers
         {
             try
             {
+                ViewBag.Mode = "Edit";
                 IEnumerable<SelectListItem> DepartmentID = new SelectList(db.HR_Department, "DepartmentID", "Name", hR_Employee.DepartmentID);
+                IEnumerable<SelectListItem> BossID = new SelectList(db.HR_Employee.Where(m => m.EmployeeID != hR_Employee.EmployeeID), "EmployeeID", "FullName", hR_Employee.BossID);
+                ViewBag.BossIDList = BossID;
                 ViewBag.DepartmentID = DepartmentID;
                 if (ModelState.IsValid)
                 {
@@ -289,8 +290,8 @@ namespace WebApplication1.Controllers
             }
             catch(Exception e)
             {
-                ViewBag.EmpEditException = e.GetType();
-                return View(hR_Employee);
+                ViewBag.Exception = e.GetType();
+                return View("EmpEditor", hR_Employee);
             }
         }
 
