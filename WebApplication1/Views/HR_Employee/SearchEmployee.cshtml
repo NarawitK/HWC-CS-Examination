@@ -1,11 +1,10 @@
 ﻿@model List<WebApplication1.Models.EmployeeSearchModel>
 @using System.Linq
-
 @{
-    ViewBag.Title = "ค้นหาข้อมูลพนักงาน (ไม่ใช้ Webservice)";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@ViewBag.Title = "ค้นหาข้อมูลพนักงาน (ไม่ใช้ Webservice)";
 <h2>ค้นหาข้อมูลพนักงาน <small>ไม่ใช้ Webservice</small></h2>
 
 @if (ViewBag.Exception != null)

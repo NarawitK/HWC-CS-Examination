@@ -60,18 +60,20 @@ namespace WebApplication1.Controllers
         //GET: /SearchEmployeeFromDB (Non-Webservice)
         public ActionResult SearchEmployee()
         {
+            ViewBag.SearchMode = 0;
             ViewBag.DepartmentID = new SelectList(db.HR_Department, "DepartmentID", "Name");
-            return View("SearchEmployee");
+            return View("ListEmployee");
         }
 
         //GET: /SearchEmployeeFromDB (Non-Webservice)
         [HttpGet]
         public ActionResult SearchEmployee(EmployeeSearchModel searchModel)
         {
+            ViewBag.SearchMode = 0;
             ViewBag.DepartmentID = new SelectList(db.HR_Department, "DepartmentID", "Name");
             var SearchMethod = new EmployeeSearchLogic();
             var model = (SearchMethod.GetSearchResult(searchModel)).ToList();
-            return View("SearchEmployee",model);
+            return View("ListEmployee", model);
         }
 
         //GET: HR_Employee/ListEmployee <Search Employee> (Webservice)

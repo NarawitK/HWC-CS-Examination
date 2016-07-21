@@ -5,38 +5,51 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-    <h2>@ViewBag.Title <small>ใช้ Webservice</small></h2>
-    @using (Html.BeginForm("ListEmployee", "HR_Employee"))
+    
+@{
+    string Mode = null;
+    if (ViewBag.SearchMode == 0)
+    {
+        <h2>@ViewBag.Title <small>จาก DB</small></h2>
+        Mode = "SearchEmployee,HR_Employee,FormMethod.Get";
+    }
+    else if (ViewBag.SearchMode == 1)
+    {
+        <h2>@ViewBag.Title <small>จาก WebService</small></h2>
+        Mode = "ListEmployee,HR_Employee";
+    }
+    using (Html.BeginForm(Mode))
     {
         <div class="form-horizontal">
             <hr />
             <div class="form-group">
                 @Html.Label("รหัสพนักงาน: ", htmlAttributes: new { @class = "col-md-4 control-label" })
                 <div class="col-md-8">
-                    @Html.TextBox("EmployeeID", null, htmlAttributes: new { @class = "form-control",@placeholder="สามารถค้นหาโดยใช้รหัสพนักงานได้", @maxlength = 50 })
+                    @Html.TextBox("EmployeeID", null, htmlAttributes: new { @class = "form-control", @placeholder = "สามารถค้นหาโดยใช้รหัสพนักงานได้", @maxlength = 50 })
                 </div>
             </div>
             <div class="form-group">
                 @Html.Label("ชื่อ-นามสกุล พนักงาน", htmlAttributes: new { @class = "col-md-4 control-label" })
                 <div class="col-md-8">
-                    @Html.TextBox("FullName", null, htmlAttributes: new { @class = "form-control", @placeholder ="สามารถค้นหาโดยพิมพ์ชื่อ นามสกุลได้", @maxlength = 100 })
+                    @Html.TextBox("FullName", null, htmlAttributes: new { @class = "form-control", @placeholder = "สามารถค้นหาโดยพิมพ์ชื่อ นามสกุลได้", @maxlength = 100 })
                 </div>
             </div>
             <div class="form-group">
                 @Html.Label("หน่วยงาน: ", htmlAttributes: new { @class = "col-md-4 control-label" })
                 <div class="col-md-8">
-                    @Html.DropDownList("DepartmentID",null, "ทั้งหมด", htmlAttributes: new { @class = "form-control" })
+                    @Html.DropDownList("DepartmentID", null, "ทั้งหมด", htmlAttributes: new { @class = "form-control" })
                 </div>
             </div>
-                <div class="form-group">
-                    <div class="btn-group col-xs-offset-1 col-sm-offset-1 col-md-offset-4">
-                        <input type="submit" class="btn btn-primary" value="Search" />
-                        <a href='@Url.Action("ListEmployee","HR_Employee")' class="btn btn-default">Reload</a>
-                    </div>
+            <div class="form-group">
+                <div class="btn-group col-xs-offset-1 col-sm-offset-1 col-md-offset-4">
+                    <input type="submit" class="btn btn-primary" value="Search" />
+                    <a href='@Url.Action(Mode)' class="btn btn-default">Reload</a>
                 </div>
             </div>
+        </div>
     }
-
+} <!---->
+    
         <table class="table table-bordered table-hover table-responsive">
 
         @if (!Model.Any() || Model == null)
@@ -63,13 +76,17 @@
                 <th>
                     หน่วยงานที่สังกัด
                 </th>
+                @if (ViewBag.SearchMode == 0)
+                {
+                    <th>ชื่อ-นามสกุล หัวหน้างาน</th>
+                }
             </tr>
             foreach (var item in Model)
             {
                 <tr>
                     <td>
-                        @Html.ActionLink("Edit","Edit","HR_Employee",new { id = item.EmployeeID }, null) |
-                        @Html.ActionLink("Delete","Delete","HR_Employee", new { id = item.EmployeeID }, new { onclick = "return confirm('Are you sure you wish to delete this employee info?');" })
+                        @Html.ActionLink("Edit", "Edit", "HR_Employee", new { id = item.EmployeeID }, null) |
+                        @Html.ActionLink("Delete", "Delete", "HR_Employee", new { id = item.EmployeeID }, new { onclick = "return confirm('Are you sure you wish to delete this employee info?');" })
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.EmployeeID)
@@ -91,11 +108,14 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.DepartmentName)
                     </td>
-
+                    @if (ViewBag.SearchMode == 0)
+                    {
+                        <td>@Html.DisplayFor(modelItem => item.BossName)</td>
+                    }
                 </tr>
             }
         }
-    </table>
+</table>
 
 <div class="pull-right">
     @Html.ActionLink("Add New Employee", "Create", null, htmlAttributes: new { @class = "btn btn-default" })
