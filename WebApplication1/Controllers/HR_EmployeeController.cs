@@ -62,11 +62,13 @@ namespace WebApplication1.Controllers
         {
             ViewBag.SearchMode = 0;
             ViewBag.DepartmentID = new SelectList(db.HR_Department, "DepartmentID", "Name");
-            return View("ListEmployee");
+            var model_obj = new EmployeeSearchLogic();
+            var model = model_obj.ShowEmployeeList();
+            return View("ListEmployee",model);
         }
 
         //GET: /SearchEmployeeFromDB (Non-Webservice)
-        [HttpGet]
+        [HttpPost]
         public ActionResult SearchEmployee(EmployeeSearchModel searchModel)
         {
             ViewBag.SearchMode = 0;

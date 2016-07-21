@@ -5,9 +5,28 @@ using System.Linq;
 using System.Web;
 
 namespace WebApplication1.Models
-{ //Using HR_E Model
+{
     public class EmployeeSearchLogic
     {
+        public List<EmployeeSearchModel> ShowEmployeeList()
+        {
+            using (HREntities db = new HREntities())
+            {
+                var Emplist = from query in db.HR_Employee
+                              select new EmployeeSearchModel
+                              {
+                                  EmployeeID = query.EmployeeID,
+                                  FirstName = query.Firstname,
+                                  LastName = query.Lastname,
+                                  Birthdate = query.Birthdate,
+                                  DepartmentName = query.HR_Department.Name,
+                                  BossName = (from q in db.HR_Employee
+                                              where query.BossID == q.EmployeeID
+                                              select q.Firstname + " " + q.Lastname).FirstOrDefault()
+                              };
+                return Emplist.ToList();
+            }
+        }
         public List<EmployeeSearchModel> GetSearchResult(EmployeeSearchModel searchModel)
         {
             using (HREntities db = new HREntities())

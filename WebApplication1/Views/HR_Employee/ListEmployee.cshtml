@@ -7,18 +7,16 @@
 
     
 @{
-    string Mode = null;
     if (ViewBag.SearchMode == 0)
     {
         <h2>@ViewBag.Title <small>จาก DB</small></h2>
-        Mode = "SearchEmployee,HR_Employee,FormMethod.Get";
     }
     else if (ViewBag.SearchMode == 1)
     {
         <h2>@ViewBag.Title <small>จาก WebService</small></h2>
-        Mode = "ListEmployee,HR_Employee";
     }
-    using (Html.BeginForm(Mode))
+
+    using (Html.BeginForm())
     {
         <div class="form-horizontal">
             <hr />
@@ -43,7 +41,7 @@
             <div class="form-group">
                 <div class="btn-group col-xs-offset-1 col-sm-offset-1 col-md-offset-4">
                     <input type="submit" class="btn btn-primary" value="Search" />
-                    <a href='@Url.Action(Mode)' class="btn btn-default">Reload</a>
+                    <a href='@Url.Action()' class="btn btn-default">Reload</a>
                 </div>
             </div>
         </div>
@@ -52,7 +50,7 @@
     
         <table class="table table-bordered table-hover table-responsive">
 
-        @if (!Model.Any() || Model == null)
+        @if (!Model.Any())
         {
             <tr>
                 <th>
@@ -118,7 +116,7 @@
 </table>
 
 <div class="pull-right">
-    @Html.ActionLink("Add New Employee", "Create", null, htmlAttributes: new { @class = "btn btn-default" })
+    @Html.ActionLink("Add New Employee", "Create","HR_Employee", null, htmlAttributes: new { @class = "btn btn-default" })
 </div>
 
 
