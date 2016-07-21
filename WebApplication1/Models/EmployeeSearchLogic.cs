@@ -5,49 +5,59 @@ using System.Linq;
 using System.Web;
 
 namespace WebApplication1.Models
-{
+{ //Using HR_E Model
     public class EmployeeSearchLogic
     {
-        private HREntities db;
-        public EmployeeSearchLogic()
+        public List<EmployeeSearchModel> GetSearchResult(EmployeeSearchModel searchModel)
         {
-            db = new HREntities();
-        }
-        public List<HR_Employee> GetSearchResult(EmployeeSearchModel searchModel)
-        {
-            var result = db.HR_Employee.AsQueryable();
-            if(searchModel != null)
+            using (HREntities db = new HREntities())
             {
-                if (!string.IsNullOrEmpty(searchModel.EmployeeID))
+                var result = db.HR_Employee.AsQueryable();
+                if (searchModel != null)
                 {
-                    var res = searchModel.EmployeeID.Trim();
-                    result = result.Where(x => x.EmployeeID.Contains(res));
-                }
-                if (!string.IsNullOrEmpty(searchModel.FullName))
-                {
-                       string FN = searchModel.FullName.Trim();
-                       string[] delimiter = { " " };
-                       var split = FN.Split(delimiter, StringSplitOptions.RemoveEmptyEntries);
-                       int length = split.Length;
-                       if (length == 1) //For Name or Surname only
-                       {
-                           string firstname = split[0];
-                           result = result.Where(x => x.Firstname.Contains(firstname) || x.Lastname.Contains(firstname));
-                       }
-                       else if (length >= 2) //Both Name and Surname
+                    if (!string.IsNullOrEmpty(searchModel.EmployeeID))
                     {
-                           string firstname = split[0];
-                           string lastname = split[1];
-                           result = result.Where(x => x.Firstname.Contains(firstname) && x.Lastname.Contains(lastname)
-                           || x.Firstname.Contains(lastname) && x.Lastname.Contains(firstname));
-                       }
+                        var res = searchModel.EmployeeID.Trim();
+                        result = result.Where(x => x.EmployeeID.Contains(res));
+                    }
+                    if (!string.IsNullOrEmpty(searchModel.FullName))
+                    {
+                        string FN = searchModel.FullName.Trim();
+                        string[] delimiter = { " " };
+                        var split = FN.Split(delimiter, StringSplitOptions.RemoveEmptyEntries);
+                        int length = split.Length;
+                        if (length == 1) //For Name or Surname only
+                        {
+                            string firstname = split[0];
+                            result = result.Where(x => x.Firstname.Contains(firstname) || x.Lastname.Contains(firstname));
+                        }
+                        else if (length >= 2) //Both Name and Surname
+                        {
+                            string firstname = split[0];
+                            string lastname = split[1];
+                            result = result.Where(x => x.Firstname.Contains(firstname) && x.Lastname.Contains(lastname)
+                            || x.Firstname.Contains(lastname) && x.Lastname.Contains(firstname));
+                        }
+                    }
+                    if (searchModel.DepartmentID.HasValue)
+                    {
+                        result = result.Where(x => x.DepartmentID == searchModel.DepartmentID);
+                    }
                 }
-                if (searchModel.DepartmentID.HasValue)
-                {
-                    result = result.Where(x => x.DepartmentID == searchModel.DepartmentID);
-                }
+                var resultSet = from item in result
+                                select new EmployeeSearchModel
+                                {
+                                    EmployeeID = item.EmployeeID,
+                                    FirstName = item.Firstname,
+                                    LastName = item.Lastname,
+                                    Birthdate = item.Birthdate,
+                                    DepartmentName = item.HR_Department.Name,
+                                    BossName = (from q in db.HR_Employee
+                                                where item.BossID == q.EmployeeID
+                                                select q.Firstname + " " + q.Lastname).FirstOrDefault()
+                                };
+                return resultSet.ToList();
             }
-            return result.ToList();
         }
     }
 }

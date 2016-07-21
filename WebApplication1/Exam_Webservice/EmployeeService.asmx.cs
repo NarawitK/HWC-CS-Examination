@@ -20,12 +20,12 @@ namespace WebApplication1.Exam_Webservice
     public class EmployeeService : System.Web.Services.WebService
     {
         [WebMethod]
-        public List<WebServiceModel> ShowEmployeeList()
+        public List<EmployeeSearchModel> ShowEmployeeList()
         {
             using (HREntities db = new HREntities())
             {
                 var Emplist = from query in db.HR_Employee
-                              select new WebServiceModel
+                              select new EmployeeSearchModel
                               {
                                   EmployeeID = query.EmployeeID,
                                   FirstName = query.Firstname,
@@ -38,7 +38,7 @@ namespace WebApplication1.Exam_Webservice
         }
 
         [WebMethod]
-        public List<WebServiceModel> ListEmployee(string EmployeeID, string FullName, int? DepartmentID)
+        public List<EmployeeSearchModel> ListEmployee(string EmployeeID, string FullName, int? DepartmentID)
         {
             using (HREntities db = new HREntities())
             {
@@ -71,7 +71,7 @@ namespace WebApplication1.Exam_Webservice
                     query = query.Where(x => x.DepartmentID == DepartmentID);
                 }
                 var ResultSet = from item in query
-                                select new WebServiceModel
+                                select new EmployeeSearchModel
                                 {
                                     EmployeeID = item.EmployeeID,
                                     FirstName = item.Firstname,

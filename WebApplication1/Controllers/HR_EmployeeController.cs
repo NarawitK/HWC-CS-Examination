@@ -58,10 +58,10 @@ namespace WebApplication1.Controllers
         }
 
         //GET: /SearchEmployeeFromDB (Non-Webservice)
-        /*public ActionResult SearchEmployee()
+        public ActionResult SearchEmployee()
         {
             ViewBag.DepartmentID = new SelectList(db.HR_Department, "DepartmentID", "Name");
-            return View("ListEmployee");
+            return View("SearchEmployee");
         }
 
         //GET: /SearchEmployeeFromDB (Non-Webservice)
@@ -70,20 +70,21 @@ namespace WebApplication1.Controllers
         {
             ViewBag.DepartmentID = new SelectList(db.HR_Department, "DepartmentID", "Name");
             var SearchMethod = new EmployeeSearchLogic();
-            var model = SearchMethod.GetSearchResult(searchModel);
-            return View("ListEmployee", model);
-        }*/
+            var model = (SearchMethod.GetSearchResult(searchModel)).ToList();
+            return View("SearchEmployee",model);
+        }
 
         //GET: HR_Employee/ListEmployee <Search Employee> (Webservice)
         public ActionResult ListEmployee()
          {
+            ViewBag.SearchMode = 1;
             ViewBag.DepartmentID = new SelectList(db.HR_Department, "DepartmentID", "Name");
             using (Exam_Webservice.EmployeeService emp_service = new Exam_Webservice.EmployeeService())
             {
                 try
                 {
                     var model = emp_service.ShowEmployeeList();
-                    return View(model);
+                    return View("ListEmployee",model);
                 }
                 catch(Exception e)
                 {
@@ -97,6 +98,7 @@ namespace WebApplication1.Controllers
         [HttpPost] //Call Webservice
         public ActionResult ListEmployee(string EmployeeID, string FullName, int? DepartmentID)
         {
+            ViewBag.SearchMode = 1;
             ViewBag.DepartmentID = new SelectList(db.HR_Department, "DepartmentID", "Name");
             using (Exam_Webservice.EmployeeService emp_service = new Exam_Webservice.EmployeeService())
             {
