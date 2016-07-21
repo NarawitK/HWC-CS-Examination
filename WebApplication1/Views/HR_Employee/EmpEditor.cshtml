@@ -4,16 +4,24 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@if (ViewBag.Mode == "Create")
-{
-    ViewBag.Title = "เพิ่มพนักงาน";
-    <h2>เพิ่มพนักงาน</h2>
+@{
+    string FormMode = null;
+    if (ViewBag.Mode == "Create")
+    {
+        ViewBag.Title = "เพิ่มพนักงาน";
+        FormMode = "Create"; // or ViewBag.Mode
+    }
+    if (ViewBag.Mode == "Edit")
+    {
+        ViewBag.Title = "แก้ไขพนักงาน";
+        FormMode = "Edit"; // or ViewBag.Mode
+    }
+    <h2>@ViewBag.Title</h2>
     if (ViewBag.Exception != null)
     {
         <p class="bg-danger"><span class="glyphicon glyphicon-alert"></span> @ViewBag.Exception</p>
     }
-
-    using (Html.BeginForm("Create"))
+    using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
 
@@ -21,7 +29,14 @@
             <hr />
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <div>
-                @Html.EditorFor(model => model.EmployeeID, new { htmlAttributes = new { @type = "hidden",@class = "form-control", @Value = "EMP-" + DateTime.Today.ToString("yyyy-MM", CultureInfo.InvariantCulture) + "-" + ViewData["currentID"] } })
+                @if (ViewBag.Mode == "Create")
+                {
+                    @Html.EditorFor(model => model.EmployeeID, new { htmlAttributes = new { @type = "hidden", @maxlength = 50, @class = "form-control", @Value = "EMP-" + DateTime.Today.ToString("yyyy-MM", CultureInfo.InvariantCulture) + "-" + ViewData["currentID"] } })
+                }
+                else
+                {
+                    @Html.HiddenFor(model => model.EmployeeID, new { htmlAttributes = new { @class = "form-control", @readonly = true, @maxlength = 50 } })
+                }
                 @Html.ValidationMessageFor(model => model.EmployeeID, "", new { @class = "text-danger" })
             </div>
 
@@ -44,88 +59,7 @@
             <div class="form-group required">
                 @Html.LabelFor(model => model.Birthdate, "วัน/เดือน/ปีเกิด", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.Birthdate, new { htmlAttributes = new { @class = "form-control dateInput", @readonly = true, @placeholder = "คลิกที่นี่เพื่อเลือกวันเกิด" }})
-                    @Html.ValidationMessageFor(model => model.Birthdate, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.BossID, "หัวหน้างาน", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10 form-inline">
-                    @Html.DropDownListFor(m => m.BossID, (SelectList)ViewBag.BossIDList, "----",htmlAttributes: new { @class="form-control" })
-                    @Html.ValidationMessageFor(model =>model.BossID, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.DepartmentID, "หน่วยงานที่สังกัด", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.DropDownList("DepartmentID",(SelectList)ViewBag.DepartmentIDList, htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.DepartmentID, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.ModifiedDate, new { htmlAttributes = new { @class = "form-control", @type = "hidden", @readonly = "readonly", @Value = DateTime.Now.ToString(@"dd/MM/yyy HH:mm:ss") } })
-                    @Html.ValidationMessageFor(model => model.ModifiedDate, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Create" class="btn btn-primary" />
-                    @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-default" })
-                </div>
-            </div>
-        </div>
-    }
-}
-
-@if (ViewBag.Mode == "Edit")
-{
-    ViewBag.Title = "แก้ไขพนักงาน";
-    <h2>แก้ไขพนักงาน</h2>
-    if (ViewBag.Exception != null)
-    {
-        <script type="text/javascript">
-        alert('@ViewBag.Exception');
-        </script>
-        <p class="bg-danger"><span class="glyphicon glyphicon-alert"></span>@ViewBag.Exception</p>
-    }
-    using (Html.BeginForm("Edit"))
-    {
-        @Html.AntiForgeryToken()
-
-        <div class="form-horizontal">
-            <hr />
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            @Html.HiddenFor(model => model.EmployeeID, new { @maxlength = "20", @readonly = "readonly" })
-
-            <div>
-                @Html.HiddenFor(model => model.EmployeeID, new { htmlAttributes = new { @class = "form-control", @readonly = true, @maxlength = 50 } })
-                @Html.ValidationMessageFor(model => model.EmployeeID, "", new { @class = "text-danger" })
-            </div>
-
-            <div class="form-group required">
-                @Html.LabelFor(model => model.Firstname, "ชื่อ", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Firstname, new { htmlAttributes = new { @class = "form-control", @placeholder = "กรอกชื่อจริง", @maxlength = 50 } })
-                    @Html.ValidationMessageFor(model => model.Firstname, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group required">
-                @Html.LabelFor(model => model.Lastname, "นามสกุล", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Lastname, new { htmlAttributes = new { @class = "form-control", @placeholder = "กรอกนามสกุล", @maxlength = 50 } })
-                    @Html.ValidationMessageFor(model => model.Lastname, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group required">
-                @Html.LabelFor(model => model.Birthdate, "วัน/เดือน/ปีเกิด", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Birthdate, new { htmlAttributes = new { @class = "form-control dateInput", @readonly = "true", @Value = Model.Birthdate.Value.ToString("dd/MM/yyyy") } })
+                    @Html.EditorFor(model => model.Birthdate, new { htmlAttributes = new { @class = "form-control dateInput", @readonly = true, @placeholder = "คลิกที่นี่เพื่อเลือกวันเกิด" } })
                     @Html.ValidationMessageFor(model => model.Birthdate, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -134,16 +68,13 @@
                 @Html.LabelFor(model => model.BossID, "หัวหน้างาน", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10 form-inline">
                     @Html.DropDownListFor(m => m.BossID, (SelectList)ViewBag.BossIDList, "----", htmlAttributes: new { @class = "form-control" })
-                    @*Html.DropDownList("BossID", (SelectList)ViewBag.BossIDList, "----", htmlAttributes: new { @class = "form-control" })*@
                     @Html.ValidationMessageFor(model => model.BossID, "", new { @class = "text-danger" })
                 </div>
             </div>
-
             <div class="form-group">
                 @Html.LabelFor(model => model.DepartmentID, "หน่วยงานที่สังกัด", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-
-                    @Html.DropDownList("DepartmentID", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.DropDownList("DepartmentID", (SelectList)ViewBag.DepartmentIDList, htmlAttributes: new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.DepartmentID, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -157,7 +88,7 @@
 
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Save" class="btn btn-primary" />
+                    <input type="submit" value=@FormMode class="btn btn-primary" />
                     @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-default" })
                 </div>
             </div>

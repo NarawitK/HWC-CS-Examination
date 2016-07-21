@@ -220,18 +220,18 @@ namespace WebApplication1.Controllers
                         db.SaveChanges();
                         return RedirectToAction("Index");
                     }
-                    /*if(ex is System.Data.Entity.Validation.DbEntityValidationException)
+                    if(ex is System.Data.Entity.Validation.DbEntityValidationException)
                     {
                         ViewBag.Exception = ex.GetType();
                         return View(hR_Employee);
-                    }*/
+                    }
 
                 }  
             }
             return View("EmpEditor", hR_Employee);
         }
 
-        //For BossName Search
+        //For BossName Search AutoComplete (Deactivated)
         [HttpGet]
         public ActionResult GetBossName(string term)
         {
@@ -290,7 +290,7 @@ namespace WebApplication1.Controllers
                     return RedirectToAction("Index");
 
                 }
-                return View(hR_Employee);
+                return View("EmpEditor",hR_Employee);
             }
             catch(Exception e)
             {
