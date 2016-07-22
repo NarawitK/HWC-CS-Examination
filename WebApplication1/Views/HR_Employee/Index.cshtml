@@ -109,6 +109,7 @@
         @Html.ActionLink("Add New Employee", "Create",null, htmlAttributes: new { @class = "btn btn-default" })
         @Html.ActionLink("List Employee", "ListEmployee", null, htmlAttributes: new { @class = "btn btn-default" })
         @Html.ActionLink("Search Employee", "SearchEmployee", null, htmlAttributes: new { @class = "btn btn-default" })
+        @Html.ActionLink("Edit Employee","Edit",null,new { onclick = "return prompt('Enter Employee ID',id);" })
     </div>
     @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.currentFilter }), PagedListRenderOptions.ClassicPlusFirstAndLast)
     <p>Showing: @Model.PageSize item(s)/Page</p>
