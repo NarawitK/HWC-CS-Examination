@@ -21,21 +21,6 @@ namespace WebApplication1.Controllers
             return View(db.HR_Department.ToList());
         }
 
-        // GET: HR_Department/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            HR_Department hR_Department = db.HR_Department.Find(id);
-            if (hR_Department == null)
-            {
-                return HttpNotFound();
-            }
-            return View(hR_Department);
-        }
-
         // GET: HR_Department/Create
         public ActionResult Create()
         {
@@ -66,10 +51,10 @@ namespace WebApplication1.Controllers
                 if(e is OverflowException)
                 {
                     ViewBag.CreateDeptException = "มีการใส่ค่าที่เกินข้อจำกัด กรุณาเช็คค่าที่กรอกอีกครั้ง";
-                    return View(hR_Department);
+                    return View("DeptEditor", hR_Department);
                 }
                ViewBag.CreateDeptException = "มีข้อผิดพลาดเกิดขึ้น ลองเช็คค่าที่ใส่ดูอีกครั้ง";
-                return View(hR_Department);
+                return View("DeptEditor",hR_Department);
             }
             
         }
@@ -108,10 +93,20 @@ namespace WebApplication1.Controllers
                 }
                 return View("DeptEditor", hR_Department);
             }
-            catch
+            catch(Exception e)
             {
-                ViewBag.EditDeptException = "เกิดข้อผิดพลาดในการแก้ไข ลองเช็คค่าที่ใส่ดูอีกครั้ง";
-                return View("DeptEditor", hR_Department);
+                if (e is System.Data.Entity.Infrastructure.DbUpdateException)
+                {
+                    ViewBag.EditDeptException = "รหัสหน่วยงานมีค่าซ้ำกับหน่วยงานอื่น" + e.GetType();
+                    return View("DeptEditor", hR_Department);
+                }
+                else
+                {
+                    ViewBag.EditDeptException = "เกิดข้อผิดพลาดในการแก้ไข ลองเช็คค่าที่ใส่ดูอีกครั้ง" + e.GetType();
+                    return View("DeptEditor", hR_Department);
+                }
+                
+
             }
             
         }
@@ -136,7 +131,7 @@ namespace WebApplication1.Controllers
             }
             catch(Exception e)
             {
-                TempData["DeptDelException"] = "ไม่สามารถลบหน่วยงานได้ เนื่องจากยังมีพนักงานสังกัดอยู่ โปรดย้ายพนักงานออกก่อนทำการลบหน่วยงาน. Error:  "+e.GetType();
+                TempData["DeptDelException"] = "ไม่สามารถลบหน่วยงานได้ เนื่องจากยังมีพนักงานสังกัดอยู่ โปรดย้ายพนักงานออกก่อนทำการลบหน่วยงาน.\nError: "+e.GetType();
                 return RedirectToAction("Index");
             }
             

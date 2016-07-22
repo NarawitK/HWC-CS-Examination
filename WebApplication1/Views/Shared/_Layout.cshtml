@@ -6,6 +6,7 @@
     <title>@ViewBag.Title</title>
     <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/Sidemenu.css")" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/CustomNavbar.css")" />
     <link rel="stylesheet" href="@Url.Content("~/Content/bootstrap.min.css")" type="text/css" />
     <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/bootstrap-theme.min.css")"/>
     <link rel="stylesheet" href="@Url.Content("~/Content/jquery-ui.min.css")" type="text/css" />
@@ -17,7 +18,7 @@
     <meta name="description" content="C# Exam" />
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar navbar-custom navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -25,7 +26,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <p class="sidemenu-toggle navbar-brand" onclick="openMenu()">☰</p>
+                <p class="sidemenu-toggle navbar-brand" onclick="switcher()">☰</p>
                 <a href="@Url.Action("Index","HR_Employee")" class="navbar-brand">C# Examination</a>
             </div>
             <div class="navbar-collapse collapse">
@@ -58,7 +59,7 @@
     <div id="navigator">
         <ul>
             <li>
-                <a href="javascript:void(0)" class="closebtn" onclick="closeMenu()"><span class="glyphicon glyphicon-remove"></span></a>
+                <a href="javascript:void(0)" class="closebtn" onclick="switcher()"><span class="glyphicon glyphicon-remove"></span></a>
             </li>
             <li>
                 พนักงาน
@@ -81,19 +82,11 @@
         @RenderSection("Scripts", required: false)
         <hr />
         <footer>
-            <p><span class="glyphicon glyphicon-copyright-mark"></span> @DateTime.Now.Year - C# Examination</p>
+            <p><span class="glyphicon glyphicon-copyright-mark"></span><script>jQuery.now()</script> - C# Examination</p>
         </footer>
     </div>
-    <script type="text/javascript">
-        function openMenu() {
-            $("#navigator").width(250);
-            $("#navigator ul").fadeIn(400);
-        }
-        function closeMenu() {
-            $("#navigator").width(0);
-            $("#navigator ul").fadeOut(400);
-        }
-    </script>
+
+    <script src=@Url.Content("~/Scripts/MenuSwitch.js")></script>
     <script src=@Url.Content("~/Scripts/bootstrap.min.js")></script>
     <script src=@Url.Content("~/Scripts/jquery.validate-vsdoc.js")></script>
     <script src=@Url.Content("~/Scripts/jquery.validate.min.js")></script>

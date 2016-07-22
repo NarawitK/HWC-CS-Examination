@@ -3,7 +3,7 @@
     margin-top:3.5em;
     margin-right:3.5em;
     height: 100%;
-    width: 0em;
+    width: 0;
     position: fixed;
     z-index: 4;
     top: 0;
@@ -21,7 +21,7 @@
     text-decoration: none;
     color: #818181;
     display: block;
-    transition: .2s
+    transition: .22s;
 }
 
 #navigator a:hover, .offcanvas a:focus{
@@ -39,7 +39,7 @@
     position: absolute;
     top: 0;
     right: 7%;
-    font-size: 20px !important;
+    font-size: 20px;
     margin-left: 50px;
 }
 @media screen and (max-height:450px){

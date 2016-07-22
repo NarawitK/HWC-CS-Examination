@@ -119,21 +119,6 @@ namespace WebApplication1.Controllers
             };
         }
 
-        // GET: HR_Employee/Details/5
-        public ActionResult Details(string id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            HR_Employee hR_Employee = db.HR_Employee.Find(id);
-            if (hR_Employee == null)
-            {
-                return HttpNotFound();
-            }
-            return View(hR_Employee);
-        }
-
         // GET: HR_Employee/Create
         public ActionResult Create()
         {
@@ -205,6 +190,7 @@ namespace WebApplication1.Controllers
             { //Handling Duplicate ID Insertion
                 try
                 {
+                    hR_Employee.ModifiedDate = DateTime.Now;
                     db.HR_Employee.Add(hR_Employee);
                     db.SaveChanges();
                     return RedirectToAction("Index");

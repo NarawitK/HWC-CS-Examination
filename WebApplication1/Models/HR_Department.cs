@@ -22,9 +22,9 @@ namespace WebApplication1.Models
             this.HR_Employee = new HashSet<HR_Employee>();
         }
         [RegularExpression("([1-9][0-9]*)", ErrorMessage = "กรุณาใส่ค่าเป็นตัวเลขจำนวนเต็มบวก")]
-        [Required]
+        [Required(ErrorMessage = "กรุณากรอกรหัสหน่วยงาน")]
         public int DepartmentID { get; set; }
-        [Required]
+        [Required(ErrorMessage = "กรุณากรอกชื่อหน่วยงาน")]
         public string Name { get; set; }
         public string GroupName { get; set; }
         public System.DateTime ModifiedDate { get; set; }
