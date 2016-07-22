@@ -16,7 +16,7 @@ namespace WebApplication1.Controllers
         private HREntities db = new HREntities();
 
 
-        // GET: HR_Employee with Pagination, Sort and SearchBox //Pagination Customizable 
+        // GET: HR_Employee with Pagination, Sort and SearchBox 
         public ActionResult Index(string sortOrder,string Search,string currentFilter,int? page,int pagesize = 15)
         {
             var hR_Employee = db.HR_Employee.Include(h => h.HR_Department);
