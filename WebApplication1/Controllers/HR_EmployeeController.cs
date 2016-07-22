@@ -67,7 +67,7 @@ namespace WebApplication1.Controllers
             return View("ListEmployee",model);
         }
 
-        //GET: /SearchEmployeeFromDB (Non-Webservice)
+        //POST: /SearchEmployeeFromDB (Non-Webservice)
         [HttpPost]
         public ActionResult SearchEmployee(EmployeeSearchModel searchModel)
         {
@@ -99,7 +99,7 @@ namespace WebApplication1.Controllers
             };
          }
 
-        [HttpPost] //Call Webservice
+        [HttpPost] //POST: Call Webservice
         public ActionResult ListEmployee(string EmployeeID, string FullName, int? DepartmentID)
         {
             ViewBag.SearchMode = 1;
