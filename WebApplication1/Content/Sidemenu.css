@@ -1,6 +1,10 @@
-﻿@media screen and (max-height:450px){
+﻿/*Hide Menu Button on LargeScreen*/
+@media screen and (max-height:450px){
     #navigator {padding-top: 3.5em;}
     #navigator a {font-size: 18px;}
+}
+@media screen and (min-width:768px){
+    .sidemenu-toggle {display:none;}
 }
 #navigator{
     display:block;
@@ -14,19 +18,20 @@
     left: 0;
     background-color: #000;
     color:#fff;
-    overflow-x: hidden;
-    overflow-y:hidden;
+    font-size:medium;
     transition: 0.5s;
     padding-top: 4em; 
+    overflow-y: auto;
 }
 
 #navigator a {
     margin-top:0.4em;
-    padding: 8px 8px 8px 32px;
+    padding: 0.6em 0.6em 0.6em 1.6em; /*Default: 8px 8px 8px 32px*/
     text-decoration: none;
-    color: #919191;
+    font-size:0.88em;
+    color: #919191; 
     display: block;
-    transition: .22s;
+    transition: .4s;    
 }
 
 #navigator a:hover, .offcanvas a:focus{
