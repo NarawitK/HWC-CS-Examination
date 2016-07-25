@@ -3,12 +3,10 @@ function switcher() {
     if (openStatus == false) {
         openMenu();
         openStatus = true;
-        console.log("Menu Opened:" + openStatus);
     }
     else {
         closeMenu();
         openStatus = false;
-        console.log("Menu Closed:" + openStatus);
     }
 }
 function openMenu() {
