@@ -220,7 +220,7 @@ namespace WebApplication1.Controllers
         }
 
         //For BossName Search AutoComplete (Deactivated)
-        [HttpGet]
+       /* [HttpGet]
         public ActionResult GetBossName(string term)
         {
             var name = (from c in db.HR_Employee
@@ -234,7 +234,7 @@ namespace WebApplication1.Controllers
             {
                 return Json(name.ToList(), JsonRequestBehavior.AllowGet);
             }
-        }
+        }*/
 
         // GET: HR_Employee/Edit/5
         public ActionResult Edit(string id)
@@ -246,7 +246,7 @@ namespace WebApplication1.Controllers
             ViewBag.Mode = "Edit";
             HR_Employee hR_Employee = db.HR_Employee.Find(id);
             IEnumerable<SelectListItem> DepartmentID = new SelectList(db.HR_Department, "DepartmentID", "Name", hR_Employee.DepartmentID);
-            IEnumerable<SelectListItem> BossID = new SelectList(db.HR_Employee.Where(m => m.EmployeeID != hR_Employee.EmployeeID), "EmployeeID", "FullName", hR_Employee.BossID);
+            IEnumerable<SelectListItem> BossID = new SelectList(db.HR_Employee.Where(m => m.EmployeeID != hR_Employee.EmployeeID && hR_Employee.EmployeeID != m.BossID /**/), "EmployeeID", "FullName", hR_Employee.BossID);
             ViewBag.DepartmentID = DepartmentID;
             ViewBag.BossIDList = BossID;
             if (hR_Employee == null)
@@ -268,7 +268,7 @@ namespace WebApplication1.Controllers
             {
                 ViewBag.Mode = "Edit";
                 IEnumerable<SelectListItem> DepartmentID = new SelectList(db.HR_Department, "DepartmentID", "Name", hR_Employee.DepartmentID);
-                IEnumerable<SelectListItem> BossID = new SelectList(db.HR_Employee.Where(m => m.EmployeeID != hR_Employee.EmployeeID), "EmployeeID", "FullName", hR_Employee.BossID);
+                IEnumerable<SelectListItem> BossID = new SelectList(db.HR_Employee.Where(m => m.EmployeeID != hR_Employee.EmployeeID && hR_Employee.EmployeeID != m.BossID /**/), "EmployeeID", "FullName", hR_Employee.BossID);
                 ViewBag.BossIDList = BossID;
                 ViewBag.DepartmentID = DepartmentID;
                 if (ModelState.IsValid)

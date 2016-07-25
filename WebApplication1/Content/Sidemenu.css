@@ -19,19 +19,21 @@
     background-color: #000;
     color:#fff;
     font-size:medium;
-    transition: 0.5s;
+    will-change: transition;
+    transition: 0.3s;
     padding-top: 4em; 
     overflow-y: auto;
 }
 
 #navigator a {
     margin-top:0.4em;
-    padding: 0.6em 0.6em 0.6em 1.6em; /*Default: 8px 8px 8px 32px*/
+    padding: 0.6em 0.6em 0.6em 1.8em; /*Default: 8px 8px 8px 32px*/
     text-decoration: none;
     font-size:0.88em;
     color: #919191; 
     display: block;
-    transition: .4s;    
+    will-change:transition;
+    transition: .3s;    
 }
 
 #navigator a:hover, .offcanvas a:focus{
